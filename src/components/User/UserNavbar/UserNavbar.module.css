@@ -1,0 +1,50 @@
+.logo-img {
+    width: 350px; 
+    height: 90px;  
+    object-fit: cover; 
+    object-position: center; 
+}
+.nav-link.active {
+    text-decoration: underline; 
+    text-decoration-thickness: 1px; 
+    font-weight: bold;
+  }
+.light {
+    background-color: white;
+    color: black;
+  }
+  
+  .light .navbar,
+  .light .nav-link,
+  .light .dropdown-menu {
+    background-color: #f8f9fa !important;
+    color: black !important;
+  }
+  
+  .light .nav-link {
+    color: black !important;
+  }
+  
+  .dark {
+    background-color: #121212;
+    color: white;
+    transition: 0.3s ease;
+  }
+  
+  .dark .navbar,
+  .dark .nav-link,
+  .dark .dropdown-menu {
+    background-color: #1f1f1f !important;
+    color: white !important;
+  }
+  
+  .dark .nav-link {
+    color: white !important;
+  }
+  
+  .dark .btn-outline-dark {
+    background-color: white;
+    color: black;
+    border-color: white;
+  }
+  

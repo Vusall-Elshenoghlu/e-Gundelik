@@ -1,0 +1,33 @@
+.logo-containerr {
+    width: 300px; 
+    height: 100px;  
+    object-fit: cover; 
+    object-position: center; 
+}
+
+.swal-title {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.swal-content {
+    font-family: 'Arial', sans-serif;
+    color: #555;
+    font-size: 16px;
+}
+
+.swal-confirm-btn {
+    background-color: #4e73df;
+    border-color: #4e73df;
+    color: white;
+    font-weight: bold;
+}
+
+.swal-cancel-btn {
+    background-color: #e74a3b;
+    border-color: #e74a3b;
+    color: white;
+    font-weight: bold;
+}
