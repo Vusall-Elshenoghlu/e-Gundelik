@@ -119,7 +119,7 @@ const UserNavbar = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <img src={user.img} alt={user.role} className={styles.userImg} />
-                  <button className={styles.roleBtn}>{user.role}</button>
+                  <Link to={user.route} style={{textDecoration:"none"}} className={styles.roleBtn}>{user.role}</Link>
                 </motion.div>
               </Carousel.Item>
             ))}
