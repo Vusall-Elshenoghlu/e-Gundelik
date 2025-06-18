@@ -1,0 +1,170 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.lightWrapper {
+  background: linear-gradient(to right, #e0f7fa, #a79a9a);
+}
+
+.darkWrapper {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+}
+
+.leftSide {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.lightLeft {
+  background-color: #16379C;
+}
+
+.darkLeft {
+  background-color: #1f2a36;
+}
+
+.image {
+  width: 100%;
+  max-width: 500px;
+  object-fit: cover;
+}
+
+.rightSide {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 30px;
+}
+
+.lightRight {
+  background: #ffffff;
+  color: #000;
+}
+
+.darkRight {
+  background: #2a3b4c;
+  color: #fff;
+}
+
+.loginForm {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formTitle {
+  font-size: 28px;
+  font-weight: bold;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* === 5. Inputs === */
+.loginInput {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+.lightRight .loginInput {
+  background: #f7f9fc;
+  color: #000;
+  border: 1px solid #cfd8dc;
+}
+
+.lightRight .loginInput:focus {
+  border-color: #007bff;
+  background: #ffffff;
+  outline: none;
+}
+
+.darkRight .loginInput {
+  background: #3c4b5c !important;
+  color: #fff;
+  border: 1px solid #546e7a;
+}
+
+.darkRight .loginInput:focus {
+  border-color: #90caf9;
+  background: #2a3b4c;
+  outline: none;
+}
+
+.loginButton {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.darkRight .loginButton {
+  background: #091d33;
+  color: #fff;
+}
+
+.loginButton:hover {
+  background: #0056b3;
+}
+
+.darkRight .loginButton:hover {
+  background: #ffffff;
+  color: #000;
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}
+
+.darkRight .eyeIcon {
+  color: #ccc;
+}
+
+.registerRedirect {
+  text-align: center;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .leftSide,
+  .rightSide {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .image {
+    max-width: 300px;
+  }
+
+  .formTitle {
+    font-size: 24px;
+  }
+}

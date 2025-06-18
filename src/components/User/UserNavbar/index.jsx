@@ -1,133 +1,142 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Button from "react-bootstrap/Button";
-import Dropdown from "react-bootstrap/Dropdown";
-import Swal from "sweetalert2";
-import "./UserNavbar.module.css";
-import { toast } from "react-toastify";
-import { darkModeContext } from "../../../context/DarkModeContext";
-import { AuthContext } from "../../../context/AuthContext";
+import React, { useEffect, useRef, useState } from "react";
+import { Navbar, Nav, Button, Carousel } from "react-bootstrap";
+import { AnimatePresence, motion } from "framer-motion";
+import { useSwipeable } from "react-swipeable";
+import styles from "./UserNavbar.module.css";
+import parentImage from '../../../assets/images/parent.jpg';
+import { FaBars, FaTimes } from "react-icons/fa";
+
+
+const users = [
+  {
+    role: "Şagird",
+    img: "https://www.smarttech.com/-/media/project/smart/www/resources/blogs/hero-and-opengraph/article-addressing-the-student-mental-health-crisis.jpeg?h=4480&iar=0&w=6720&rev=8d8c698221ab42a39fdab60ef02835d4&hash=84510F6BA435076CC38FCAA363745D5B",
+  },
+  {
+    role: "Valideyn",
+    img: parentImage,
+  },
+  {
+    role: "Müəllim",
+    img: "https://www.venkateshwaragroup.in/vgiblog/wp-content/uploads/2022/09/Untitled-design-2-1-1200x1200.jpg",
+  },
+  {
+    role: "Direktor",
+    img: "https://media.istockphoto.com/id/595158506/photo/portrait-of-solid-middle-aged-businessman.jpg?s=612x612&w=0&k=20&c=SIH-PNrQQL5WknmXcl17LLUiMBc3AwuaX5j0gTefyso=",
+  },
+];
 
 const UserNavbar = () => {
-  const { user, setUser } = useContext(AuthContext);
-  const { darkMode, setDarkMode } = useContext(darkModeContext  );
-  const [token,setToken] = useState(localStorage.getItem("token") ? localStorage.getItem("token") : "")
-  const navigate = useNavigate();
-  const location = useLocation(); 
+  const carouselRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const [opacity,setOpacity] = useState(1)
-
-  useEffect(() =>{
-    const handleScroll = () =>{
-      const scrollY = window.scrollY;
-      setOpacity(scrollY > 110 ? 0.3 : 1)
-    }
-
-    window.addEventListener("scroll",handleScroll);
-    return () => window.removeEventListener("scroll",handleScroll)
-  },[])
-
-  function handleReservation(){
-    if(token){
-      toast.warn(content[lang].navDoctor)
-      navigate("/doctors")
-    }else{
-        toast.warn(content[lang].logAppoint)
-        navigate("/login")
-    }
-  }
-
-  const logout = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes,log out!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/");
-        setUser(!user);
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("userEmail")
-        setUser(null);
-        Swal.fire({
-          title: "Logged Out!",
-          text: "Logged Out Successfully..",
-          icon: "success",
-        });
-      }
-    });
-  };
-
-  const isActive = (path) => location.pathname === path ? "active" : "";
+  const handlers = useSwipeable({
+    onSwipedLeft: () => carouselRef.current?.next?.(),
+    onSwipedRight: () => carouselRef.current?.prev?.(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <Navbar expand="lg" className={`bg-${darkMode ? "dark text-light" : "light"} shadow-sm`} sticky="top" style={{opacity, transition:"opacity 0.3s ease-in-out" }}>
-      <Navbar.Brand>
-        <Link to="/">
-          <img src="/images/navbarLogoDarkMode.png" alt="" className="logo-img" />
-        </Link>
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mx-auto">
-          <Nav.Link as={Link} to="/" className={isActive("/")}>
-            Ev
-          </Nav.Link>
-          <Nav.Link as={Link} to="/about" className={isActive("/about")}>
-            Haqqimizda
-          </Nav.Link>
-          <Nav.Link as={Link} to="/contact" className={isActive("/contact")}>
-            Elaqe
-          </Nav.Link>
-          <Nav.Link as={Link} to="/video-call-lobby" className={isActive("/video-call-lobby")}>
-              Video-Call
-          </Nav.Link>
+    <div className={styles.navbarHeroWrapper}>
+      <motion.nav
+        className={styles.navbar}
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className={styles.navbarContent}>
+          <a href="/" className={styles.brand}>rəqəmsal məktəb</a>
 
-        </Nav>
+          <div className={styles.linksDesktop}>
+            <a href="#about">Layihə haqqında</a>
+            <a href="#videos">Tədris videoları</a>
+            <a href="#schools">Bakı məktəbləri</a>
+            <a href="#faq">FAQ</a>
+            <a href="#guide">İstifadəçi təlimatı</a>
+          </div>
 
-        <Dropdown style={{ marginRight: "20px" }}>
-          
-          
-        </Dropdown>
+          <button className={styles.loginBtn}>Giriş</button>
 
-        {user ? (
-          <Dropdown className="me-3">
-            <Dropdown.Toggle variant="outline-secondary" id="user-dropdown">
-              👤 {user.name}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item as={Link} to="/my-profile" style={{color:`${darkMode ? "blue" : ""}`}}>
-               profil
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={logout} className="text-danger" style={{color:`${darkMode ? "blue" : ""}`}}>
-                Cixis
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <div className={styles.menuIcon} onClick={toggleMenu}>
+            {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              className={styles.mobileMenu}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <a href="#about" onClick={toggleMenu}>Layihə haqqında</a>
+              <a href="#videos" onClick={toggleMenu}>Tədris videoları</a>
+              <a href="#schools" onClick={toggleMenu}>Bakı məktəbləri</a>
+              <a href="#faq" onClick={toggleMenu}>FAQ</a>
+              <a href="#guide" onClick={toggleMenu}>İstifadəçi təlimatı</a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+
+      <div className={styles.heroSection}>
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className={styles.heroTitle}
+        >
+          Rəqəmsal Məktəb platforması
+        </motion.h1>
+        <p className={styles.heroSubtitle}>
+          Rəqəmsal mühitdə öyrənmə, tədris, ünsiyyət və əməkdaşlıq platformasıdır.
+        </p>
+
+        {isMobile ? (
+          <Carousel ref={carouselRef} interval={3000} className={styles.heroCarousel}>
+            {users.map((user, index) => (
+              <Carousel.Item key={index}>
+                <motion.div
+                  {...handlers}
+                  className={styles.carouselItemCustom}
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <img src={user.img} alt={user.role} className={styles.userImg} />
+                  <button className={styles.roleBtn}>{user.role}</button>
+                </motion.div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
         ) : (
-          <div className="me-3 d-flex">
-            <Link to="/login" className="btn btn-primary me-2">
-              Daxil ol
-            </Link>
-            <Link to="/register" className="btn btn-secondary">
-              Qeydiyyat
-            </Link>
+          <div className={styles.gridWrapper}>
+            {users.map((user, index) => (
+              <motion.div
+                key={index}
+                className={`${styles.gridItem} ${index === 1 || index === 2 ? styles.lowered : styles.raised}`}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img src={user.img} alt={user.role} className={styles.userImg} />
+                <button className={styles.roleBtn}>{user.role}</button>
+              </motion.div>
+            ))}
           </div>
         )}
-
-        <Button variant="outline-dark" onClick={() => setDarkMode(!darkMode)} className="me-3">
-          {darkMode ? "☀" : "🌙"}
-        </Button>
-      </Navbar.Collapse>
-    </Navbar>
+      </div>
+    </div>
   );
 };
 

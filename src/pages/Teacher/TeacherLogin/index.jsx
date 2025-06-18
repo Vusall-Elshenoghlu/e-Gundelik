@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './ParentLogin.module.css';
+import styles from './TeacherLogin.module.css';
 import { motion } from 'framer-motion';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { darkModeContext } from '../../../context/DarkModeContext';
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import { AuthContext } from '../../../context/AuthContext';
 
-const ParentLogin = () => {
+const TeacherLogin = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [emailOrUserName, setEmailOrUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -168,4 +168,4 @@ const ParentLogin = () => {
   );
 };
 
-export default ParentLogin;
+export default TeacherLogin;

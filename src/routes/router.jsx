@@ -3,6 +3,7 @@ import AdminLogin from "../pages/Admin/AdminLogin";
 import AdminRoot from "../pages/Admin/AdminRoot";
 import ParentPortal from "../pages/Parent/ParentPortal";
 import ParentSidebar from "../pages/Parent/ParentSidebar";
+import StudentLogin from "../pages/Student/StudentLogin";
 import StudentPage from "../pages/Student/StudentPage";
 import StudentSidebar from "../pages/Student/StudentSidebar";
 import TeacherPanel from "../pages/Teacher/TeacherPanel";
@@ -11,9 +12,7 @@ import About from "../pages/User/About";
 import Contact from "../pages/User/Contact";
 import Home from "../pages/User/Home";
 import NoPage from "../pages/User/NoPage";
-import UserLogin from "../pages/User/UserLogin";
 import UserProfile from "../pages/User/UserProfile";
-import UserRegister from "../pages/User/UserRegister";
 import UserRoot from "../pages/User/UserRoot";
 
 export const ROUTES = [
@@ -24,14 +23,6 @@ export const ROUTES = [
             {
                 path:"",
                 element:<Home/>
-            },
-            {
-                path:"/login",
-                element:<UserLogin/>
-            },
-            {
-                path:"register",
-                element:<UserRegister/>
             },
             {
                 path:"about",
@@ -52,6 +43,12 @@ export const ROUTES = [
         ]
     },
     // deyisilecek
+
+    {
+        path:"/adminn",
+        element:<AdminLogin/>
+
+    },
     {
         path:"/admin",
         element:<AdminRoot/>
@@ -85,6 +82,10 @@ export const ROUTES = [
                 element:<ParentSidebar/>
             }
         ]
+    },
+    {
+        path:"student-login",
+        element:<StudentLogin/>
     },
     {
         path:"student-page",
