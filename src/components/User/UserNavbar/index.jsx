@@ -103,7 +103,7 @@ const UserNavbar = () => {
         </p>
 
         {isMobile ? (
-          <Carousel ref={carouselRef} interval={3000} className={styles.heroCarousel}>
+          <Carousel ref={carouselRef} interval={3000} className={styles.heroCarousel} indicators = {false} controls = {false}>
             {users.map((user, index) => (
               <Carousel.Item key={index}>
                 <motion.div

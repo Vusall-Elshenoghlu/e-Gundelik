@@ -83,7 +83,11 @@
   }
 
   .loginBtn {
-    display: none; /* Əgər mobil üçün ayrıca düymə göstərəcəksənsə, bura dəyişə bilərik */
+    display: none; 
+  }
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none !important;
   }
 }
 
