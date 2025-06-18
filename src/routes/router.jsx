@@ -1,3 +1,4 @@
+import { path } from "framer-motion/client";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import AdminLogin from "../pages/Admin/AdminLogin";
 import AdminRoot from "../pages/Admin/AdminRoot";
@@ -14,6 +15,9 @@ import Home from "../pages/User/Home";
 import NoPage from "../pages/User/NoPage";
 import UserProfile from "../pages/User/UserProfile";
 import UserRoot from "../pages/User/UserRoot";
+import TeacherLogin from "../pages/Teacher/TeacherLogin";
+import ParentLogin from "../pages/Parent/ParentLogin";
+import DirectorLogin from "../pages/Director/DirectorLogin";
 
 export const ROUTES = [
     {
@@ -45,7 +49,7 @@ export const ROUTES = [
     // deyisilecek
 
     {
-        path:"/adminn",
+        path:"/admin",
         element:<AdminLogin/>
 
     },
@@ -64,6 +68,10 @@ export const ROUTES = [
         ]
     },
     {
+        path:"teacher-login",
+        element:<TeacherLogin/>
+    },
+    {
         path: "/teacher-panel",
         element:<TeacherPanel/>,
         children:[
@@ -74,6 +82,10 @@ export const ROUTES = [
         ]
     },
     {
+        path:"parent-login",
+        element:<ParentLogin/>
+    },
+    {
         path:"parent-portal",
         element:<ParentPortal/>,
         children:[
@@ -82,6 +94,10 @@ export const ROUTES = [
                 element:<ParentSidebar/>
             }
         ]
+    },
+    {
+        path:"director-login",
+        element:<DirectorLogin/>
     },
     {
         path:"student-login",

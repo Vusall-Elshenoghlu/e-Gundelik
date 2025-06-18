@@ -5,24 +5,29 @@ import { useSwipeable } from "react-swipeable";
 import styles from "./UserNavbar.module.css";
 import parentImage from '../../../assets/images/parent.jpg';
 import { FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router";
 
 
 const users = [
   {
     role: "Şagird",
     img: "https://www.smarttech.com/-/media/project/smart/www/resources/blogs/hero-and-opengraph/article-addressing-the-student-mental-health-crisis.jpeg?h=4480&iar=0&w=6720&rev=8d8c698221ab42a39fdab60ef02835d4&hash=84510F6BA435076CC38FCAA363745D5B",
+    route:"/student-login"
   },
   {
     role: "Valideyn",
     img: parentImage,
+    route:"/parent-login"
   },
   {
     role: "Müəllim",
     img: "https://www.venkateshwaragroup.in/vgiblog/wp-content/uploads/2022/09/Untitled-design-2-1-1200x1200.jpg",
+    route:"/teacher-login"
   },
   {
     role: "Direktor",
     img: "https://media.istockphoto.com/id/595158506/photo/portrait-of-solid-middle-aged-businessman.jpg?s=612x612&w=0&k=20&c=SIH-PNrQQL5WknmXcl17LLUiMBc3AwuaX5j0gTefyso=",
+    route:"director-login"
   },
 ];
 
@@ -130,7 +135,7 @@ const UserNavbar = () => {
                 transition={{ duration: 0.5 }}
               >
                 <img src={user.img} alt={user.role} className={styles.userImg} />
-                <button className={styles.roleBtn}>{user.role}</button>
+                <Link to={user.route} style={{textDecoration:"none"}} className={styles.roleBtn}>{user.role}</Link>
               </motion.div>
             ))}
           </div>
