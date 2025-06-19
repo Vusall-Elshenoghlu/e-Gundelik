@@ -33,6 +33,30 @@
   display: none;
 }
 
+.userName{
+  width: 90%;
+  height: 7vh;
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.userName div{
+  color: #000;
+  margin-bottom: 7px;
+}
+
+.userName h5{
+  color: #000;
+  margin-top: 5px;
+}
+
 /* Sadəcə mobil üçün görünəcək */
 @media (max-width: 768px) {
   .menuBtn {
