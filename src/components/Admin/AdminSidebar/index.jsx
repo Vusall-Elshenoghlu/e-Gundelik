@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaUserGraduate, FaChalkboardTeacher, FaUserFriends, FaUsers, FaHome, FaCog } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './AdminSidebar.module.css'; // module.css düz import
+import styles from './AdminSidebar.module.css'; 
 
 const AdminSidebar = () => {
   return (

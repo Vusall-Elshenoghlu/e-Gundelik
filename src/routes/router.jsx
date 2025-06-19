@@ -6,7 +6,6 @@ import ParentPortal from "../pages/Parent/ParentPortal";
 import ParentSidebar from "../pages/Parent/ParentSidebar";
 import StudentLogin from "../pages/Student/StudentLogin";
 import StudentPage from "../pages/Student/StudentPage";
-import StudentSidebar from "../pages/Student/StudentSidebar";
 import TeacherPanel from "../pages/Teacher/TeacherPanel";
 import TeacherSidebar from "../pages/Teacher/TeacherSidebar";
 import About from "../pages/User/About";
@@ -18,6 +17,11 @@ import UserRoot from "../pages/User/UserRoot";
 import TeacherLogin from "../pages/Teacher/TeacherLogin";
 import ParentLogin from "../pages/Parent/ParentLogin";
 import DirectorLogin from "../pages/Director/DirectorLogin";
+import StudentRoot from "../pages/Student/StudentRoot";
+import StudentMenu from "../pages/Student/StudentMenu";
+import StudentDiary from "../pages/Student/StudentDiary";
+import StudentLessons from "../pages/Student/StudentLessons";
+import StudentResults from "../pages/Student/StudentResults";
 
 export const ROUTES = [
     {
@@ -105,12 +109,25 @@ export const ROUTES = [
     },
     {
         path:"student-page",
-        element:<StudentPage/>,
+        element:<StudentRoot/>,
         children:[
             {
                 path:"",
-                element:<StudentSidebar/>
-            }
+                element:<StudentMenu/>
+            },
+            {
+                path:"diary",
+                element:<StudentDiary/>
+            },
+            {
+                path:"lessons",
+                element:<StudentLessons/>
+            },
+            {
+                path:"results",
+                element:<StudentResults/>
+            },
+
         ]
     }
 
