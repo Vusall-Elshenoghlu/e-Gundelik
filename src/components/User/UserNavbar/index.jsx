@@ -12,7 +12,7 @@ const users = [
   {
     role: "Şagird",
     img: "https://www.smarttech.com/-/media/project/smart/www/resources/blogs/hero-and-opengraph/article-addressing-the-student-mental-health-crisis.jpeg?h=4480&iar=0&w=6720&rev=8d8c698221ab42a39fdab60ef02835d4&hash=84510F6BA435076CC38FCAA363745D5B",
-    route:"/student-login"
+    route:"/student-page"
   },
   {
     role: "Valideyn",
