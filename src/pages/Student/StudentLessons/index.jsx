@@ -3,7 +3,7 @@ import React from 'react'
 function StudentLessons() {
   return (
     <div>
-      StudentLessons
+      StudentL
     </div>
   )
 }

@@ -1,0 +1,79 @@
+.card {
+  padding: 24px;
+  border-radius: 24px;
+  height: 100%;
+  color: white;
+}
+
+.purple {
+  background-color: #6c5ce7;
+  height: 300px;
+  width: 500px;
+}
+
+.green {
+  background-image: url(../../../assets/images/askTeacher.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 250px;
+}
+
+.darkPurple {
+  background-color: #5f27cd;
+}
+
+.pink {
+  background-image: url(../../../assets/images/askTeacher.png);
+  background-position: center;
+  background-size: cover;
+  height: 250px;
+}
+
+.imageCard {
+  border-radius: 24px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.continueBtn {
+  width: 180px;
+  height: 65px;
+  border-radius: 50px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  margin-left: auto;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ✅ Responsive üçün media query */
+@media (max-width: 768px) {
+  .continueBtn {
+    width: 50%;
+    height: 50px;
+    margin-left: 0;
+    margin-top: 10px;
+    font-size: 16px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .imageCard {
+    margin-top: 20px;
+  }
+}

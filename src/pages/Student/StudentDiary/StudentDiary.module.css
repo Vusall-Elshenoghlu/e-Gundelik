@@ -1,0 +1,331 @@
+/* StudentDiary.module.css */
+
+/* Ümumi Konteyner Stilləri */
+.container {
+    margin-left: 300px; /* Sidebar üçün yer */
+    padding: 24px;
+    background-color: #f9f9fb; /* Şəkildəki fon rəngi */
+    min-height: 100vh;
+    box-sizing: border-box; /* Paddingin ümumi ölçüyə daxil olmasını təmin edir */
+    transition: margin-left 0.3s ease; /* Responsivlik üçün hamar keçid */
+}
+
+.mainContent {
+    max-width: 1300px; /* Kontentin maksimum eni, şəkilə uyğun */
+    margin: 0 auto; /* Ortaya düzləndirmək üçün */
+}
+
+/* Header Stilləri */
+.header {
+    margin-bottom: 25px; /* Başlıqdan sonra boşluq */
+    padding: 5px; /* Kiçik padding hizalama üçün */
+}
+
+/* Görünüş Seçici (Toggle) Stilləri */
+.viewToggle {
+    display: flex;
+    gap: 8px; /* Düymələr arasında boşluq */
+    background-color: #e6e6ef; /* Toggle düymələrinin fonu */
+    border-radius: 20px;
+    padding: 4px; /* Toggle konteynerinin daxili boşluğu */
+}
+
+.toggleButton {
+    padding: 6px 16px;
+    font-size: 14px;
+    border-radius: 20px; /* Həb şəkli */
+    border: none;
+    background-color: transparent; /* Susmaya görə şəffaf */
+    color: #5d2eea; /* Aktiv olmayan düymənin mətni */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px; /* İkon və mətn arasında boşluq */
+    white-space: nowrap; /* Mətni bir sətirdə saxlayır */
+}
+
+.toggleButton:hover {
+    background-color: #d5d5e5;
+    color: #5d2eea;
+}
+
+.toggleButton.active {
+    background-color: #5d2eea; /* Aktiv düymənin fonu */
+    color: white; /* Aktiv düymənin mətni */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Aktiv vəziyyət üçün kölgə */
+}
+
+/* Tarix Naviqasiyası Stilləri */
+.dateNav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600; /* Tarix üçün daha qalın şrift */
+    font-size: 15px;
+    color: #333; /* Tarix mətni üçün tünd rəng */
+    background-color: #f1f3f7; /* Tarix bölməsinin fonu */
+    border-radius: 20px; /* Yuvarlaq künclər */
+    padding: 6px 15px; /* Tarix bölməsinin daxili boşluğu */
+    white-space: nowrap; /* Tarixin bir sətirdə qalmasını təmin edir */
+}
+
+.arrow {
+    background: none;
+    border: none;
+    font-size: 1.2rem; /* Böyük oxlar */
+    color: #5d2eea; /* Bənövşəyi ox rəngi */
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s ease;
+}
+
+.arrow:hover {
+    color: #4a1dd6; /* Hover zamanı tünd bənövşəyi */
+}
+
+.date {
+    white-space: nowrap; /* Tarixin bükülməsini qarşısını alır */
+}
+
+/* Cədvəl Stilləri */
+.tableCard {
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Daha qabarıq kölgə */
+    overflow: hidden; /* Yuvarlaq künclərin kontentə tətbiq olunmasını təmin edir */
+    /* height: 70vh; /* Bu dəyər dinamik məzmunla problem yarada bilər, ehtiyatlı olun */
+}
+
+.tableWrapper {
+    overflow-x: auto; /* Kiçik ekranlar üçün üfüqi scroll */
+    min-width: fit-content; /* Cədvəlin minimum eni kontentə uyğun olsun */
+}
+
+.tableGridHeader,
+.tableGridRow {
+    display: grid;
+    /* İlk sütun (gün/boş) sabit enə malikdir, digərləri çevikdir */
+    grid-template-columns: 160px repeat(7, minmax(100px, 1fr)); /* minmax daha yaxşı idarəetmə üçün */
+    align-items: stretch; /* Elementləri hüceyrə hündürlüyünə uzadır */
+}
+
+.tableGridHeader {
+    background-color: #f1f3f7;
+    font-weight: 600; /* Başlıqlar üçün daha qalın şrift */
+    font-size: 13px;
+    color: #666; /* Bozvari mətn rəngi */
+    /* height: 15vh; /* Bu dəyər də dinamik məzmunla problem yarada bilər */
+}
+
+.emptyCell {
+    padding: 12px 8px;
+    border-bottom: 1px solid #e0e0e0; /* Digər hüceyrələrə uyğun kənar xətt */
+    border-right: 1px solid #e0e0e0;
+    /* height: 15vh; /* Bu dəyər də dinamik məzmunla problem yarada bilər */
+}
+
+.hourCell {
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    white-space: nowrap; /* Saatların bükülməsini qarşısını alır */
+    display: flex; /* Şaquli mərkəzləşdirmək üçün */
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+.hourCell:last-child {
+    border-right: none; /* Sonuncu saat hüceyrəsi üçün sağ kənar xəttini aradan qaldırır */
+}
+
+
+.dayCell {
+    background-color: #f1f3f7;
+    padding: 12px;
+    font-weight: 500;
+    font-size: 13px;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    white-space: pre-line; /* Gün adlarında sətir sonu əlavə etməyə imkan verir */
+    color: #333;
+}
+.tableGridRow:last-child .dayCell {
+    border-bottom: none; /* Sonuncu sıranın gün hüceyrəsi üçün aşağı kənar xəttini aradan qaldırır */
+}
+
+
+.lessonCell {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    min-height: 60px; /* Dərs hüceyrələri üçün minimum hündürlük */
+    background-color: #fff;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    word-break: break-word; /* Uzun sözlərin bölünməsinə icazə verir */
+    /* height: 13.5vh; /* Bu dəyər də dinamik məzmunla problem yarada bilər */
+}
+
+.lessonCell:last-child {
+    border-right: none; /* Bir sıradakı sonuncu dərs hüceyrəsi üçün sağ kənar xəttini aradan qaldırır */
+}
+
+.tableGridRow:last-child .lessonCell {
+    border-bottom: none; /* Sonuncu sıradakı hüceyrələr üçün aşağı kənar xəttini aradan qaldırır */
+}
+
+/* Tam Responsivlik Düzəlişləri */
+
+/* Geniş ekranlar (1200px-dən aşağı) */
+@media (max-width: 1200px) {
+    .mainContent {
+        padding: 0 15px; /* Kiçik ekranlarda kənarlardan boşluq */
+    }
+
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 120px repeat(7, minmax(80px, 1fr)); /* Sütun enlərini azaldır */
+    }
+    .dayCell {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 11px;
+        padding: 6px;
+        min-height: 50px;
+    }
+    .dateNav {
+        font-size: 14px;
+        padding: 4px 10px;
+    }
+    .toggleButton {
+        font-size: 13px;
+        padding: 4px 12px;
+    }
+}
+
+/* Orta ekranlar (992px-dən aşağı) */
+@media (max-width: 992px) {
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 100px repeat(7, minmax(70px, 1fr)); /* Daha da kiçildir */
+    }
+    .dayCell {
+        font-size: 11px;
+        padding: 6px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 10px;
+        padding: 5px;
+        min-height: 45px;
+    }
+    .dateNav {
+        font-size: 13px;
+    }
+    .toggleButton {
+        font-size: 12px;
+    }
+}
+
+/* Kiçik ekranlar (768px-dən aşağı) - Tabletlandşaft və ya böyük telefonlar */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0; /* Sidebar yerini aradan qaldır */
+        padding: 15px;
+    }
+
+    .header {
+        flex-direction: column; /* Elementləri alt-alta düzür */
+        align-items: center; /* Mərkəzə düzləndirir */
+    }
+
+    .viewToggle {
+        width: auto; /* İçindəkilərə görə en */
+        justify-content: center;
+        margin-bottom: 10px; /* Alt boşluq */
+    }
+
+    .dateNav {
+        width: auto;
+        justify-content: center;
+    }
+
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 80px repeat(7, minmax(60px, 1fr)); /* Sütun enlərini daha da azaldır */
+    }
+    .dayCell {
+        font-size: 10px;
+        padding: 5px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 9px;
+        padding: 4px;
+        min-height: 40px;
+    }
+    .arrow {
+        font-size: 1rem;
+    }
+    .date {
+        font-size: 12px;
+    }
+    .toggleButton {
+        font-size: 11px;
+        padding: 3px 10px;
+    }
+}
+
+/* Çox kiçik ekranlar (576px-dən aşağı) - Mobil telefonlar */
+@media (max-width: 576px) {
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 70px repeat(7, minmax(50px, 1fr)); /* Ən kiçik enə qədər azalt */
+    }
+    .dayCell {
+        font-size: 9px;
+        padding: 4px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 8px;
+        padding: 3px;
+        min-height: 35px;
+    }
+    .dateNav {
+        font-size: 11px;
+    }
+    .toggleButton {
+        font-size: 10px;
+    }
+}
+
+/* Ən kiçik telefon ekranları (480px-dən aşağı) */
+@media (max-width: 480px) {
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 60px repeat(7, minmax(40px, 1fr)); /* Minimum en */
+    }
+    .dayCell {
+        font-size: 8px;
+        padding: 3px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 7px;
+        padding: 2px;
+        min-height: 30px;
+    }
+    .dateNav {
+        font-size: 10px;
+    }
+    .toggleButton {
+        font-size: 9px;
+    }
+}

@@ -35,7 +35,7 @@ function StudentSidebar() {
                         initial={{ x: 300 }}
                         animate={{ x: 0 }}
                         exit={{ x: 300 }}
-                        transition={{  stiffness: 80 }}
+                        transition={{ type: 'spring', stiffness: 80 }}
                     >
                         <div>
                             <h4 className='text-white text-center mb-4'>Student Sidebar</h4>
