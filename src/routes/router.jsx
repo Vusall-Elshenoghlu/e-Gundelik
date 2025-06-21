@@ -23,6 +23,17 @@ import StudentDiary from "../pages/Student/StudentDiary";
 import StudentLessons from "../pages/Student/StudentLessons";
 import StudentResults from "../pages/Student/StudentResults";
 import AdminTeachers from "../pages/Admin/AdminTeachers";
+import AddTeacher from "../pages/Admin/AddTeacher";
+import Parents from "../pages/Admin/Parents";
+import AddParent from "../pages/Admin/AddParent";
+import Director from "../pages/Admin/Director";
+import Students from "../pages/Admin/Students";
+import AddStudent from "../pages/Admin/AddStudent";
+import Subjects from "../pages/Admin/Subjects";
+import AddSubjects from "../pages/Admin/AddSubject";
+import AddSubject from "../pages/Admin/AddSubject";
+import Classes from "../pages/Admin/Classes";
+import AddClass from "../pages/Admin/AddClass";
 
 export const ROUTES = [
     {
@@ -72,15 +83,43 @@ export const ROUTES = [
             },
             {
                 path:"add-teacher",
-                element:<AdminDashboard/>
+                element:<AddTeacher/>
             },
             {
-                path:"",
-                element:<AdminDashboard/>
+                path:"parents",
+                element:<Parents/>
             },
             {
-                path:"",
-                element:<AdminDashboard/>
+                path:"add-parent",
+                element:<AddParent/>
+            },
+            {
+                path:"director",
+                element:<Director/>
+            },
+            {
+                path:"students",
+                element:<Students/>
+            },
+            {
+                path:"add-student",
+                element:<AddStudent/>
+            },
+            {
+                path:"subjects",
+                element:<Subjects/>
+            },
+            {
+                path:"add-subject",
+                element:<AddSubject/>
+            },
+            {
+                path:"classes",
+                element:<Classes/>
+            },
+            {
+                path:"add-class",
+                element:<AddClass/>
             },
 
         ]

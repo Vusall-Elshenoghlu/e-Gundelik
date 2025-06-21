@@ -7,7 +7,6 @@ function AdminRoot() {
     <>
        
       <AdminSidebar/>
-      <Outlet/>
     </>
   )
 }
