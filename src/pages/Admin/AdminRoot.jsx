@@ -1,12 +1,13 @@
 import React from 'react'
-import AdminNavbar from '../../components/Admin/AdminNavbar'
 import AdminSidebar from '../../components/Admin/AdminSidebar'
+import { Outlet } from 'react-router'
 
 function AdminRoot() {
   return (
     <>
-      <AdminNavbar/>  
+       
       <AdminSidebar/>
+      <Outlet/>
     </>
   )
 }

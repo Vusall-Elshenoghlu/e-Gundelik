@@ -22,6 +22,7 @@ import StudentMenu from "../pages/Student/StudentMenu";
 import StudentDiary from "../pages/Student/StudentDiary";
 import StudentLessons from "../pages/Student/StudentLessons";
 import StudentResults from "../pages/Student/StudentResults";
+import AdminTeachers from "../pages/Admin/AdminTeachers";
 
 export const ROUTES = [
     {
@@ -58,17 +59,30 @@ export const ROUTES = [
 
     },
     {
-        path:"/admin",
-        element:<AdminRoot/>
-    },
-    {
-        path:"/dashboard",
+        path:"/admin-panel",
         element:<AdminRoot/>,
         children:[
             {
-                path:'',
+                path:"",
                 element:<AdminDashboard/>
-            }
+            },
+            {
+                path:"teachers",
+                element:<AdminTeachers/>
+            },
+            {
+                path:"add-teacher",
+                element:<AdminDashboard/>
+            },
+            {
+                path:"",
+                element:<AdminDashboard/>
+            },
+            {
+                path:"",
+                element:<AdminDashboard/>
+            },
+
         ]
     },
     {

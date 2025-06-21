@@ -2,8 +2,9 @@ import React from 'react'
 
 function AdminDashboard() {
   return (
-    <div>
+    <div style={{backgroundColor:"aqua",height:"100vh"}}>
       AdminDashboard
+      sdldmxc;kmfskc;
     </div>
   )
 }

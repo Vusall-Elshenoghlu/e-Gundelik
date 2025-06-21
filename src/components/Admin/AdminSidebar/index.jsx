@@ -1,52 +1,66 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaUserGraduate, FaChalkboardTeacher, FaUserFriends, FaUsers, FaHome, FaCog } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './AdminSidebar.module.css'; 
+import { useState } from "react";
+import { ListGroup } from "react-bootstrap";
+import { FaTachometerAlt, FaCalendarAlt, FaUserMd, FaUsers } from "react-icons/fa";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Link, Outlet } from "react-router-dom";
 
 const AdminSidebar = () => {
+  const [active, setActive] = useState("Dashboard");
+
+  const menuItems = [
+    { name: "Dashboard", path: "", icon: <FaTachometerAlt className="me-2" /> },
+    { name: "Teachers", path: "teachers", icon: <FaCalendarAlt className="me-2" /> },
+    { name: "Add Teacher", path: "add-teacher", icon: <FaUserMd className="me-2" /> },
+    { name: "Parents", path: "parents", icon: <FaUsers className="me-2" /> },
+    { name: "Add Parent", path: "add-parent", icon: <FaUsers className="me-2" /> },
+    { name: "Director", path: "director", icon: <FaUsers className="me-2" /> },
+    { name: "Students", path: "students", icon: <FaUsers className="me-2" /> },
+    { name: "Add Student", path: "add-student", icon: <FaUsers className="me-2" /> },
+  ];
+
   return (
-    <motion.div 
-      className={`${styles.sidebar} d-flex flex-column p-3`}
-      initial={{ x: -200 }}
-      animate={{ x: 0 }}
-      transition={{ type: "spring", stiffness: 80 }}
-    >
-      <h4 className="text-white text-center mb-4">EduAdmin Panel</h4>
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item">
-          <Link to="/dashboard" className={`nav-link text-white ${styles.navLink}`}>
-            <FaHome className="me-2" /> Dashboard
-          </Link>
-        </li>
-        <li>
-          <Link to="/students" className={`nav-link text-white ${styles.navLink}`}>
-            <FaUserGraduate className="me-2" /> Students
-          </Link>
-        </li>
-        <li>
-          <Link to="/teachers" className={`nav-link text-white ${styles.navLink}`}>
-            <FaChalkboardTeacher className="me-2" /> Teachers
-          </Link>
-        </li>
-        <li>
-          <Link to="/parents" className={`nav-link text-white ${styles.navLink}`}>
-            <FaUserFriends className="me-2" /> Parents
-          </Link>
-        </li>
-        <li>
-          <Link to="/members" className={`nav-link text-white ${styles.navLink}`}>
-            <FaUsers className="me-2" /> Members
-          </Link>
-        </li>
-        <li>
-          <Link to="/settings" className={`nav-link text-white ${styles.navLink}`}>
-            <FaCog className="me-2" /> Settings
-          </Link>
-        </li>
-      </ul>
-    </motion.div>
+    <div className="d-flex">
+      <div
+        className="bg-light p-4 shadow-sm"
+        style={{
+          width: "260px",
+          position: "fixed",
+          top: "0",
+          left: "0",
+          bottom: "0",
+          height: "100vh",  
+          zIndex: "1000",
+        }}
+      >
+        <ListGroup className="gap-3">
+          {menuItems.map((item) => (
+            <Link
+              to={item.path}
+              key={item.name}
+              style={{ textDecoration: "none" }}
+              onClick={() => setActive(item.name)}
+            >
+              <ListGroup.Item
+                action
+                className={`d-flex align-items-center rounded py-2 px-3 border-0 ${active === item.name
+                  ? "bg-white shadow-sm border-start border-primary"
+                  : "bg-light"
+                  }`}
+                style={{ transition: "0.3s ease-in-out", cursor: "pointer" }}
+              >
+                {item.icon} <span className="fw-semibold">{item.name}</span>
+              </ListGroup.Item>
+            </Link>
+          ))}
+        </ListGroup>
+      </div>
+
+      <div style={{ marginLeft: "260px", height: "100vh" }}>
+        <div style={{ maxHeight: "100vh", overflowY: "auto" }}>
+          <Outlet />
+        </div>
+      </div>
+    </div>
   );
 };
 
