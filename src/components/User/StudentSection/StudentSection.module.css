@@ -26,7 +26,7 @@
 
 .darkPurple {
   background-image: url(../../../assets/images/studentSectionBook.jpg);
-  fill-opacity: inherit;
+  
   background-position: center;
   background-size:10cm;
   min-height: 250px;
