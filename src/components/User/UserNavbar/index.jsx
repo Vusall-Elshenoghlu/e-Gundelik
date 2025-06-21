@@ -68,7 +68,7 @@ const UserNavbar = () => {
             <a href="#guide">İstifadəçi təlimatı</a>
           </div>
 
-          <button className={styles.loginBtn}>Giriş</button>
+          <Link to={"/admin-panel"}><button className={styles.loginBtn}>Giriş</button></Link>
 
           <div className={styles.menuIcon} onClick={toggleMenu}>
             {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
