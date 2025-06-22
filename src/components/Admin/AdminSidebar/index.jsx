@@ -32,18 +32,19 @@ const AdminSidebar = () => {
     { name: "Fənn əlavə et", path: "add-subject", icon: <FaPlusCircle className="me-2" /> },
     { name: "Siniflər", path: "classes", icon: <FaLayerGroup className="me-2" /> },
     { name: "Sinif əlavə et", path: "add-class", icon: <FaPlusCircle className="me-2" /> },
-
+    { name: "Kitablar", path: "books", icon: <FaBook className="me-2" /> },
+    { name: "Kitab əlavə et", path: "add-book", icon: <FaPlusCircle className="me-2" /> },
   ];
 
   const handleLogout = () => {
-    // Burada istəsən tokenləri silə bilərsən və s.
+    // Token silmək və ya başqa çıxış əməliyyatı
     navigate("/admin-login");
   };
 
   return (
     <div className="d-flex">
       <div
-        className="bg-light d-flex flex-column justify-content-between p-4 shadow-sm"
+        className="bg-light d-flex flex-column p-4 shadow-sm"
         style={{
           width: "260px",
           position: "fixed",
@@ -54,7 +55,8 @@ const AdminSidebar = () => {
           zIndex: "1000",
         }}
       >
-        <div>
+        {/* Scroll olan menyu hissəsi */}
+        <div style={{ overflowY: "auto", maxHeight: "calc(100vh - 80px)" }}>
           <ListGroup className="gap-3">
             {menuItems.map((item) => (
               <Link
@@ -69,7 +71,7 @@ const AdminSidebar = () => {
                     ? "bg-white shadow-sm border-start border-primary"
                     : "bg-light"
                     }`}
-                  style={{ transition: "0.3s ease-in-out", cursor: "pointer", fontSize: "13px" }}
+                  style={{ transition: "0.3s ease-in-out", cursor: "pointer", fontSize: "15px" }}
                 >
                   {item.icon} <span className="fw-semibold">{item.name}</span>
                 </ListGroup.Item>
@@ -78,6 +80,7 @@ const AdminSidebar = () => {
           </ListGroup>
         </div>
 
+        {/* Sabit çıxış düyməsi */}
         <div className="mt-4">
           <ListGroup>
             <ListGroup.Item
@@ -92,6 +95,7 @@ const AdminSidebar = () => {
         </div>
       </div>
 
+      {/* Sağ tərəf kontent sahəsi */}
       <div style={{ marginLeft: "260px", height: "100vh" }}>
         <div style={{ minHeight: "100vh" }}>
           <Outlet />

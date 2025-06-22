@@ -23,8 +23,8 @@ const AddSubject = () => {
 
   const onSubmit = async (values, { setSubmitting, resetForm, setStatus }) => {
     try {
-      const response = await axios.post("http://localhost:3000/admin/add-subject", values);
-
+      const response = await axios.post('https://turansalimli-001-site1.ntempurl.com/api/Subject/CreateSubject', values);
+      console.log(response.data)
       if (response.data.success) {
         setStatus({ success: "Fənn uğurla əlavə olundu!" });
         resetForm();
@@ -32,8 +32,9 @@ const AddSubject = () => {
         setStatus({ error: response.data.message || "Xəta baş verdi" });
       }
     } catch (error) {
-      setStatus({ error: error.message || "Server xətası" });
-    }
+  console.log("Error response:", error.response); // burda cavabı göstər
+  setStatus({ error: error.response?.data?.message || error.message || "Server xətası" });
+}
     setSubmitting(false);
   };
 

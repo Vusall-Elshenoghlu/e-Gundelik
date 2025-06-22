@@ -34,6 +34,8 @@ import AddSubjects from "../pages/Admin/AddSubject";
 import AddSubject from "../pages/Admin/AddSubject";
 import Classes from "../pages/Admin/Classes";
 import AddClass from "../pages/Admin/AddClass";
+import AddBook from "../pages/Admin/AddBook";
+import Books from "../pages/Admin/Books";
 
 export const ROUTES = [
     {
@@ -120,6 +122,14 @@ export const ROUTES = [
             {
                 path:"add-class",
                 element:<AddClass/>
+            },
+            {
+                path:"books",
+                element:<Books/>
+            },
+            {
+                path:"add-book",
+                element:<AddBook/>
             },
 
         ]

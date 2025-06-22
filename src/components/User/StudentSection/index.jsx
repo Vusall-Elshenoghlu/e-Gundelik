@@ -56,7 +56,7 @@ const StudentSection = () => {
           <div className={styles.imageCard}>
             <img
               src={studentSection}
-              alt="Girl with laptop"
+              alt="boy with lupa"
               className={styles.image}
             />
           </div>
