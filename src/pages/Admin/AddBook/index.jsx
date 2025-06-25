@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
 const AddBook = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [subjects, setSubjects] = useState([]);
 
   const initialValues = {
     name: '',
@@ -13,21 +13,34 @@ const AddBook = () => {
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Book name is required'),
-    subjectId: Yup.string()
-      .uuid('Invalid Subject ID format')
-      .required('Subject ID is required'),
+    subjectId: Yup.string().required('Subject ID is required'),
   });
 
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const res = await axios.get('https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject');
+        setSubjects(res.data || []);
+      } catch (error) {
+        console.error("Fənnlər yüklənərkən xəta:", error);
+      }
+    };
+    fetchSubjects();
+  }, []);
+
   const handleSubmit = async (values, { resetForm }) => {
-    if (!selectedFile) {
+    const fileInput = document.querySelector('input[type="file"]');
+    const file = fileInput?.files[0];
+
+    if (!file) {
       alert("Please select a PDF file!");
       return;
     }
 
     const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("subjectId", values.subjectId);
-    formData.append("pdf", selectedFile); // Important: match backend param
+    formData.append('name', values.name);
+    formData.append('subjectId', values.subjectId);
+    formData.append('pdf', file);
 
     try {
       const response = await axios.post(
@@ -36,13 +49,11 @@ const AddBook = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            accept: '*/*',
           },
         }
       );
       alert("Book successfully created!");
       resetForm();
-      setSelectedFile(null);
     } catch (error) {
       console.error('Error uploading book:', error);
       alert('Failed to upload book.');
@@ -57,7 +68,7 @@ const AddBook = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue }) => (
+        {() => (
           <Form className="mt-4">
             <div className="mb-3">
               <label htmlFor="name" className="form-label">Book Name</label>
@@ -66,8 +77,15 @@ const AddBook = () => {
             </div>
 
             <div className="mb-3">
-              <label htmlFor="subjectId" className="form-label">Subject ID</label>
-              <Field name="subjectId" className="form-control" />
+              <label htmlFor="subjectId" className="form-label">Fənn seçin</label>
+              <Field as="select" name="subjectId" className="form-select">
+                <option value="">Fənn seçin...</option>
+                {subjects.map(subject => (
+                  <option key={subject.id || subject._id} value={subject.id || subject._id}>
+                    {subject.name}
+                  </option>
+                ))}
+              </Field>
               <ErrorMessage name="subjectId" component="div" className="text-danger" />
             </div>
 
@@ -77,9 +95,6 @@ const AddBook = () => {
                 type="file"
                 className="form-control"
                 accept="application/pdf"
-                onChange={(event) => {
-                  setSelectedFile(event.currentTarget.files[0]);
-                }}
               />
             </div>
 

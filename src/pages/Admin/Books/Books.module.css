@@ -1,0 +1,160 @@
+.container {
+  width: 100%;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #f9fbfd;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(13, 110, 253, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  margin-bottom: 32px;
+  font-weight: 700;
+  font-size: 2.25rem;
+  color: #0d6efd;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* 📖 Açıq kitab effekti */
+.classCard {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background: linear-gradient(to right, #fffbe6 50%, #ffffff 50%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  min-height: 200px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.classCard:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(13, 110, 253, 0.25);
+}
+
+/* 📘 Ortadakı qat effekti */
+.classCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: #ccc;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+
+/* Sol səhifə - kitab məlumatları */
+.leftPage {
+  flex: 1;
+  max-width: calc(100% - 80px); /* sağ səhifəni nəzərə alırıq */
+  padding: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.classHeader {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.className {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #212529;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;  /* ✅ lazım olsa sətir sındırılsın */
+  line-height: 1.3;
+}
+
+.classInfo {
+  font-size: 0.95rem;
+  color: #6c757d;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  word-break: break-word;
+  white-space: normal;
+  line-height: 1.3;
+}
+
+.pdfButton {
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  transition: background-color 0.2s ease;
+}
+
+.pdfButton:hover {
+  background: #dc3545;
+  color: #fff;
+}
+
+/* Sağ səhifə - Edit/Delete düymələri */
+.rightPage {
+  width: 80px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 12px;
+  z-index: 2;
+  user-select: none;
+}
+.icon {
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-size: 1.3rem;
+}
+
+.icon:hover {
+  transform: scale(1.2);
+}
+
+.modalTitle {
+  font-weight: 700;
+  color: #0d6efd;
+}
+
+.modalBody {
+  font-size: 1.1rem;
+  color: #212529;
+  line-height: 1.5;
+}
+
+.modalLabel {
+  font-weight: 600;
+  margin-right: 6px;
+  color: #495057;
+}
