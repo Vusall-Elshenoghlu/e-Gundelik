@@ -2,12 +2,8 @@ import { path } from "framer-motion/client";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import AdminLogin from "../pages/Admin/AdminLogin";
 import AdminRoot from "../pages/Admin/AdminRoot";
-import ParentPortal from "../pages/Parent/ParentPortal";
-import ParentSidebar from "../pages/Parent/ParentSidebar";
 import StudentLogin from "../pages/Student/StudentLogin";
 import StudentPage from "../pages/Student/StudentPage";
-import TeacherPanel from "../pages/Teacher/TeacherPanel";
-import TeacherSidebar from "../pages/Teacher/TeacherSidebar";
 import About from "../pages/User/About";
 import Contact from "../pages/User/Contact";
 import Home from "../pages/User/Home";
@@ -36,162 +32,201 @@ import Classes from "../pages/Admin/Classes";
 import AddClass from "../pages/Admin/AddClass";
 import AddBook from "../pages/Admin/AddBook";
 import Books from "../pages/Admin/Books";
+import ParentRoot from "../pages/Parent/ParentRoot";
+import ParentMenu from "../pages/Parent/ParentMenu";
+import ParentDiary from "../pages/Parent/ParentDiary";
+import TeacherRoot from "../pages/Teacher/TeacherRoot";
+import TeacherDashboard from "../pages/Teacher/TeacherDashboard";
+import TeacherDiary from "../pages/Teacher/TeacherDiary";
+import Lessons from "../pages/Teacher/Lessons";
+import AddLesson from "../pages/Teacher/AddLesson";
+import TeachersStudents from "../pages/Teacher/TeachersStudents";
 
 export const ROUTES = [
     {
-        path:"",
-        element:<UserRoot/>,
-        children:[
+        path: "",
+        element: <UserRoot />,
+        children: [
             {
-                path:"",
-                element:<Home/>
+                path: "",
+                element: <Home />
             },
             {
-                path:"about",
-                element:<About/>
+                path: "about",
+                element: <About />
             },
             {
-                path:"contact",
-                element:<Contact/>
+                path: "contact",
+                element: <Contact />
             },
             {
-                path:"user-profile",
-                element:<UserProfile/>
+                path: "user-profile",
+                element: <UserProfile />
             },
-            {
-                path:"*",
-                element:<NoPage/>
-            },
+
         ]
     },
     // deyisilecek
 
     {
-        path:"/admin",
-        element:<AdminLogin/>
+        path: "/admin",
+        element: <AdminLogin />
 
     },
     {
-        path:"/admin-panel",
-        element:<AdminRoot/>,
-        children:[
+        path: "/admin-panel",
+        element: <AdminRoot />,
+        children: [
             {
-                path:"",
-                element:<AdminDashboard/>
+                path: "",
+                element: <AdminDashboard />
             },
             {
-                path:"teachers",
-                element:<AdminTeachers/>
+                path: "teachers",
+                element: <AdminTeachers />
             },
             {
-                path:"add-teacher",
-                element:<AddTeacher/>
+                path: "add-teacher",
+                element: <AddTeacher />
             },
             {
-                path:"parents",
-                element:<Parents/>
+                path: "parents",
+                element: <Parents />
             },
             {
-                path:"add-parent",
-                element:<AddParent/>
+                path: "add-parent",
+                element: <AddParent />
             },
             {
-                path:"director",
-                element:<Director/>
+                path: "director",
+                element: <Director />
             },
             {
-                path:"students",
-                element:<Students/>
+                path: "students",
+                element: <Students />
             },
             {
-                path:"add-student",
-                element:<AddStudent/>
+                path: "add-student",
+                element: <AddStudent />
             },
             {
-                path:"subjects",
-                element:<Subjects/>
+                path: "subjects",
+                element: <Subjects />
             },
             {
-                path:"add-subject",
-                element:<AddSubject/>
+                path: "add-subject",
+                element: <AddSubject />
             },
             {
-                path:"classes",
-                element:<Classes/>
+                path: "classes",
+                element: <Classes />
             },
             {
-                path:"add-class",
-                element:<AddClass/>
+                path: "add-class",
+                element: <AddClass />
             },
             {
-                path:"books",
-                element:<Books/>
+                path: "books",
+                element: <Books />
             },
             {
-                path:"add-book",
-                element:<AddBook/>
+                path: "add-book",
+                element: <AddBook />
             },
 
         ]
     },
     {
-        path:"teacher-login",
-        element:<TeacherLogin/>
+        path: "teacher-login",
+        element: <TeacherLogin />
     },
     {
         path: "/teacher-panel",
-        element:<TeacherPanel/>,
-        children:[
+        element: <TeacherRoot />,
+        children: [
             {
-                path:"",
-                element:<TeacherSidebar/>
-            }
+                path: "",
+                element: <TeacherDashboard />
+            },
+            {
+                path: "diary",
+                element: <TeacherDiary />
+            },
+            {
+                path: "my-lessons",
+                element: <Lessons />
+            },
+            {
+                path: "add-lesson",
+                element: <AddLesson />
+            },
+            {
+                path: "students",
+                element: <TeachersStudents />
+            },
         ]
     },
     {
-        path:"parent-login",
-        element:<ParentLogin/>
+        path: "parent-login",
+        element: <ParentLogin />
     },
     {
-        path:"parent-portal",
-        element:<ParentPortal/>,
-        children:[
+        path: "parent-portal",
+        element: <ParentRoot />,
+        children: [
             {
-                path:"",
-                element:<ParentSidebar/>
-            }
+                path: "",
+                element: <ParentMenu />
+            },
+            {
+                path: "diary",
+                element: <ParentDiary />
+            },
+            // {
+            //     path:"lessons",
+            //     element:<ParentLessons/>
+            // },
+            // {
+            //     path:"results",
+            //     element:<ParentResults/>
+            // },
+
         ]
     },
     {
-        path:"director-login",
-        element:<DirectorLogin/>
+        path: "director-login",
+        element: <DirectorLogin />
     },
     {
-        path:"student-login",
-        element:<StudentLogin/>
+        path: "student-login",
+        element: <StudentLogin />
     },
     {
-        path:"student-page",
-        element:<StudentRoot/>,
-        children:[
+        path: "student-page",
+        element: <StudentRoot />,
+        children: [
             {
-                path:"",
-                element:<StudentMenu/>
+                path: "",
+                element: <StudentMenu />
             },
             {
-                path:"diary",
-                element:<StudentDiary/>
+                path: "diary",
+                element: <StudentDiary />
             },
             {
-                path:"lessons",
-                element:<StudentLessons/>
+                path: "lessons",
+                element: <StudentLessons />
             },
             {
-                path:"results",
-                element:<StudentResults/>
+                path: "results",
+                element: <StudentResults />
             },
 
         ]
-    }
+    },
+    {
+        path: "*",
+        element: <NoPage />
+    },
 
 ]

@@ -1,0 +1,314 @@
+/* ParentDiary.module.css */
+
+.container {
+    margin-left: 300px;
+    padding: 24px;
+    background-color: #f9f9fb;
+    min-height: 100vh;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease;
+}
+
+.mainContent {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 25px;
+    padding: 5px;
+}
+
+.viewToggle {
+    display: flex;
+    gap: 8px;
+    background-color: #e6e6ef;
+    border-radius: 20px;
+    padding: 4px;
+}
+
+.toggleButton {
+    padding: 6px 16px;
+    font-size: 14px;
+    border-radius: 20px;
+    border: none;
+    background-color: transparent;
+    color: #5d2eea;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.toggleButton:hover {
+    background-color: #d5d5e5;
+    color: #5d2eea;
+}
+
+.toggleButton.active {
+    background-color: #5d2eea;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dateNav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #333;
+    background-color: #f1f3f7;
+    border-radius: 20px;
+    padding: 6px 15px;
+    white-space: nowrap;
+}
+
+.arrow {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #5d2eea;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s ease;
+}
+
+.arrow:hover {
+    color: #4a1dd6;
+}
+
+.date {
+    white-space: nowrap;
+}
+
+.tableCard {
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    min-width: fit-content;
+}
+
+.tableGridHeader,
+.tableGridRow {
+    display: grid;
+    grid-template-columns: 160px repeat(7, minmax(100px, 1fr));
+    align-items: stretch;
+}
+
+.tableGridHeader {
+    background-color: #f1f3f7;
+    font-weight: 600;
+    font-size: 13px;
+    color: #666;
+}
+
+.emptyCell {
+    padding: 12px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+}
+
+.hourCell {
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.hourCell:last-child {
+    border-right: none;
+}
+
+.dayCell {
+    background-color: #f1f3f7;
+    padding: 12px;
+    font-weight: 500;
+    font-size: 13px;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    white-space: pre-line;
+    color: #333;
+}
+
+.tableGridRow:last-child .dayCell {
+    border-bottom: none;
+}
+
+.lessonCell {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    min-height: 60px;
+    background-color: #fff;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    word-break: break-word;
+}
+
+.lessonCell:last-child {
+    border-right: none;
+}
+
+.tableGridRow:last-child .lessonCell {
+    border-bottom: none;
+}
+
+@media (max-width: 1200px) {
+    .mainContent {
+        padding: 0 15px;
+    }
+
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 120px repeat(7, minmax(80px, 1fr));
+    }
+    .dayCell {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 11px;
+        padding: 6px;
+        min-height: 50px;
+    }
+    .dateNav {
+        font-size: 14px;
+        padding: 4px 10px;
+    }
+    .toggleButton {
+        font-size: 13px;
+        padding: 4px 12px;
+    }
+}
+
+@media (max-width: 992px) {
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 100px repeat(7, minmax(70px, 1fr));
+    }
+    .dayCell {
+        font-size: 11px;
+        padding: 6px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 10px;
+        padding: 5px;
+        min-height: 45px;
+    }
+    .dateNav {
+        font-size: 13px;
+    }
+    .toggleButton {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .viewToggle {
+        width: auto;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .dateNav {
+        width: auto;
+        justify-content: center;
+    }
+
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 80px repeat(7, minmax(60px, 1fr));
+    }
+    .dayCell {
+        font-size: 10px;
+        padding: 5px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 9px;
+        padding: 4px;
+        min-height: 40px;
+    }
+    .arrow {
+        font-size: 1rem;
+    }
+    .date {
+        font-size: 12px;
+    }
+    .toggleButton {
+        font-size: 11px;
+        padding: 3px 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 70px repeat(7, minmax(50px, 1fr));
+    }
+    .dayCell {
+        font-size: 9px;
+        padding: 4px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 8px;
+        padding: 3px;
+        min-height: 35px;
+    }
+    .dateNav {
+        font-size: 11px;
+    }
+    .toggleButton {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tableGridHeader,
+    .tableGridRow {
+        grid-template-columns: 60px repeat(7, minmax(40px, 1fr));
+    }
+    .dayCell {
+        font-size: 8px;
+        padding: 3px;
+    }
+    .hourCell, .lessonCell {
+        font-size: 7px;
+        padding: 2px;
+        min-height: 30px;
+    }
+    .dateNav {
+        font-size: 10px;
+    }
+    .toggleButton {
+        font-size: 9px;
+    }
+}

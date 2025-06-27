@@ -12,7 +12,7 @@
   margin-bottom: 32px;
   font-weight: 700;
   font-size: 2.25rem;
-  color: red;
+  color: #0d6efd;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -28,7 +28,7 @@
   background-color: #ffffff;
   padding: 24px 20px;
   border-radius: 20px;
-  box-shadow: 0 4px 10px red;
+  box-shadow: 0 4px 10px #0d6efd;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -53,7 +53,7 @@
 .className {
   font-size: 1.5rem;
   font-weight: 700;
-  color: red;
+  color: #0d6efd;
 }
 
 .classYear {

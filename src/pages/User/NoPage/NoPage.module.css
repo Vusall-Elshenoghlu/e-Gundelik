@@ -1,0 +1,121 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle at center, #a5b4fc 0%, #6366f1 50%, #4338ca 100%);
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+}
+
+.particles::before,
+.particles::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+  animation: float 8s ease-in-out infinite alternate;
+}
+
+.particles::before {
+  width: 400px;
+  height: 400px;
+  top: 10%;
+  left: 20%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.particles::after {
+  width: 300px;
+  height: 300px;
+  bottom: 15%;
+  right: 25%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(30px, -30px) scale(1.2);
+  }
+}
+
+.centerContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 1rem;
+  animation: fadeSlide 1.5s ease forwards;
+}
+
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.iconWrapper {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+  padding: 2rem;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  animation: pulse 3s infinite;
+}
+
+.icon {
+  font-size: 6rem;
+  color: #fff;
+}
+
+.title {
+  font-size: 7rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.text {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-block;
+  background: #fff;
+  color: #4f46e5;
+  font-weight: 700;
+  padding: 0.9rem 2.5rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  transition: background 0.4s, transform 0.3s;
+}
+
+.button:hover {
+  background: #e0e0e0;
+  transform: scale(1.08);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+}

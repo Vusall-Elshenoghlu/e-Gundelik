@@ -22,6 +22,7 @@ export default function Books() {
   const fetchBooks = async () => {
     try {
       const response = await axios.get(`${API_BASE}/GetAllBooks`);
+      console.log(response.data)
       setBooks(response.data);
     } catch (err) {
       console.error("Kitablar yüklənmədi:", err);
@@ -62,6 +63,29 @@ export default function Books() {
       }
     });
   };
+
+  const handleDownload = async (pdfUrl, fileName) => {
+    try {
+      const response = await fetch(pdfUrl, { mode: "cors" });
+      if (!response.ok) throw new Error("Fayl tapılmadı və ya server səhvi!");
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName || "file.pdf";
+      document.body.appendChild(a); // Firefox üçün lazımdır
+      a.click();
+      a.remove();
+
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Yükləmə xətası:", error);
+      alert("Fayl yüklənmədi!");
+    }
+  };
+
 
   const handleEditClick = (book) => {
     setEditForm({
@@ -124,11 +148,14 @@ export default function Books() {
                   <h3 className={styles.className}>{book.name}</h3>
                   <FaBookOpen className={styles.icon} />
                 </div>
-                <p className={styles.classInfo}>Mövzu: {book.subject?.name || "Yoxdur"}</p>
+                <p className={styles.classInfo}>Mövzu: <br /> {book.subject?.name || "Yoxdur"}</p>
                 {book.pdf && (
-                  <a href={book.pdf} target="_blank" rel="noreferrer" className={styles.pdfButton}>
+                  <button
+                    onClick={() => handleDownload(book.pdf, `${book.name}.pdf`)}
+                    className={styles.pdfButton}
+                  >
                     <FaFilePdf /> PDF
-                  </a>
+                  </button>
                 )}
               </div>
               <div className={styles.rightPage}>
