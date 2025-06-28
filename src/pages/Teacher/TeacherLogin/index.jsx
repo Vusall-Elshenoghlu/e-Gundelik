@@ -51,8 +51,8 @@ const TeacherLogin = () => {
         localStorage.setItem("refreshToken", response.data.refreshToken);
         localStorage.setItem("user", JSON.stringify(userData));
       } else {
-        sessionStorage.setItem("accessToken", token);
-        sessionStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("user", JSON.stringify(userData));
       }
       console.log(token)
 

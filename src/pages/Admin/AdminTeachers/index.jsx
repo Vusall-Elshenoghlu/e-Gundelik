@@ -1,11 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 
-function AdminTeachers() {
+const AdminTeachers = () => {
+  const [teachers, setTeachers] = useState([]);
+  const axiosAuth = useAxiosWithAuth();
+
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const res = await axiosAuth.get("/api/teachers"); // Token avtomatik gedir
+        setTeachers(res.data);
+      } catch (err) {
+        console.error("Error:", err);
+      }
+    };
+    fetchTeachers();
+  }, [axiosAuth]);
+
   return (
-    <div>
-      Admin teachers
-    </div>
-  )
-}
+    <ul>
+      {teachers.map((t) => (
+        <li key={t.id}>{t.name}</li>
+      ))}
+    </ul>
+  );
+};
 
-export default AdminTeachers
+export default AdminTeachers;

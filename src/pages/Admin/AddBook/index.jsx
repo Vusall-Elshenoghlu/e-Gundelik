@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useAxiosWithAuth } from '../../../hooks/UseAxiosWithAuth';
 
 const AddBook = () => {
   const [subjects, setSubjects] = useState([]);
-
+  const axiosAuth = useAxiosWithAuth()
   const initialValues = {
     name: '',
     subjectId: '',
@@ -43,7 +44,7 @@ const AddBook = () => {
     formData.append('pdf', file);
 
     try {
-      const response = await axios.post(
+      const response = await axiosAuth.post(
         'https://turansalimli-001-site1.ntempurl.com/api/Book/CreateBook',
         formData,
         {

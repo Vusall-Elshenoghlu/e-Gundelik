@@ -4,6 +4,7 @@ import styles from "./Books.module.css";
 import { FaEdit, FaTrash, FaBookOpen, FaFilePdf } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 
 const API_BASE = "https://turansalimli-001-site1.ntempurl.com/api/Book";
 
@@ -12,16 +13,18 @@ export default function Books() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const axiosAuth = useAxiosWithAuth()
   const [editForm, setEditForm] = useState({
     id: "",
     name: "",
     subjectId: "",
-    pdfFile: null, // Fayl obyektini saxlayırıq
+    pdfFile: null,
   });
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get(`${API_BASE}/GetAllBooks`);
+      const response = await axiosAuth.get(`${API_BASE}/GetAllBooks`);
+
       console.log(response.data)
       setBooks(response.data);
     } catch (err) {
@@ -29,13 +32,15 @@ export default function Books() {
     }
   };
 
+
   useEffect(() => {
     fetchBooks();
   }, []);
 
+
   const handleBookClick = async (book) => {
     try {
-      const res = await axios.get(`${API_BASE}/GetById/${book.id}`);
+      const res = await axiosAuth.get(`${API_BASE}/GetById/${book.id}`);
       setSelectedBook(res.data);
       setShowDetailModal(true);
     } catch (err) {
@@ -54,7 +59,7 @@ export default function Books() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${API_BASE}/DeleteBook/${book.id}`);
+          await axiosAuth.delete(`${API_BASE}/DeleteBook/${book.id}`);
           fetchBooks();
           Swal.fire("Silindi!", `"${book.name}" kitabı silindi.`, "success");
         } catch (err) {
@@ -64,27 +69,6 @@ export default function Books() {
     });
   };
 
-  const handleDownload = async (pdfUrl, fileName) => {
-    try {
-      const response = await fetch(pdfUrl, { mode: "cors" });
-      if (!response.ok) throw new Error("Fayl tapılmadı və ya server səhvi!");
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fileName || "file.pdf";
-      document.body.appendChild(a); // Firefox üçün lazımdır
-      a.click();
-      a.remove();
-
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Yükləmə xətası:", error);
-      alert("Fayl yüklənmədi!");
-    }
-  };
 
 
   const handleEditClick = (book) => {
@@ -119,7 +103,7 @@ export default function Books() {
     }
 
     try {
-      await axios.put(`${API_BASE}/UpdateBook`, formData, {
+      await axiosAuth.put(`${API_BASE}/UpdateBook`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       fetchBooks();
@@ -151,7 +135,7 @@ export default function Books() {
                 <p className={styles.classInfo}>Mövzu: <br /> {book.subject?.name || "Yoxdur"}</p>
                 {book.pdf && (
                   <button
-                    onClick={() => handleDownload(book.pdf, `${book.name}.pdf`)}
+                    onClick={() => window.open(book.pdf, "_blank")}
                     className={styles.pdfButton}
                   >
                     <FaFilePdf /> PDF
