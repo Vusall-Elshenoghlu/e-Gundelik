@@ -21,6 +21,8 @@ export default function Books() {
     pdfFile: null,
   });
 
+  console.log(localStorage);
+  
   const fetchBooks = async () => {
     try {
       const response = await axiosAuth.get(`${API_BASE}/GetAllBooks`);
@@ -59,6 +61,7 @@ export default function Books() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
+          console.log(book.id)
           await axiosAuth.delete(`${API_BASE}/DeleteBook/${book.id}`);
           fetchBooks();
           Swal.fire("Silindi!", `"${book.name}" kitabı silindi.`, "success");
@@ -76,7 +79,7 @@ export default function Books() {
       id: book.id,
       name: book.name,
       subjectId: book.subject?.id || "",
-      pdfFile: null, // Faylı boş qoyuruq, lazım olsa yüklənəcək
+      pdfFile: null, 
     });
     setShowEditModal(true);
   };

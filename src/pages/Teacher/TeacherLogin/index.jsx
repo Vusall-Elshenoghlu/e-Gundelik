@@ -17,7 +17,7 @@ const TeacherLogin = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   const { darkMode } = useContext(darkModeContext);
-  const { setUser } = useContext(AuthContext)
+  const { setUser, refreshToken, setRefreshToken, setAccessToken } = useContext(AuthContext)
 
 
   const handleSubmit = async (e) => {
@@ -44,17 +44,16 @@ const TeacherLogin = () => {
       };
       setUser(userData.name)
       console.log(userData.name)
-      console.log(userData)
-      console.log(userData.name)
-      if (rememberMe) {
-        localStorage.setItem("accessToken", token);
-        localStorage.setItem("refreshToken", response.data.refreshToken);
-        localStorage.setItem("user", JSON.stringify(userData));
-      } else {
-        localStorage.setItem("accessToken", token);
-        localStorage.setItem("user", JSON.stringify(userData));
-      }
+      setAccessToken(token)
+      setRefreshToken(response.data.refreshToken)
+      console.log(refreshToken)
+      localStorage.setItem("accessToken", token);
+      localStorage.setItem("user", JSON.stringify(userData));
       console.log(token)
+
+      if (rememberMe) {
+        localStorage.setItem("refreshToken", response.data.refreshToken);
+      }
 
       toast.success("Login successful!");
       if (userData.role === "Admin") {

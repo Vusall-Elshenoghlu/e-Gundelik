@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 export const useAxiosWithAuth = () => {
   const { accessToken, refreshAccessToken, logout } = useContext(AuthContext);
 
-  const axiosInstance = axios.create(); 
+  const axiosInstance = axios.create({}); 
 
   axiosInstance.interceptors.request.use(
     (config) => {
@@ -27,7 +27,7 @@ export const useAxiosWithAuth = () => {
           error.config.headers.Authorization = `Bearer ${newToken}`;
           return axiosInstance(error.config); 
         } else {
-          logout(); 
+          // logout(); 
         }
       }
       return Promise.reject(error);
