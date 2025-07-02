@@ -31,20 +31,19 @@ const AddTeacher = () => {
   });
 
   const handleSubmit = async (values, { resetForm }) => {
-    try {
-      if (values.imgUrl === "") {
-        values.imgUrl = null;
-      }
+    try {      const payload = {
+        ...values,
+        imgUrl: values.imgUrl === "" ? "" : values.imgUrl,
+        password: "",
+        confirmPassword: "",
+        childrenIds: [],
+        parentId: "",
+      };
 
-      values.password = "";
-      values.confirmPassword = "";
       const response = await axios.post(
-       "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-teacher",
-        values,
-        
+        "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-teacher",
+        payload
       );
-      console.log(values)
-      console.log(values.confirmPassword)
 
       alert("✅ Müəllim uğurla yaradıldı!");
       resetForm();
@@ -54,8 +53,9 @@ const AddTeacher = () => {
     }
   };
 
+
   return (
-    <Container className="mt-4" style={{height:"100vh",width:"130%",  display:"flex",justifyContent:"center",alignItems:"center"}}>
+    <Container className="mt-4" style={{ height: "100vh", width: "130%", display: "flex", justifyContent: "center", alignItems: "center" }}>
       <div className={styles.formContainer}>
         <h3 className={styles.title}>Yeni Müəllim Yarat</h3>
         <Formik
@@ -125,13 +125,7 @@ const AddTeacher = () => {
                   </BootstrapForm.Group>
                 </Col>
 
-                <Col md={12}>
-                  <BootstrapForm.Group className="mb-3">
-                    <BootstrapForm.Label className={styles.label}>Şəkil URL (isteğe bağlı)</BootstrapForm.Label>
-                    <Field name="imgUrl" className={`form-control ${styles.input}`} />
-                    <ErrorMessage name="imgUrl" component="div" className={styles.error} />
-                  </BootstrapForm.Group>
-                </Col>
+                
 
                 <Col md={12}>
                   <Button type="submit" className={`w-100 ${styles.submitBtn}`}>

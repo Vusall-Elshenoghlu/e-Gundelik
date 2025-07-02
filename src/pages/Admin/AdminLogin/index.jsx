@@ -3,17 +3,18 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
+import {jwtDecode} from 'jwt-decode';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().min(4, 'Too Short!').max(20, 'Too Long!').required('Required'),
+  emailOrUserName: Yup.string().required('Email or Username is required'),
+  password: Yup.string().min(4, 'Too Short!').max(20, 'Too Long!').required('Password is required'),
 });
 
-const AdminLogin = () => {
+const AdminLogin = ({ setUser, setAccessToken, setRefreshToken }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -21,70 +22,89 @@ const AdminLogin = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const response = await axios.post("https://turansalimli-001-site1.ntempurl.com/api/Auth/login", {
+        emailOrUserName: values.emailOrUserName,
+        password: values.password,
+        rememberMe: values.rememberMe,
+      });
+
+      const token = response.data.accessToken;
+      const decodeToken = jwtDecode(token);
+
+      const userData = {
+        userId: decodeToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"],
+        name: decodeToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
+        role: decodeToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+      };
+
+      if (userData.role !== "Admin") {
+        toast.error("Only admin can log in here.");
+        setSubmitting(false);
+        return;
+      }
+
+      setUser && setUser(userData.name);
+      setAccessToken && setAccessToken(token);
+      setRefreshToken && setRefreshToken(response.data.refreshToken);
+
+      localStorage.setItem("accessToken", token);
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      if (values.rememberMe) {
+        localStorage.setItem("refreshToken", response.data.refreshToken);
+      }
+
+      toast.success("Admin login successful!");
+      navigate("/admin-dashboard");
+
+    } catch (err) {
+      const errorData = err.response?.data;
+
+      if (errorData?.errors) {
+        Object.values(errorData.errors).forEach(errorArr => {
+          errorArr.forEach(msg => toast.error(msg));
+        });
+      } else if (errorData?.title) {
+        toast.error(errorData.title);
+      } else if (errorData?.Message) {
+        toast.error(errorData.Message);
+      } else {
+        toast.error("Unknown error occurred");
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-      <Helmet>
-        <title>
-          Admin-Login
-        </title>
-      </Helmet>
+      <Helmet><title>Admin Login</title></Helmet>
       <div className="card shadow-lg" style={{ width: '25rem' }}>
         <div className="card-body p-4">
           <h1 className="text-center mb-4">Admin Login</h1>
-
           <Formik
-            initialValues={{
-              email: '',
-              password: '',
-            }}
+            initialValues={{ emailOrUserName: '', password: '', rememberMe: false }}
             validationSchema={LoginSchema}
-            onSubmit={async (values, { setSubmitting, setErrors }) => {
-              try {
-                const response = await axios.post('http://localhost:3000/admin/login', values);
-
-                if (response.data.success) {
-                  localStorage.setItem('adminToken', response.data.token);
-                  toast.success('Login successful!');
-                  navigate('/dashboard');
-                } else {
-                  toast.error(response.data.message || 'Invalid credentials');
-                }
-              } catch (error) {
-                console.error('Error during login:', error);
-
-                if (error.response) {
-                  toast.error(error.response.data.message || 'An error occurred during login');
-                } else {
-                  toast.error('An error occurred during login');
-                }
-              } finally {
-                setSubmitting(false);
-              }
-            }}
+            onSubmit={handleSubmit}
           >
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
+                  <label className="form-label">Email or Username</label>
                   <Field
-                    id="email"
-                    name="email"
-                    type="email"
-                    className={`form-control ${errors.email && touched.email ? 'is-invalid' : ''}`}
+                    name="emailOrUserName"
+                    className={`form-control ${errors.emailOrUserName && touched.emailOrUserName ? 'is-invalid' : ''}`}
                   />
-                  {errors.email && touched.email ? (
-                    <div className="invalid-feedback">{errors.email}</div>
-                  ) : null}
+                  {errors.emailOrUserName && touched.emailOrUserName && (
+                    <div className="invalid-feedback">{errors.emailOrUserName}</div>
+                  )}
                 </div>
 
                 <div className="mb-3 position-relative">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
+                  <label className="form-label">Password</label>
                   <Field
-                    id="password"
                     name="password"
                     type={passwordVisible ? 'text' : 'password'}
                     className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
@@ -96,22 +116,20 @@ const AdminLogin = () => {
                   >
                     {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                   </div>
-                  {errors.password && touched.password ? (
+                  {errors.password && touched.password && (
                     <div className="invalid-feedback">{errors.password}</div>
-                  ) : null}
+                  )}
+                </div>
+
+                <div className="mb-3 form-check">
+                  <Field name="rememberMe" type="checkbox" className="form-check-input" id="rememberMe" />
+                  <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                 </div>
 
                 <div className="d-grid">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={isSubmitting}
-                  >
+                  <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
                     {isSubmitting ? 'Logging in...' : 'Login'}
                   </button>
-                  <div style={{ display: "flex", gap: "20px" }}>
-                    Doctor Login? <a href="/doctor">Doctor</a>
-                  </div>
                 </div>
               </Form>
             )}

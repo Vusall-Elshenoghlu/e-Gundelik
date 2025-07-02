@@ -1,0 +1,29 @@
+.pageWrapper {
+  margin-left: 300px; /* 300px-lik sidebar üçün */
+  padding: 2rem;
+  background-color: #f1f4f8;
+  min-height: 100vh;
+}
+
+.contentWrapper {
+  max-width: 900px;
+}
+
+.card {
+  background: #fff;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .pageWrapper {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+}

@@ -22,6 +22,11 @@ const TeacherLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log({
+      emailOrUserName,
+      password,
+      rememberMe
+    });
 
     try {
       const response = await axios.post("https://turansalimli-001-site1.ntempurl.com/api/Auth/login", {

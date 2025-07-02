@@ -8,7 +8,7 @@ const AdminTeachers = () => {
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
-        const res = await axiosAuth.get("/api/teachers"); // Token avtomatik gedir
+        const res = await axiosAuth.get("/api/teachers");
         setTeachers(res.data);
       } catch (err) {
         console.error("Error:", err);

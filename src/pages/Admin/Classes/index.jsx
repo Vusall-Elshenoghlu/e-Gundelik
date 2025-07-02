@@ -10,7 +10,6 @@ import {
 import Swal from "sweetalert2";
 import axios from "axios";
 
-// Backend API URL (öz backendinə uyğun dəyiş)
 const BASE_URL = 'https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass';
 
 export default function Classes() {
