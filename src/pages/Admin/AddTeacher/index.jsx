@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { Button, Container, Row, Col, Form as BootstrapForm } from "react-bootstrap";
 import styles from "./AddTeacher.module.css";
-
+import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 const AddTeacher = () => {
   const initialValues = {
     firstName: "",
@@ -19,6 +19,7 @@ const AddTeacher = () => {
     confirmPassword: null,
   };
 
+  const axiosAuth = useAxiosWithAuth()
   const validationSchema = Yup.object({
     firstName: Yup.string().required("Ad vacibdir"),
     lastName: Yup.string().required("Soyad vacibdir"),
@@ -40,10 +41,11 @@ const AddTeacher = () => {
         parentId: "",
       };
 
-      const response = await axios.post(
+      const response = await axiosAuth.post(
         "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-teacher",
         payload
       );
+      console.log(response.data)
 
       alert("✅ Müəllim uğurla yaradıldı!");
       resetForm();

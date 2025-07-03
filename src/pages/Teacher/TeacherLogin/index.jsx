@@ -18,6 +18,8 @@ const TeacherLogin = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(darkModeContext);
   const { setUser, refreshToken, setRefreshToken, setAccessToken } = useContext(AuthContext)
+  const [isFirstLogin, setIsFirstLogin] = useState(false);
+
 
 
   const handleSubmit = async (e) => {
@@ -61,7 +63,9 @@ const TeacherLogin = () => {
       }
 
       toast.success("Login successful!");
-      if (userData.role === "Admin") {
+      if (isFirstLogin) {
+        navigate("/update-password");
+      } else if (userData.role === "Admin") {
         navigate("/admin-dashboard");
       } else if (userData.role === "Teacher") {
         navigate("/teacher-panel");
@@ -148,7 +152,6 @@ const TeacherLogin = () => {
           </div>
 
 
-
           <div className={styles.rememberMeWrapper}>
             <input
               type="checkbox"
@@ -158,11 +161,23 @@ const TeacherLogin = () => {
             />
             <label htmlFor="rememberMe">Remember Me</label>
           </div>
+          <div className={styles.rememberMeWrapper}>
+            <input
+              type="checkbox"
+              id="firstLogin"
+              checked={isFirstLogin}
+              onChange={(e) => setIsFirstLogin(e.target.checked)}
+            />
+            <label htmlFor="firstLogin">I am logging in for the first time</label>
+          </div>
+
 
           <button type="submit" className={styles.loginButton}>
             Login
           </button>
-
+          <p className={styles.registerRedirect}>
+            <Link to="/forgot-password">Forgot your password?</Link>
+          </p>
           <p className={styles.registerRedirect}>
             Don't have an account? <Link to="/register">Register</Link>
           </p>

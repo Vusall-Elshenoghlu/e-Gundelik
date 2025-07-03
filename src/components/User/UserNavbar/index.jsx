@@ -12,12 +12,12 @@ const users = [
   {
     role: "Şagird",
     img: "https://www.smarttech.com/-/media/project/smart/www/resources/blogs/hero-and-opengraph/article-addressing-the-student-mental-health-crisis.jpeg?h=4480&iar=0&w=6720&rev=8d8c698221ab42a39fdab60ef02835d4&hash=84510F6BA435076CC38FCAA363745D5B",
-    route:"/student-page"
+    route:"/teacher-login"
   },
   {
     role: "Valideyn",
     img: parentImage,
-    route:"/parent-login"
+    route:"/teacher-login"
   },
   {
     role: "Müəllim",
@@ -27,7 +27,7 @@ const users = [
   {
     role: "Direktor",
     img: "https://media.istockphoto.com/id/595158506/photo/portrait-of-solid-middle-aged-businessman.jpg?s=612x612&w=0&k=20&c=SIH-PNrQQL5WknmXcl17LLUiMBc3AwuaX5j0gTefyso=",
-    route:"director-login"
+    route:"teacher-login"
   },
 ];
 
@@ -68,7 +68,7 @@ const UserNavbar = () => {
             <a href="#guide">İstifadəçi təlimatı</a>
           </div>
 
-          <Link to={"/admin-panel"}><button className={styles.loginBtn}>Giriş</button></Link>
+          <Link to={"/teacher-login"}><button className={styles.loginBtn}>Giriş</button></Link>
 
           <div className={styles.menuIcon} onClick={toggleMenu}>
             {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}

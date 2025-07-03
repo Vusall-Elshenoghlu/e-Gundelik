@@ -41,6 +41,8 @@ import TeacherDiary from "../pages/Teacher/TeacherDiary";
 import Lessons from "../pages/Teacher/Lessons";
 import AddLesson from "../pages/Teacher/AddLesson";
 import TeachersStudents from "../pages/Teacher/TeachersStudents";
+import ForgotPassword from "../pages/Teacher/ForgotPassword";
+import UpdatePassword from "../pages/Teacher/UpdatePassword";
 
 export const ROUTES = [
     {
@@ -227,6 +229,14 @@ export const ROUTES = [
     {
         path: "*",
         element: <NoPage />
+    },
+    {
+        path: "/forgot-password",
+        element: <ForgotPassword />
+    },
+    {
+        path: "/update-password",
+        element: <UpdatePassword />
     },
 
 ]

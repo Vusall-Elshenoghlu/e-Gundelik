@@ -49,15 +49,24 @@ export const AuthProvider = ({ children }) => {
         try {
             
             console.log("aaa");
-            console.log(refreshToken)
-            const res = await axios.post(`https://turansalimli-001-site1.ntempurl.com/api/Token?refreshToken=${refreshToken}`);
+            console.log("old refresh token: ", refreshToken)
+            const res = await axios.post(`https://turansalimli-001-site1.ntempurl.com/api/Token?refreshToken=${encodeURIComponent(refreshToken)}`);
+
+
+            console.log(res)
             console.log(res.data)
             console.log("bbb");
 
             const newAccessToken = res.data.accessToken;
+            const newRefreshToken = res.data.refreshToken
             setAccessToken(newAccessToken);
+            setRefreshToken(newRefreshToken);
+            
+            localStorage.setItem("refreshToken", newRefreshToken);
             localStorage.setItem("accessToken", newAccessToken);
             console.log("new Acceess Token: ", newAccessToken)
+            console.log("new refresh Token: ", newRefreshToken)
+            console.log("new refresh Token: ", refreshToken)
             return newAccessToken;
         } catch (err) {
             console.error("Refresh token failed", err.message);

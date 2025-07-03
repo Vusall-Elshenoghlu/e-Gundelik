@@ -4,6 +4,7 @@ import styles from "./Subjects.module.css";
 import { FaBookOpen, FaEdit, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 
 const BASE_URL = "https://turansalimli-001-site1.ntempurl.com/api/Subject";
 
@@ -12,17 +13,25 @@ export default function Subject() {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const axiosAuth = useAxiosWithAuth()
   const [editForm, setEditForm] = useState({
     id: "",
     name: "",
     description: "",
   });
 
+
+  const fetshSubjects = async () => {
+    try {
+      const response = await axiosAuth.get(`${BASE_URL}/GetAllSubject`)
+      console.log(response.data)
+      setSubjects(response.data)
+    } catch (err) {
+      console.error("Fenler yüklənmədi:", err);
+    }
+  }
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/GetAllSubject`)
-      .then((res) => setSubjects(res.data))
-      .catch((err) => console.error("Fənləri yükləmək mümkün olmadı:", err));
+    fetshSubjects()
   }, []);
 
   const handleSubjectClick = (subject) => {
@@ -61,7 +70,7 @@ export default function Subject() {
       cancelButtonText: "Ləğv et",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`${BASE_URL}/DeleteSubject`, {
+        axiosAuth.delete(`${BASE_URL}/DeleteSubject`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -86,15 +95,17 @@ export default function Subject() {
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    axios
+    axiosAuth
       .put(`${BASE_URL}/UpdateSubject`, editForm)
       .then((res) => {
+        const updatedSubject = { ...res.data, id: editForm.id }; // id-ni əlavə et əgər backend atmırsa
         setSubjects((prev) =>
-          prev.map((s) => (s.id === editForm.id ? res.data : s))
+          prev.map((s) => (s.id === editForm.id ? updatedSubject : s))
         );
         setShowEditModal(false);
         Swal.fire("Uğurlu!", `"${editForm.name}" fənni yeniləndi.`, "success");
       })
+
       .catch((err) => {
         console.error("Yeniləmə zamanı xəta:", err);
         Swal.fire("Xəta!", "Yeniləmə zamanı problem oldu.", "error");
@@ -119,9 +130,8 @@ export default function Subject() {
               </div>
 
               <p className={styles.classYear}>
-                <strong>ID:</strong> {subject.id.slice(0, 6)}...
+                <strong>ID:</strong> {subject.id ? subject.id.slice(0, 6) + "..." : "Yoxdur"}
               </p>
-
               <div className="d-flex justify-content-end gap-3 mt-3">
                 <FaEdit
                   size={20}

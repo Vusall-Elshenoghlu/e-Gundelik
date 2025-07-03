@@ -57,7 +57,7 @@ const AdminLogin = ({ setUser, setAccessToken, setRefreshToken }) => {
       }
 
       toast.success("Admin login successful!");
-      navigate("/admin-dashboard");
+      navigate("/admin-panel");
 
     } catch (err) {
       const errorData = err.response?.data;
