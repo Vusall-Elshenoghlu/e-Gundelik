@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
-import bananaImage from "../Frontend/src/assets/images/banana.png"
-import appleImage from "../Frontend/src/assets/images/apple.png"
+
 export default defineConfig({
   plugins: [
     react(),
@@ -29,15 +28,23 @@ export default defineConfig({
           {
             src: 'icons/icon-192x192.png',
             sizes: '192x192',
-            type: {bananaImage}
+            type: 'image/png'  // Düzgün MIME type
           },
           {
             src: 'icons/icon-512x512.png',
             sizes: '512x512',
-            type:{appleImage}
+            type: 'image/png'  // Düzgün MIME type
           }
         ]
       }
     })
-  ]
+  ],
+  server: {
+    port: 5173,
+    open: true
+  },
+  build: {
+    outDir: 'dist'
+  },
+  base: '/'
 })
