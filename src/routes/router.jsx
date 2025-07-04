@@ -45,6 +45,7 @@ import ForgotPassword from "../pages/Teacher/ForgotPassword";
 import UpdatePassword from "../pages/Teacher/UpdatePassword";
 import MemoryCardGame from "../components/User/MemoryCardGame";
 import ViewLesson from "../pages/Teacher/ViewLesson";
+import ResetPassword from "../pages/Teacher/ResetPassword";
 
 export const ROUTES = [
     {
@@ -235,6 +236,10 @@ export const ROUTES = [
     {
         path: "/forgot-password",
         element: <ForgotPassword />
+    },
+    {
+        path: "/reset-password",
+        element: <ResetPassword />
     },
     {
         path: "/update-password",
