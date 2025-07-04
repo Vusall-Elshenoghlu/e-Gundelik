@@ -3,21 +3,37 @@ import { useEffect, useState } from "react"
 import { Container, Button, Modal } from "react-bootstrap"
 import { motion, AnimatePresence } from "framer-motion"
 import styles from "./MemoryCardGame.module.css"
-
+import appleImage from "../../../assets/images/apple.png"
+import bananaImage from "../../../assets/images/banana.png"
+import bottleImage from "../../../assets/images/bottle.png"
+import grapeImage from "../../../assets/images/grape.png"
+import cornImage from "../../../assets/images/corn.png"
+import iceCreamImage from "../../../assets/images/ice-cream.png"
+import iceCream2Image from "../../../assets/images/ice-cream2.png"
+import lollipopImage from "../../../assets/images/lollipop.png"
+import mixImage from "../../../assets/images/mix.png"
+import peachImage from "../../../assets/images/peach.png"
+import pineappleImage from "../../../assets/images/pinapple.png"  
+import strawberryImage from "../../../assets/images/strawberry.png"
+import waterImage from "../../../assets/images/water.png"
+import watermelonImage from "../../../assets/images/watermelon.png"
 const cardImages = [
-  { src: "https://cdn-icons-png.flaticon.com/512/590/590685.png", name: "apple" },
-  { src: "https://cdn-icons-png.flaticon.com/512/590/590682.png", name: "banana" },
-  { src: "https://cdn-icons-png.flaticon.com/512/590/590684.png", name: "grape" },
-  { src: "https://cdn-icons-png.flaticon.com/512/590/590688.png", name: "lemon" },
-  { src: "https://cdn-icons-png.flaticon.com/512/590/590686.png", name: "peach" },
-  { src: "https://cdn-icons-png.flaticon.com/512/590/590683.png", name: "watermelon" },
-  { src: "https://cdn-icons-png.flaticon.com/512/415/415733.png", name: "cherry" },
-  { src: "https://cdn-icons-png.flaticon.com/512/415/415749.png", name: "strawberry" },
-  { src: "https://cdn-icons-png.flaticon.com/512/415/415726.png", name: "pineapple" },
-  { src: "https://cdn-icons-png.flaticon.com/512/415/415736.png", name: "kiwi" },
-  { src: "https://cdn-icons-png.flaticon.com/512/415/415755.png", name: "blueberry" },
-  { src: "https://cdn-icons-png.flaticon.com/512/415/415739.png", name: "orange" },
+  { src: appleImage, name: "apple" },
+  { src: bananaImage, name: "banana" },
+  { src: bottleImage, name: "bottle" },
+  { src: grapeImage, name: "grape" },
+  { src: cornImage, name: "corn" },
+  { src: iceCreamImage, name: "ice-cream" },
+  { src: iceCream2Image, name: "ice-cream2" },
+  { src: lollipopImage, name: "lollipop" },
+  { src: mixImage, name: "mix" },
+  { src: peachImage, name: "peach" },
+  { src: pineappleImage, name: "pineapple" },
+  { src: strawberryImage, name: "strawberry" },
+  { src: waterImage, name: "water" },
+  { src: watermelonImage, name: "watermelon" },
 ]
+
 
 const Card = ({ card, onClick, isFlipped, isDisabled }) => {
   const handleClick = () => {

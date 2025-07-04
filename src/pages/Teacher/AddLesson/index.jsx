@@ -51,7 +51,7 @@ const AddLesson = () => {
         formData.append("Video", videoFile);
       }
 
-      await axios.post("http://localhost:5000/api/lessons", formData, {
+      await axios.post("http://turansalimli-001-site1.ntempurl.com/api/Lesson/CreateLesson", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

@@ -44,6 +44,7 @@ import TeachersStudents from "../pages/Teacher/TeachersStudents";
 import ForgotPassword from "../pages/Teacher/ForgotPassword";
 import UpdatePassword from "../pages/Teacher/UpdatePassword";
 import MemoryCardGame from "../components/User/MemoryCardGame";
+import ViewLesson from "../pages/Teacher/ViewLesson";
 
 export const ROUTES = [
     {
@@ -157,7 +158,7 @@ export const ROUTES = [
             },
             {
                 path: "my-lessons",
-                element: <Lessons />
+                element: <ViewLesson />
             },
             {
                 path: "add-lesson",
