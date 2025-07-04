@@ -43,6 +43,7 @@ import AddLesson from "../pages/Teacher/AddLesson";
 import TeachersStudents from "../pages/Teacher/TeachersStudents";
 import ForgotPassword from "../pages/Teacher/ForgotPassword";
 import UpdatePassword from "../pages/Teacher/UpdatePassword";
+import MemoryCardGame from "../components/User/MemoryCardGame";
 
 export const ROUTES = [
     {
@@ -237,6 +238,10 @@ export const ROUTES = [
     {
         path: "/update-password",
         element: <UpdatePassword />
+    },
+    {
+        path: "/card-game",
+        element: <MemoryCardGame />
     },
 
 ]

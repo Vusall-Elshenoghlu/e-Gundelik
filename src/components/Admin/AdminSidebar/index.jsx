@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ListGroup } from "react-bootstrap";
+import Swal from "sweetalert2"
 import {
   FaTachometerAlt,
   FaUserTie,
@@ -14,11 +15,12 @@ import {
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
 
 const AdminSidebar = () => {
   const [active, setActive] = useState("İdarə paneli");
   const navigate = useNavigate();
-
+  const { logout } = useContext(AuthContext)
   const menuItems = [
     { name: "İdarə paneli", path: "", icon: <FaTachometerAlt className="me-2" /> },
     { name: "Müəllimlər", path: "teachers", icon: <FaChalkboardTeacher className="me-2" /> },
@@ -36,10 +38,24 @@ const AdminSidebar = () => {
     { name: "Kitab əlavə et", path: "add-book", icon: <FaPlusCircle className="me-2" /> },
   ];
 
-  const handleLogout = () => {
-    // Token silmək və ya başqa çıxış əməliyyatı
-    navigate("/admin-login");
+  const handleLogoutClick = () => {
+    Swal.fire({
+      title: "Əminsiniz?",
+      text: "Hesabdan çıxmaq istədiyinizə əminsiniz?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Bəli, çıx!",
+      cancelButtonText: "İmtina",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        navigate("/admin");
+      }
+    });
   };
+
 
   return (
     <div className="d-flex">
@@ -85,7 +101,7 @@ const AdminSidebar = () => {
           <ListGroup>
             <ListGroup.Item
               action
-              onClick={handleLogout}
+              onClick={handleLogoutClick}
               className="d-flex align-items-center rounded py-2 px-3 border-0 bg-light text-danger"
               style={{ cursor: "pointer", transition: "0.3s ease-in-out" }}
             >

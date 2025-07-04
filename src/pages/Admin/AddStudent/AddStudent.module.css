@@ -1,0 +1,218 @@
+.pageWrapper {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 300;
+}
+
+.formCard {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  background: white;
+}
+
+.cardBody {
+  padding: 3rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  border: 2px solid #e9ecef !important;
+  border-radius: 12px !important;
+  padding: 0.875rem 1.25rem !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.input:focus {
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15) !important;
+  transform: translateY(-1px);
+}
+
+.input:hover {
+  border-color: #d1d5db !important;
+}
+
+.inputError {
+  border-color: #dc3545 !important;
+}
+
+.inputError:focus {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15) !important;
+}
+
+.textarea {
+  resize: vertical !important;
+  min-height: 120px !important;
+}
+
+.errorText {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.errorText::before {
+  content: "⚠️";
+  margin-right: 0.5rem;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  gap: 1rem;
+}
+
+.submitButton {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 1rem 2.5rem !important;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
+  min-width: 200px;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4) !important;
+  background: linear-gradient(135deg, #218838 0%, #1ea080 100%) !important;
+}
+
+.submitButton:active {
+  transform: translateY(0) !important;
+}
+
+.submitButton:disabled {
+  opacity: 0.7 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding: 1rem 0;
+  }
+
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .cardBody {
+    padding: 2rem 1.5rem;
+  }
+
+  .buttonContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .submitButton {
+    width: 100% !important;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardBody {
+    padding: 1.5rem 1rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .input {
+    padding: 0.75rem 1rem !important;
+  }
+}
+
+/* Custom scrollbar for textarea */
+.textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.textarea::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.submitButton:disabled {
+  animation: pulse 1.5s ease-in-out infinite;
+}

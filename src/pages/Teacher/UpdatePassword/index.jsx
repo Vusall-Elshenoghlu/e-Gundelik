@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 import { Container, Row, Col, Form as RBForm, Button, InputGroup, Card, Alert, Spinner } from "react-bootstrap"
 import { FaEye, FaEyeSlash, FaLock, FaShieldAlt } from "react-icons/fa"
 import { motion, AnimatePresence } from "framer-motion"
+import { AuthContext } from "../../../context/AuthContext"
+import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth"
 
 const UpdatePassword = () => {
   const navigate = useNavigate()
@@ -15,7 +17,13 @@ const UpdatePassword = () => {
   const [showNew, setShowNew] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [error, setError] = useState("")
+  const [successfullyUpdated, setSuccessfullyUpdated] = useState(false);
+
   const [success, setSuccess] = useState(false)
+  const { user } = useContext(AuthContext)
+  console.log(user)
+  console.log(user.role)
+  const axiosAuth = useAxiosWithAuth()
 
   const initialValues = {
     currentPassword: "",
@@ -40,24 +48,39 @@ const UpdatePassword = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setError("")
-      await axios.post("https://turansalimli-001-site1.ntempurl.com/api/Auth/update-password", values, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      await axiosAuth.post("https://turansalimli-001-site1.ntempurl.com/api/Auth/update-password", values,)
       setSuccess(true)
       localStorage.removeItem("firstLogin")
 
       // Delay navigation to show success message
-      setTimeout(() => {
-        navigate("/dashboard")
-      }, 2000)
+      setSuccessfullyUpdated(true)
     } catch (error) {
       setError("Password update failed. Please check your current password and try again.")
     }
     setSubmitting(false)
   }
 
+  useEffect(() => {
+    if (
+      successfullyUpdated &&
+      user &&
+      typeof user === "object" &&
+      user.role
+    ) {
+
+      if (user.role === "Admin") {
+        navigate("/admin-dashboard");
+      } else if (user.role === "Teacher") {
+        navigate("/teacher-panel");
+      } else if (user.role === "Parent") {
+        navigate("/parent-portal");
+      } else if (user.role === "Student") {
+        navigate("/student-page");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [successfullyUpdated, user]);
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -156,9 +179,8 @@ const UpdatePassword = () => {
                                   {...field}
                                   type={showCurrent ? "text" : "password"}
                                   placeholder="Enter your current password"
-                                  className={`rounded-start-3 border-end-0 ${
-                                    errors.currentPassword && touched.currentPassword ? "is-invalid" : ""
-                                  }`}
+                                  className={`rounded-start-3 border-end-0 ${errors.currentPassword && touched.currentPassword ? "is-invalid" : ""
+                                    }`}
                                   style={{
                                     padding: "12px 16px",
                                     fontSize: "15px",
@@ -205,9 +227,8 @@ const UpdatePassword = () => {
                                   {...field}
                                   type={showNew ? "text" : "password"}
                                   placeholder="Enter your new password"
-                                  className={`rounded-start-3 border-end-0 ${
-                                    errors.newPassword && touched.newPassword ? "is-invalid" : ""
-                                  }`}
+                                  className={`rounded-start-3 border-end-0 ${errors.newPassword && touched.newPassword ? "is-invalid" : ""
+                                    }`}
                                   style={{
                                     padding: "12px 16px",
                                     fontSize: "15px",
@@ -254,9 +275,8 @@ const UpdatePassword = () => {
                                   {...field}
                                   type={showConfirm ? "text" : "password"}
                                   placeholder="Confirm your new password"
-                                  className={`rounded-start-3 border-end-0 ${
-                                    errors.confirmPassword && touched.confirmPassword ? "is-invalid" : ""
-                                  }`}
+                                  className={`rounded-start-3 border-end-0 ${errors.confirmPassword && touched.confirmPassword ? "is-invalid" : ""
+                                    }`}
                                   style={{
                                     padding: "12px 16px",
                                     fontSize: "15px",

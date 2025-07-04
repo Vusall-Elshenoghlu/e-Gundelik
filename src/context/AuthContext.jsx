@@ -25,17 +25,17 @@ export const AuthProvider = ({ children }) => {
         return null;
     });
 
-    // useEffect(() => {
-    //     const storedUser = localStorage.getItem("user");
-    //     const storedAccessToken = localStorage.getItem("accessToken")
-    //     const storedRefreshToken = localStorage.getItem("refreshToken")
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        const storedAccessToken = localStorage.getItem("accessToken")
+        const storedRefreshToken = localStorage.getItem("refreshToken")
 
-    //     if (storedUser && storedAccessToken && storedRefreshToken) {
-    //         setUser(JSON.parse(storedUser));
-    //         setAccessToken(storedAccessToken)
-    //         setRefreshToken(storedRefreshToken)
-    //     }
-    // }, []);
+        if (storedUser && storedAccessToken && storedRefreshToken) {
+            setUser(JSON.parse(storedUser));
+            setAccessToken(storedAccessToken)
+            setRefreshToken(storedRefreshToken)
+        }
+    }, []);
 
 
     const refreshAccessToken = async () => {

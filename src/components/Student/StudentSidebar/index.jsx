@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom' // düzəliş etdin
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./StudentSidebar.module.css"
 import { FaBars, FaBook, FaHome, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
+import { AuthContext } from '../../../context/AuthContext'
 
 
 function StudentSidebar() {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
-
+    const {user} = useContext(AuthContext)
     useEffect(() => {
         const handleResize = () => {
             setIsOpen(window.innerWidth > 768);
@@ -69,7 +70,7 @@ function StudentSidebar() {
                             </Link>
                             <div className={`text-white mt-2 ${styles.userName}`}>
                                 <div><FaUser/></div>
-                                <h5>Vusal Huseynli</h5>
+                                <h5>{user.name}</h5>
                             </div>
                         </div>
                     </motion.div>

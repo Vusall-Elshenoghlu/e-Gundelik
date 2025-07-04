@@ -8,6 +8,7 @@ import { AuthContext } from '../../../context/AuthContext'
 function TeacherSidebar() {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
     const {user} = useContext(AuthContext)
+    console.log(user.name)
 
     useEffect(() => {
         const handleResize = () => {
