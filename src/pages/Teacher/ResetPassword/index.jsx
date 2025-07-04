@@ -10,9 +10,11 @@ import styles from './ResetPassword.module.css';
 
 function ResetPassword() {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [message, setMessage] = useState("");
+
     const validationSchema = Yup.object({
         password: Yup.string()
             .min(6, 'Password must be at least 6 characters')
@@ -24,6 +26,9 @@ function ResetPassword() {
 
     const email = searchParams.get("email");
     const token = searchParams.get("token");
+
+    console.log("Email:", email);
+    console.log("Token:", token);
 
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
@@ -41,10 +46,12 @@ function ResetPassword() {
                 navigate("/login");
             }
         } catch (error) {
+            console.error(error.response?.data || error.message);
             setMessage(error.response?.data?.message || "Something went wrong.");
         }
         setSubmitting(false);
     };
+
     return (
         <div className={styles.resetPasswordWrapper}>
             <Helmet>
