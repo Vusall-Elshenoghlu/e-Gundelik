@@ -6,7 +6,6 @@ import parentSection from '../../../assets/images/parentSection.jpg';
 function ParentSection() {
   return (
     <Container className="my-5">
-      {/* Üst hissə: Başlıq və Davam et düyməsi */}
       <Row className="justify-content-between align-items-center mb-4">
         <Col xs={12} md="auto">
           <h2 className={styles.title}>Valideynlər üçün giriş</h2>
@@ -18,9 +17,7 @@ function ParentSection() {
         </Col>
       </Row>
 
-      {/* Alt hissə: Şəkil və məlumat hissəsi */}
       <Row className={`${styles.contentBox} p-4 align-items-center`}>
-        {/* Sol tərəf: şəkil */}
         <Col lg={5} className="mb-4 mb-lg-0">
           <div className={styles.imageCard}>
             <img
@@ -31,7 +28,6 @@ function ParentSection() {
           </div>
         </Col>
 
-        {/* Sağ tərəf */}
         <Col lg={7}>
           <h4 className="fw-semibold mb-3">Övladın barədə məlumatlı ol.</h4>
           <p className="text-muted mb-4">

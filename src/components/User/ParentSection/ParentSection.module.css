@@ -75,3 +75,15 @@
 .iconGreen {
   background-color: #28a745;
 }
+
+@media (max-width: 768px) {
+  .imageCard {
+    width: 100%;
+    height: auto;
+  }
+
+  .image {
+    height: auto;
+    border-radius: 20px;
+  }
+}

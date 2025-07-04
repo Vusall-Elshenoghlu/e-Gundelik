@@ -70,12 +70,7 @@ export default function Subject() {
       cancelButtonText: "Ləğv et",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosAuth.delete(`${BASE_URL}/DeleteSubject`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: { id: subject.id },
-        })
+        axiosAuth.delete(`${BASE_URL}/DeleteSubject?id=${subject.id}`)
           .then(() => {
             setSubjects((prev) => prev.filter((s) => s.id !== subject.id));
             Swal.fire("Silindi!", `"${subject.name}" silindi.`, "success");
