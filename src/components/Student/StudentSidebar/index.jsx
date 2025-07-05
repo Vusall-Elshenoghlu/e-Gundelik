@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom' // düzəliş etdin
+import { Link, useNavigate } from 'react-router-dom' // düzəliş etdin
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./StudentSidebar.module.css"
 import { FaBars, FaBook, FaHome, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
 import { AuthContext } from '../../../context/AuthContext'
-
+import Swal from 'sweetalert2'
 
 function StudentSidebar() {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
-    const {user} = useContext(AuthContext)
+    const {user, logout} = useContext(AuthContext)
+    const navigate = useNavigate()
     useEffect(() => {
         const handleResize = () => {
             setIsOpen(window.innerWidth > 768);
@@ -22,6 +23,23 @@ function StudentSidebar() {
             setIsOpen(false);
         }
     };
+    const handleLogoutClick = () => {
+    Swal.fire({
+      title: "Əminsiniz?",
+      text: "Hesabdan çıxmaq istədiyinizə əminsiniz?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Bəli, çıx!",
+      cancelButtonText: "İmtina",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        navigate("/teacher-login");
+      }
+    });
+  };
 
     return (
         <>
@@ -65,9 +83,9 @@ function StudentSidebar() {
                         </div>
 
                         <div>
-                            <Link to={"logout"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                <FaSignOutAlt className='me-2' /> Çıxış
-                            </Link>
+                            <div onClick={handleLogoutClick} className={`nav-link text-white ${styles.navLink}`} style={{cursor:"pointer"}}>
+                                <FaSignOutAlt className='me-2' /> Logout
+                            </div>
                             <div className={`text-white mt-2 ${styles.userName}`}>
                                 <div><FaUser/></div>
                                 <h5>{user.name}</h5>

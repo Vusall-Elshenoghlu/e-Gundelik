@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./TeacherSidebar.module.css"
 import { FaBars, FaBook, FaChalkboardTeacher, FaHome, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
 import { AuthContext } from '../../../context/AuthContext'
+import Swal from 'sweetalert2'
 
 function TeacherSidebar() {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
-    const {user} = useContext(AuthContext)
+    const {user, logout} = useContext(AuthContext)
+    const navigate = useNavigate()
     console.log(user.name)
 
     useEffect(() => {
@@ -24,6 +26,23 @@ function TeacherSidebar() {
         }
     };
 
+    const handleLogoutClick = () => {
+    Swal.fire({
+      title: "Əminsiniz?",
+      text: "Hesabdan çıxmaq istədiyinizə əminsiniz?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Bəli, çıx!",
+      cancelButtonText: "İmtina",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        navigate("/teacher-login");
+      }
+    });
+  };
     return (
         <>
             <button className={`btn btn-light ${styles.menuBtn}`} onClick={() => setIsOpen(!isOpen)}>
@@ -67,9 +86,9 @@ function TeacherSidebar() {
                         </div>
 
                         <div>
-                            <Link to={"logout"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                            <div onClick={handleLogoutClick} className={`nav-link text-white ${styles.navLink}`} style={{cursor:"pointer"}}>
                                 <FaSignOutAlt className='me-2' /> Logout
-                            </Link>
+                            </div>
                             <div className={`text-white mt-2 ${styles.userName}`}>
                                 <div><FaUser /></div>
                                 <h5>Mr. {user.name}</h5>

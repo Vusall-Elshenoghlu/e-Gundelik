@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./ParentSidebar.module.css"
 import { FaBars, FaBook, FaHome, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
-
+import { AuthContext } from '../../../context/AuthContext'
+import Swal from 'sweetalert2'
 function ParentSidebar() {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
-
+    const {user, logout} = useContext(AuthContext)
+    const navigate = useNavigate()
     useEffect(() => {
         const handleResize = () => {
             setIsOpen(window.innerWidth > 768);
@@ -21,6 +23,23 @@ function ParentSidebar() {
         }
     };
 
+    const handleLogoutClick = () => {
+    Swal.fire({
+      title: "Əminsiniz?",
+      text: "Hesabdan çıxmaq istədiyinizə əminsiniz?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Bəli, çıx!",
+      cancelButtonText: "İmtina",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        navigate("/teacher-login");
+      }
+    });
+  };
     return (
         <>
             <button className={`btn btn-light ${styles.menuBtn}`} onClick={() => setIsOpen(!isOpen)}>
@@ -63,12 +82,12 @@ function ParentSidebar() {
                         </div>
 
                         <div>
-                            <Link to={"logout"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                <FaSignOutAlt className='me-2' /> Çıxış
-                            </Link>
+                            <div onClick={handleLogoutClick} className={`nav-link text-white ${styles.navLink}`} style={{cursor:"pointer"}}>
+                                <FaSignOutAlt className='me-2' /> Logout
+                            </div>
                             <div className={`text-white mt-2 ${styles.userName}`}>
                                 <div><FaUser /></div>
-                                <h5>Ata/Valideyn</h5>
+                                <h5>{user.userName}</h5>
                             </div>
                         </div>
                     </motion.div>
