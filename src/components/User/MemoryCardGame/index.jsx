@@ -3,20 +3,20 @@ import { useEffect, useState } from "react"
 import { Container, Button, Modal } from "react-bootstrap"
 import { motion, AnimatePresence } from "framer-motion"
 import styles from "./MemoryCardGame.module.css"
-import appleImage from "../../../assets/images/apple.png"
-import bananaImage from "../../../assets/images/banana.png"
-import bottleImage from "../../../assets/images/bottle.png"
-import grapeImage from "../../../assets/images/grape.png"
-import cornImage from "../../../assets/images/corn.png"
-import iceCreamImage from "../../../assets/images/ice-cream.png"
-import iceCream2Image from "../../../assets/images/ice-cream2.png"
-import lollipopImage from "../../../assets/images/lollipop.png"
-import mixImage from "../../../assets/images/mix.png"
-import peachImage from "../../../assets/images/peach.png"
-import pineappleImage from "../../../assets/images/pinapple.png"  
-import strawberryImage from "../../../assets/images/strawberry.png"
-import waterImage from "../../../assets/images/water.png"
-import watermelonImage from "../../../assets/images/watermelon.png"
+import appleImage from "../../../assets/images/apple.svg"
+import bananaImage from "../../../assets/images/banana.svg"
+import bottleImage from "../../../assets/images/bottle.svg"
+import grapeImage from "../../../assets/images/grape.svg"
+import cornImage from "../../../assets/images/corn.svg"
+import iceCreamImage from "../../../assets/images/ice-cream.svg"
+import iceCream2Image from "../../../assets/images/ice-cream2.svg"
+import lollipopImage from "../../../assets/images/lollipop.svg"
+import mixImage from "../../../assets/images/mix.svg"
+import peachImage from "../../../assets/images/peach.svg"
+import pineappleImage from "../../../assets/images/pinapple.svg"  
+import strawberryImage from "../../../assets/images/strawberry.svg"
+import waterImage from "../../../assets/images/water.svg"
+import watermelonImage from "../../../assets/images/watermelon.svg"
 const cardImages = [
   { src: appleImage, name: "apple" },
   { src: bananaImage, name: "banana" },
@@ -99,7 +99,6 @@ const MemoryCardGame = () => {
     setShowVictory(false)
     setGameStarted(true)
 
-    // Show all cards initially for 2 seconds
     setTimeout(() => {
       setInitialShow(false)
       setDisabled(false)
@@ -213,7 +212,6 @@ const MemoryCardGame = () => {
           </AnimatePresence>
         </motion.div>
 
-        {/* Victory Modal */}
         <Modal show={showVictory} onHide={() => setShowVictory(false)} centered className={styles.victoryModal}>
           <Modal.Body className={styles.victoryContent}>
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", duration: 0.5 }}>
