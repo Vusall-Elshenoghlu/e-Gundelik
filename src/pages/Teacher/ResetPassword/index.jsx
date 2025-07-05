@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import styles from './ResetPassword.module.css';
+import { toast } from 'react-toastify';
 
 function ResetPassword() {
     const [searchParams] = useSearchParams();
@@ -14,7 +15,6 @@ function ResetPassword() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [message, setMessage] = useState("");
-
     const validationSchema = Yup.object({
         password: Yup.string()
             .min(6, 'Password must be at least 6 characters')
@@ -24,8 +24,11 @@ function ResetPassword() {
             .required('Required'),
     });
 
+
+
     const email = searchParams.get("email");
-    const token = searchParams.get("token");
+    const rawToken = searchParams.get("token")
+    const token = decodeURIComponent(rawToken)
 
     console.log("Email:", email);
     console.log("Token:", token);
@@ -39,18 +42,24 @@ function ResetPassword() {
                 confirmPassword: values.confirmPassword,
             });
 
-            setMessage(res.data.message);
+            console.log("Response:", res);
 
-            if (res.data.success) {
-                alert("Password successfully changed!");
-                navigate("/login");
+            if (res.status === 200) {
+                setMessage("✅ Password successfully changed!");
+                setTimeout(() => {
+                    navigate("/teacher-login");
+                }, 2000); 
+            } else {
+                setMessage(res.data.message || "❌ Something went wrong.");
             }
         } catch (error) {
-            console.error(error.response?.data || error.message);
-            setMessage(error.response?.data?.message || "Something went wrong.");
+            console.error("Error Response:", error.response?.data || error.message);
+            toast.error( error.response?.data || error.message)
+            setMessage(error.response?.data?.message || "❌ An error occurred while resetting password.");
         }
         setSubmitting(false);
     };
+
 
     return (
         <div className={styles.resetPasswordWrapper}>
