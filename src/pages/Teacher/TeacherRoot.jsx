@@ -6,21 +6,25 @@ import { toast } from 'react-toastify'
 
 function TeacherRoot() {
   const navigate = useNavigate()
-  const userData = localStorage.getItem("user");
 
   useEffect(() => {
-    const userData = localStorage.getItem("user");
-    if (!userData) {
-      toast.warning("Zehmet olmasa daxil olun..");
+    const storedUser = localStorage.getItem("user");
+
+    if (!storedUser) {
+      toast.warning("Zəhmət olmasa daxil olun.");
       navigate("/teacher-login");
       return;
     }
-    let user = JSON.parse(userData);
+
+    const user = JSON.parse(storedUser);
+
     if (user.role !== "Teacher") {
-      toast.warning("Zehmet olmasa daxil olun..");
+      toast.error("Sizin bu səhifəyə girişiniz yoxdur.");
       navigate("/teacher-login");
+      return;
     }
-  }, [navigate]);
+  }, []);
+
   return (
     <>
       <div style={{ display: "flex", minHeight: "100vh" }}>

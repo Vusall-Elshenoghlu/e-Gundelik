@@ -8,13 +8,13 @@ import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 
 const AddStudent = () => {
   const validationSchema = Yup.object({
-    firstName: Yup.string().min(2, "First name must be at least 2 characters").required("First name is required"),
-    lastName: Yup.string().min(2, "Last name must be at least 2 characters").required("Last name is required"),
-    userName: Yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
-    email: Yup.string().email("Invalid email address").required("Email is required"),
-    gender: Yup.number().required("Gender is required"),
-    dob: Yup.date().max(new Date(), "Date of birth cannot be in the future").required("Date of birth is required"),
-    address: Yup.string().min(5, "Address must be at least 5 characters").required("Address is required"),
+    firstName: Yup.string().min(2, "Ad ən azı 2 simvoldan ibarət olmalıdır").required("Ad vacibdir"),
+    lastName: Yup.string().min(2, "Soyad ən azı 2 simvoldan ibarət olmalıdır").required("Soyad vacibdir"),
+    userName: Yup.string().min(3, "İstifadəçi adı ən azı 3 simvoldan ibarət olmalıdır").required("İstifadəçi adı vacibdir"),
+    email: Yup.string().email("Yanlış email ünvanı").required("Email vacibdir"),
+    gender: Yup.number().required("Cinsiyyət vacibdir"),
+    dob: Yup.date().max(new Date(), "Doğum tarixi gələcəkdə ola bilməz").required("Doğum tarixi vacibdir"),
+    address: Yup.string().min(5, "Ünvan ən azı 5 simvoldan ibarət olmalıdır").required("Ünvan vacibdir"),
   })
 
   const initialValues = {
@@ -30,11 +30,11 @@ const AddStudent = () => {
     confirmPassword: null,
   }
 
-    const axiosAuth = useAxiosWithAuth()
-  
+  const axiosAuth = useAxiosWithAuth()
+
   const handleSubmit = async (values, { resetForm }) => {
     try {
-        const payload = {
+      const payload = {
         ...values,
         gender: Number(values.gender),
         imgUrl: values.imgUrl === "" ? "" : values.imgUrl,
@@ -45,15 +45,15 @@ const AddStudent = () => {
       };
 
       const response = await axiosAuth.post(
-        "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-student",payload
+        "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-student", payload
       );
       console.log(response.data)
 
-      alert("✅ Sagird uğurla yaradıldı!");
+      alert("✅ Şagird uğurla yaradıldı!");
       resetForm();
     } catch (error) {
       console.error("❌ Xəta baş verdi:", error);
-      alert("Xəta oldu. Zəhmət olmasa məlumatları yoxla.");
+      alert("Xəta oldu. Zəhmət olmasa məlumatları yoxlayın.");
     }
   };
 
@@ -62,8 +62,8 @@ const AddStudent = () => {
     <div className={styles.pageWrapper}>
       <Container fluid className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Add New Student</h1>
-          <p className={styles.subtitle}>Please fill in all the required information</p>
+          <h1 className={styles.title}>Yeni Şagird Əlavə Et</h1>
+          <p className={styles.subtitle}>Zəhmət olmasa bütün tələb olunan məlumatları doldurun</p>
         </div>
 
         <Card className={styles.formCard}>
@@ -75,14 +75,14 @@ const AddStudent = () => {
                     <Col md={6}>
                       <BootstrapForm.Group>
                         <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-user me-2"></i>First Name
+                          <i className="fas fa-user me-2"></i>Ad
                         </BootstrapForm.Label>
                         <Field name="firstName">
                           {({ field }) => (
                             <BootstrapForm.Control
                               {...field}
                               type="text"
-                              placeholder="Enter first name"
+                              placeholder="Ad daxil edin"
                               className={`${styles.input} ${errors.firstName && touched.firstName ? styles.inputError : ""}`}
                             />
                           )}
@@ -94,14 +94,14 @@ const AddStudent = () => {
                     <Col md={6}>
                       <BootstrapForm.Group>
                         <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-user me-2"></i>Last Name
+                          <i className="fas fa-user me-2"></i>Soyad
                         </BootstrapForm.Label>
                         <Field name="lastName">
                           {({ field }) => (
                             <BootstrapForm.Control
                               {...field}
                               type="text"
-                              placeholder="Enter last name"
+                              placeholder="Soyad daxil edin"
                               className={`${styles.input} ${errors.lastName && touched.lastName ? styles.inputError : ""}`}
                             />
                           )}
@@ -113,14 +113,14 @@ const AddStudent = () => {
                     <Col md={6}>
                       <BootstrapForm.Group>
                         <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-at me-2"></i>Username
+                          <i className="fas fa-at me-2"></i>İstifadəçi Adı
                         </BootstrapForm.Label>
                         <Field name="userName">
                           {({ field }) => (
                             <BootstrapForm.Control
                               {...field}
                               type="text"
-                              placeholder="Enter username"
+                              placeholder="İstifadəçi adını daxil edin"
                               className={`${styles.input} ${errors.userName && touched.userName ? styles.inputError : ""}`}
                             />
                           )}
@@ -132,14 +132,14 @@ const AddStudent = () => {
                     <Col md={6}>
                       <BootstrapForm.Group>
                         <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-envelope me-2"></i>Email Address
+                          <i className="fas fa-envelope me-2"></i>Email Ünvanı
                         </BootstrapForm.Label>
                         <Field name="email">
                           {({ field }) => (
                             <BootstrapForm.Control
                               {...field}
                               type="email"
-                              placeholder="Enter email address"
+                              placeholder="Email ünvanı daxil edin"
                               className={`${styles.input} ${errors.email && touched.email ? styles.inputError : ""}`}
                             />
                           )}
@@ -151,7 +151,7 @@ const AddStudent = () => {
                     <Col md={6}>
                       <BootstrapForm.Group>
                         <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-venus-mars me-2"></i>Gender
+                          <i className="fas fa-venus-mars me-2"></i>Cinsiyyət
                         </BootstrapForm.Label>
                         <Field name="gender">
                           {({ field }) => (
@@ -159,9 +159,9 @@ const AddStudent = () => {
                               {...field}
                               className={`${styles.input} ${errors.gender && touched.gender ? styles.inputError : ""}`}
                             >
-                              <option value="">Select Gender</option>
-                              <option value="0">Male</option>
-                              <option value="1">Female</option>
+                              <option value="">Cinsiyyəti seçin</option>
+                              <option value="0">Kişi</option>
+                              <option value="1">Qadın</option>
                             </BootstrapForm.Select>
                           )}
                         </Field>
@@ -172,7 +172,7 @@ const AddStudent = () => {
                     <Col md={6}>
                       <BootstrapForm.Group>
                         <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-calendar me-2"></i>Date of Birth
+                          <i className="fas fa-calendar me-2"></i>Doğum Tarixi
                         </BootstrapForm.Label>
                         <Field name="dob">
                           {({ field }) => (
@@ -190,7 +190,7 @@ const AddStudent = () => {
                     <Col md={12}>
                       <BootstrapForm.Group>
                         <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-map-marker-alt me-2"></i>Address
+                          <i className="fas fa-map-marker-alt me-2"></i>Ünvan
                         </BootstrapForm.Label>
                         <Field name="address">
                           {({ field }) => (
@@ -198,7 +198,7 @@ const AddStudent = () => {
                               {...field}
                               as="textarea"
                               rows={4}
-                              placeholder="Enter full address"
+                              placeholder="Tam ünvanı daxil edin"
                               className={`${styles.input} ${styles.textarea} ${errors.address && touched.address ? styles.inputError : ""}`}
                             />
                           )}
@@ -217,12 +217,12 @@ const AddStudent = () => {
                             role="status"
                             aria-hidden="true"
                           ></span>
-                          Adding Student...
+                          Şagird əlavə olunur...
                         </>
                       ) : (
                         <>
                           <i className="fas fa-plus me-2"></i>
-                          Add Student
+                          Şagird Əlavə Et
                         </>
                       )}
                     </Button>

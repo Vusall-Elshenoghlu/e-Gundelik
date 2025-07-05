@@ -10,49 +10,118 @@ import {
 } from "react-icons/fa";
 
 const AdminDashboard = () => {
-  const [dashData, setDashData] = useState(null);
+  const [counts, setCounts] = useState({
+    teachers: 0,
+    parents: 0,
+    students: 0,
+    subjects: 0,
+    director: 1, // statik
+  });
+
   const [recentStudents, setRecentStudents] = useState([]);
+  const [recentParents, setRecentParents] = useState([]);
   const [recentTeachers, setRecentTeachers] = useState([]);
+
   const navigate = useNavigate();
 
-  const getDashData = async () => {
+  // Base URL
+  const baseURL = "https://turansalimli-001-site1.ntempurl.com/api";
+
+  // Helper fetch functions
+  const fetchTeachers = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/admin/dashboard");
-      if (data.success) {
-        setDashData(data.dashData);
-      } else {
-        console.error("Server error:", data.message);
+      const res = await axios.get(`${baseURL}/User/teachers`);
+      if (res.data.isSuccess) {
+        setCounts((c) => ({ ...c, teachers: res.data.data.length }));
+        // Son 5 müəllim (son tarixə görə sort yoxsa slice)
+        setRecentTeachers(
+          res.data.data
+            .slice()
+            .sort(
+              (a, b) =>
+                new Date(b.dob).getTime() - new Date(a.dob).getTime()
+            )
+            .slice(0, 5)
+            .map((t) => ({
+              id: t.id,
+              name: `${t.firstName} ${t.lastName}`,
+              createdAt: t.dob,
+            }))
+        );
       }
-    } catch (err) {
-      console.error("Request error:", err.message);
+    } catch (error) {
+      console.error("Teachers fetch error:", error);
+    }
+  };
+
+  const fetchParents = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/User/parents`);
+      if (res.data.isSuccess) {
+        setCounts((c) => ({ ...c, parents: res.data.data.length }));
+        // Son 5 valideyn
+        setRecentParents(
+          res.data.data
+            .slice()
+            .sort(
+              (a, b) =>
+                new Date(b.dob).getTime() - new Date(a.dob).getTime()
+            )
+            .slice(0, 5)
+            .map((p) => ({
+              id: p.id,
+              name: `${p.firstName} ${p.lastName}`,
+              createdAt: p.dob,
+            }))
+        );
+      }
+    } catch (error) {
+      console.error("Parents fetch error:", error);
+    }
+  };
+
+  const fetchStudents = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/User/students`);
+      if (res.data.isSuccess) {
+        setCounts((c) => ({ ...c, students: res.data.data.length }));
+        // Son 10 tələbə
+        setRecentStudents(
+          res.data.data
+            .slice()
+            .sort(
+              (a, b) =>
+                new Date(b.dob).getTime() - new Date(a.dob).getTime()
+            )
+            .slice(0, 10)
+            .map((s) => ({
+              id: s.id,
+              name: `${s.firstName} ${s.lastName}`,
+              createdAt: s.dob,
+            }))
+        );
+      }
+    } catch (error) {
+      console.error("Students fetch error:", error);
+    }
+  };
+
+  const fetchSubjects = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/Subject/GetAllSubject`);
+      if (res.data) {
+        setCounts((c) => ({ ...c, subjects: res.data.length || res.data.data.length }));
+      }
+    } catch (error) {
+      console.error("Subjects fetch error:", error);
     }
   };
 
   useEffect(() => {
-    getDashData();
-
-    // Statik son 10 tələbə
-    setRecentStudents([
-      { id: 1, name: "Aysel Məmmədova", createdAt: "2025-06-20" },
-      { id: 2, name: "Rəşad Hüseynov", createdAt: "2025-06-19" },
-      { id: 3, name: "Nigar Əliyeva", createdAt: "2025-06-18" },
-      { id: 4, name: "Elvin Quliyev", createdAt: "2025-06-17" },
-      { id: 5, name: "Leyla Məmmədli", createdAt: "2025-06-16" },
-      { id: 6, name: "Tural Səfərov", createdAt: "2025-06-15" },
-      { id: 7, name: "Zeynəb İsmayılova", createdAt: "2025-06-14" },
-      { id: 8, name: "Kamran Əliyev", createdAt: "2025-06-13" },
-      { id: 9, name: "Fəridə Rzayeva", createdAt: "2025-06-12" },
-      { id: 10, name: "Murad Məmmədov", createdAt: "2025-06-11" },
-    ]);
-
-    // Statik son 5 müəllim
-    setRecentTeachers([
-      { id: 1, name: "Ramil Əliyev", createdAt: "2025-06-19" },
-      { id: 2, name: "Aygün Quliyeva", createdAt: "2025-06-18" },
-      { id: 3, name: "Elşən Həsənov", createdAt: "2025-06-17" },
-      { id: 4, name: "Nərmin Məmmədova", createdAt: "2025-06-16" },
-      { id: 5, name: "Eldar Rzayev", createdAt: "2025-06-15" },
-    ]);
+    fetchTeachers();
+    fetchParents();
+    fetchStudents();
+    fetchSubjects();
   }, []);
 
   const cards = [
@@ -111,7 +180,7 @@ const AdminDashboard = () => {
             {item.icon}
             <div>
               <p style={{ fontSize: "30px", fontWeight: "500", color: "black" }}>
-                {dashData?.[item.key] ?? "--"}
+                {counts[item.key] ?? "--"}
               </p>
               <p style={{ color: "gray", fontSize: "16px", fontWeight: "600" }}>
                 {item.title}
@@ -122,6 +191,7 @@ const AdminDashboard = () => {
       </div>
 
       <div className="d-flex gap-4" style={{ maxWidth: "1000px" }}>
+        {/* Son 10 tələbə */}
         <div className="card shadow-sm p-4 flex-fill">
           <h4 className="mb-4">Son 10 tələbə</h4>
           <table className="table table-striped table-hover">
@@ -129,7 +199,7 @@ const AdminDashboard = () => {
               <tr>
                 <th>#</th>
                 <th>Ad Soyad</th>
-                <th>Yaradılma Tarixi</th>
+                <th>Doğum Tarixi</th>
               </tr>
             </thead>
             <tbody>
@@ -139,9 +209,9 @@ const AdminDashboard = () => {
                   <td>{student.name}</td>
                   <td>
                     {new Date(student.createdAt).toLocaleDateString("az-AZ", {
-                      year: "numeric",
+                      day: "2-digit",
                       month: "long",
-                      day: "numeric",
+                      year: "numeric",
                     })}
                   </td>
                 </tr>
@@ -150,24 +220,24 @@ const AdminDashboard = () => {
           </table>
         </div>
 
-        {/* Son 5 Müəllim */}
+        {/* Son 5 valideyn */}
         <div className="card shadow-sm p-4 flex-fill">
-          <h4 className="mb-4">Son 5 müəllim</h4>
+          <h4 className="mb-4">Son 5 valideyn</h4>
           <table className="table table-striped table-hover">
             <thead className="table-dark">
               <tr>
                 <th>#</th>
                 <th>Ad Soyad</th>
-                <th>Yaradılma Tarixi</th>
+                <th>Doğum Tarixi</th>
               </tr>
             </thead>
             <tbody>
-              {recentTeachers.map((teacher, idx) => (
-                <tr key={teacher.id} style={{ cursor: "default" }}>
+              {recentParents.map((parent, idx) => (
+                <tr key={parent.id} style={{ cursor: "default" }}>
                   <td>{idx + 1}</td>
-                  <td>{teacher.name}</td>
+                  <td>{parent.name}</td>
                   <td>
-                    {new Date(teacher.createdAt).toLocaleDateString("az-AZ", {
+                    {new Date(parent.createdAt).toLocaleDateString("az-AZ", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
@@ -178,8 +248,9 @@ const AdminDashboard = () => {
             </tbody>
           </table>
         </div>
-        
       </div>
+
+
     </div>
   );
 };

@@ -46,6 +46,7 @@ import UpdatePassword from "../pages/Teacher/UpdatePassword";
 import MemoryCardGame from "../components/User/MemoryCardGame";
 import ViewLesson from "../pages/Teacher/ViewLesson";
 import ResetPassword from "../pages/Teacher/ResetPassword";
+import EditProfile from "../pages/Teacher/EditProfile";
 
 export const ROUTES = [
     {
@@ -168,6 +169,10 @@ export const ROUTES = [
             {
                 path: "students",
                 element: <TeachersStudents />
+            },
+            {
+                path: "edit-profile",
+                element: <EditProfile />
             },
         ]
     },

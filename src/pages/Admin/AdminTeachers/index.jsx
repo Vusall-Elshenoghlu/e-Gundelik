@@ -1,19 +1,48 @@
-
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth"
+import { Modal, Button } from "react-bootstrap"
+import { FaEdit, FaEye, FaTrash } from "react-icons/fa"
+import Swal from "sweetalert2"
 
 const AdminTeachers = () => {
   const [teachers, setTeachers] = useState([])
   const [loading, setLoading] = useState(true)
+  const [selectedTeacher, setSelectedTeacher] = useState(null)
+  const [showModal, setShowModal] = useState(false)
   const axiosAuth = useAxiosWithAuth()
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [editData, setEditData] = useState({
+    firstName: "",
+    lastName: "",
+    gender: 0,
+    dob: "",
+    address: ""
+  })
+
+
+
+
+  const calculateAge = (dob) => {
+    const birthDate = new Date(dob)
+    const today = new Date()
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const m = today.getMonth() - birthDate.getMonth()
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--
+    }
+    return age
+  }
+
+  const getGenderLabel = (gender) => {
+    return gender === 0 ? "Male" : gender === 1 ? "Female" : "Unknown"
+  }
 
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
         setLoading(true)
-        const res = await axiosAuth.get("http://turansalimli-001-site1.ntempurl.com/api/User/teachers")
-        console.log(res)
+        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/User/teachers")
         setTeachers(res.data.data)
       } catch (err) {
         console.error("Error:", err)
@@ -24,28 +53,81 @@ const AdminTeachers = () => {
     fetchTeachers()
   }, [])
 
-  const handleUpdate = (teacher) => {
-    console.log("Update teacher:", teacher)
-  }
-
-  const handleDelete = (teacher) => {
-    console.log("Delete teacher:", teacher)
-    // Add your delete logic here
-  }
-
   const handleDetail = (teacher) => {
-    console.log("View teacher details:", teacher)
-    // Add your detail view logic here
+    setSelectedTeacher(teacher)
+    setShowModal(true)
   }
 
-  if (loading) {
+  const handleUpdate = (teacher) => {
+    setEditData({
+      ...teacher,
+      dob: teacher.dob?.split("T")[0] || ""
+    })
+    setShowEditModal(true)
+  }
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target
+    setEditData((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleDelete = async (teacher) => {
+    console.log(teacher.id)
+    const result = await Swal.fire({
+      title: 'Silinsin?',
+      text: `${teacher.firstName} ${teacher.lastName} adlı müəllimi silmək istəyirsiniz?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Bəli, sil!',
+      cancelButtonText: 'Ləğv et'
+    })
+
+    if (result.isConfirmed) {
+      try {
+        await axiosAuth.delete(`https://turansalimli-001-site1.ntempurl.com/api/User/teachers/${teacher.id}`)
+        setTeachers((prev) => prev.filter(t => t.id !== teacher.id))
+        Swal.fire(
+          'Silindi!',
+          'Müəllim uğurla silindi.',
+          'success'
+        )
+      } catch (error) {
+        console.error("Müəllimi silərkən xəta baş verdi:", error)
+        Swal.fire(
+          'Xəta!',
+          'Müəllimi silmək mümkün olmadı. Yenidən cəhd edin.',
+          'error'
+        )
+      }
+    }
+  }
+
+
+  const renderProfileImage = (teacher) => {
+    if (teacher.imgUrl) {
+      return <img src={teacher.imgUrl} alt="profile" className="rounded-circle" width={40} height={40} />
+    }
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "400px" }}>
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
+      <div
+        className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+        style={{ width: "40px", height: "40px", fontSize: "14px" }}
+      >
+        {teacher.firstName?.charAt(0)}
+        {teacher.lastName?.charAt(0)}
       </div>
     )
+  }
+  const handleSaveChanges = () => {
+    console.log("Updated Teacher Data:", editData)
+    setShowEditModal(false)
+
+    // Əgər istəsən, burada PUT və ya PATCH request də ata bilərik:
+    // await axiosAuth.put(`/api/User/update/${editData.id}`, editData)
   }
 
   return (
@@ -54,15 +136,11 @@ const AdminTeachers = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="container-fluid p-4"
+      style={{ width: "130%", display: "flex", justifyContent: "center" }}
     >
-      <div className="row">
+      <div className="row" style={{ width: "900px", padding: "10px" }}>
         <div className="col-12">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="card shadow-sm"
-          >
+          <div className="card shadow-sm">
             <div className="card-header bg-primary text-white">
               <h4 className="mb-0">
                 <i className="bi bi-person-workspace me-2"></i>
@@ -74,77 +152,59 @@ const AdminTeachers = () => {
                 <table className="table table-hover mb-0">
                   <thead className="table-light">
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th scope="col">Full Name</th>
-                      <th scope="col" className="text-center">
-                        Actions
-                      </th>
+                      <th>#</th>
+                      <th>Profile</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Age</th>
+                      <th>Gender</th>
+                      <th>Full Name</th>
+                      <th className="text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {teachers.map((teacher, index) => (
                       <motion.tr
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
+                        key={teacher.id}
+                        initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
                         className="align-middle"
                       >
-                        <th scope="row" className="text-muted">
-                          {index + 1}
-                        </th>
+                        <td>{index + 1}</td>
+                        <td>{renderProfileImage(teacher)}</td>
+                        <td>{teacher.firstName}</td>
+                        <td>{teacher.lastName}</td>
+                        <td>{calculateAge(teacher.dob)}</td>
+                        <td>{getGenderLabel(teacher.gender)}</td>
                         <td>
-                          <span className="fw-medium">{teacher.firstName}</span>
+                          {teacher.firstName} {teacher.lastName}
                         </td>
-                        <td>
-                          <span className="fw-medium">{teacher.lastName}</span>
-                        </td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <div
-                              className="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2"
-                              style={{ width: "32px", height: "32px" }}
-                            >
-                              <span className="text-white fw-bold small">
-                                {teacher.firstName?.charAt(0)}
-                                {teacher.lastName?.charAt(0)}
-                              </span>
-                            </div>
-                            <span className="text-dark fw-semibold">
-                              {teacher.firstName} {teacher.lastName}
-                            </span>
-                          </div>
-                        </td>
-                        <td>
+                        <td className="text-center">
                           <div className="d-flex justify-content-center gap-2">
                             <motion.button
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.95 }}
                               className="btn btn-outline-info btn-sm"
                               onClick={() => handleDetail(teacher)}
-                              title="View Details"
                             >
-                              <i className="bi bi-eye"></i>
+                              <FaEye />
                             </motion.button>
                             <motion.button
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.95 }}
                               className="btn btn-outline-warning btn-sm"
                               onClick={() => handleUpdate(teacher)}
-                              title="Update Teacher"
                             >
-                              <i className="bi bi-pencil-square"></i>
+                              <FaEdit />
                             </motion.button>
                             <motion.button
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.95 }}
                               className="btn btn-outline-danger btn-sm"
                               onClick={() => handleDelete(teacher)}
-                              title="Delete Teacher"
                             >
-                              <i className="bi bi-trash"></i>
+                              <FaTrash />
                             </motion.button>
                           </div>
                         </td>
@@ -153,32 +213,107 @@ const AdminTeachers = () => {
                   </tbody>
                 </table>
               </div>
+
               {teachers.length === 0 && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-5">
+                <div className="text-center py-5">
                   <i className="bi bi-person-x display-1 text-muted"></i>
                   <h5 className="text-muted mt-3">No teachers found</h5>
-                  <p className="text-muted">There are no teachers to display at the moment.</p>
-                </motion.div>
+                </div>
               )}
             </div>
-            <div className="card-footer bg-light">
-              <div className="d-flex justify-content-between align-items-center">
-                <small className="text-muted">
-                  Total Teachers: <span className="fw-bold">{teachers.length}</span>
-                </small>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="btn btn-primary btn-sm"
-                >
-                  <i className="bi bi-plus-circle me-1"></i>
-                  Add New Teacher
-                </motion.button>
-              </div>
+            <div className="card-footer d-flex justify-content-between bg-light">
+              <small className="text-muted">Total Teachers: {teachers.length}</small>
+              <button className="btn btn-primary btn-sm">
+                <i className="bi bi-plus-circle me-1"></i>Add New Teacher
+              </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
+
+      {/* Details Modal */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Teacher Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedTeacher && (
+            <div>
+              <p><strong>ID:</strong> {selectedTeacher.id}</p>
+              <p><strong>Full Name:</strong> {selectedTeacher.firstName} {selectedTeacher.lastName}</p>
+              <p><strong>Gender:</strong> {getGenderLabel(selectedTeacher.gender)}</p>
+              <p><strong>Age:</strong> {calculateAge(selectedTeacher.dob)}</p>
+              <p><strong>Address:</strong> {selectedTeacher.address}</p>
+              <p><strong>Date of Birth:</strong> {new Date(selectedTeacher.dob).toLocaleDateString()}</p>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Teacher</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className="d-flex flex-column gap-3">
+            <input
+              type="text"
+              name="firstName"
+              value={editData.firstName}
+              onChange={handleEditChange}
+              className="form-control"
+              placeholder="First Name"
+            />
+            <input
+              type="text"
+              name="lastName"
+              value={editData.lastName}
+              onChange={handleEditChange}
+              className="form-control"
+              placeholder="Last Name"
+            />
+            <select
+              name="gender"
+              value={editData.gender}
+              onChange={handleEditChange}
+              className="form-select"
+            >
+              <option value={0}>Male</option>
+              <option value={1}>Female</option>
+            </select>
+            <input
+              type="date"
+              name="dob"
+              value={editData.dob}
+              onChange={handleEditChange}
+              className="form-control"
+            />
+            <textarea
+              name="address"
+              value={editData.address}
+              onChange={handleEditChange}
+              className="form-control"
+              placeholder="Address"
+              rows={3}
+            />
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </motion.div>
   )
 }

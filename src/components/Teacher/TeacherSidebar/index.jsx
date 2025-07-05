@@ -10,7 +10,11 @@ function TeacherSidebar() {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
     const {user, logout} = useContext(AuthContext)
     const navigate = useNavigate()
-    console.log(user.name)
+
+    if (!user) {
+    return null;
+  }
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -79,6 +83,11 @@ function TeacherSidebar() {
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"students"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
                                         <FaBook className='me-2' /> Students
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
+                                    <Link to={"edit-profile"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaBook className='me-2' /> Edit Profile
                                     </Link>
                                 </li>
                                 
