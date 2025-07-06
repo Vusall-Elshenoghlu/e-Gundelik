@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import styles from "./ParentSidebar.module.css"
+import styles from "./Parentsidebar.module.css"
 import { FaAccessibleIcon, FaAdjust, FaBars, FaBook, FaHome, FaLess, FaSignOutAlt, FaSubscript, FaTimes, FaUser } from 'react-icons/fa'
 import { AuthContext } from '../../../context/AuthContext'
 import Swal from 'sweetalert2'
