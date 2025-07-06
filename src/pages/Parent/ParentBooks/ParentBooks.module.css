@@ -1,0 +1,76 @@
+.container {
+  padding-top: 20px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #333;
+}
+
+.classCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.classCard:hover {
+  transform: translateY(-5px);
+}
+
+.leftPage {
+  flex: 1;
+}
+
+.rightPage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.classHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.className {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.classInfo {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.pdfButton {
+  margin-top: 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.pdfButton:hover {
+  background-color: #c82333;
+}

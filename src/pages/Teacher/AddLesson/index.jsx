@@ -1,8 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Container, Row, Col, Button, Card, Spinner, Form as BootstrapForm } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Card,
+  Spinner,
+  Form as BootstrapForm,
+} from "react-bootstrap";
 import styles from "./AddLesson.module.css";
 import { AuthContext } from "../../../context/AuthContext";
 
@@ -11,6 +19,26 @@ const AddLesson = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+  const [classes, setClasses] = useState([]);
+
+  // 🔽 Fənnləri və Sinifləri yüklə
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [subjectRes, classRes] = await Promise.all([
+          axios.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
+          axios.get("https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass"),
+        ]);
+        setSubjects(subjectRes.data);
+        setClasses(classRes.data);
+      } catch (err) {
+        console.error("Məlumatlar yüklənərkən xəta:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const initialValues = {
     title: "",
@@ -23,8 +51,8 @@ const AddLesson = () => {
   const validationSchema = Yup.object({
     title: Yup.string().required("Başlıq boş ola bilməz"),
     date: Yup.date().required("Tarix seçilməlidir"),
-    subjectId: Yup.string().required("Fənn ID-si boş ola bilməz"),
-    classId: Yup.string().required("Sinif ID-si boş ola bilməz"),
+    subjectId: Yup.string().required("Fənn seçilməlidir"),
+    classId: Yup.string().required("Sinif seçilməlidir"),
     task: Yup.string().required("Tapşırıq boş ola bilməz"),
   });
 
@@ -40,22 +68,24 @@ const AddLesson = () => {
       formData.append("ClassId", values.classId);
       formData.append("TeacherId", user?.userId || "");
       formData.append("Task", values.task);
-      formData.append("StudentsProgress", JSON.stringify([{ studentId: null, result: null }]));
+      if (videoFile) formData.append("VideoUrl", videoFile);
+      formData.append("StudentsProgress", JSON.stringify([]));
 
-
-      if (videoFile) formData.append("Video", videoFile);
-
-      await axios.post("http://turansalimli-001-site1.ntempurl.com/api/Lesson/CreateLesson", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        "https://turansalimli-001-site1.ntempurl.com/api/Lesson/CreateLesson",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       setSuccess(true);
       resetForm();
       setVideoFile(null);
-    } catch (err) {
-      console.error("Xəta baş verdi:", err);
+    } catch (error) {
+      console.error("Dərs əlavə edilərkən xəta baş verdi:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -71,7 +101,7 @@ const AddLesson = () => {
           onSubmit={handleSubmit}
         >
           {() => (
-            <Form>
+            <Form encType="multipart/form-data">
               <Row>
                 <Col md={6}>
                   <BootstrapForm.Group className="mb-3">
@@ -92,15 +122,30 @@ const AddLesson = () => {
               <Row>
                 <Col md={6}>
                   <BootstrapForm.Group className="mb-3">
-                    <BootstrapForm.Label>Fənn ID</BootstrapForm.Label>
-                    <Field name="subjectId" className="form-control" />
+                    <BootstrapForm.Label>Fənn Seç</BootstrapForm.Label>
+                    <Field as="select" name="subjectId" className="form-control">
+                      <option value="">-- Fənn seçin --</option>
+                      {subjects.map((subject) => (
+                        <option key={subject.id} value={subject.id}>
+                          {subject.name}
+                        </option>
+                      ))}
+                    </Field>
                     <ErrorMessage name="subjectId" component="div" className="text-danger" />
                   </BootstrapForm.Group>
                 </Col>
+
                 <Col md={6}>
                   <BootstrapForm.Group className="mb-3">
-                    <BootstrapForm.Label>Sinif ID</BootstrapForm.Label>
-                    <Field name="classId" className="form-control" />
+                    <BootstrapForm.Label>Sinif Seç</BootstrapForm.Label>
+                    <Field as="select" name="classId" className="form-control">
+                      <option value="">-- Sinif seçin --</option>
+                      {classes.map((cls) => (
+                        <option key={cls.id} value={cls.id}>
+                          {cls.name}
+                        </option>
+                      ))}
+                    </Field>
                     <ErrorMessage name="classId" component="div" className="text-danger" />
                   </BootstrapForm.Group>
                 </Col>

@@ -65,6 +65,7 @@ const TeacherLogin = () => {
       toast.success("Login successful!");
       if (isFirstLogin) {
         navigate("/update-password");
+        window.location.reload()
       } else if (userData.role === "Admin") {
         navigate("/admin-dashboard");
       } else if (userData.role === "Teacher") {

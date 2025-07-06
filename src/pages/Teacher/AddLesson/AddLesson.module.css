@@ -1,29 +1,111 @@
 .pageWrapper {
-  margin-left: 300px; /* 300px-lik sidebar üçün */
-  padding: 2rem;
-  background-color: #f1f4f8;
+  padding: 30px 20px;
+  max-width: calc(100% - 300px); /* Sidebar 300px nəzərə alınır */
+  margin-left: 300px;
+  background: #f9fbfd;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(13, 110, 253, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
-}
-
-.contentWrapper {
-  max-width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
 }
 
 .card {
+  width: 100%;
+  max-width: 900px;
+  padding: 30px 40px;
   background: #fff;
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
-@media (max-width: 768px) {
+.card:hover {
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #0d6efd;
+  margin-bottom: 30px;
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1.8px solid #ced4da;
+  padding: 10px 14px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 6px #0d6efd66;
+  outline: none;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.text-danger {
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: #dc3545 !important;
+}
+
+.mb-3, .mb-4 {
+  margin-bottom: 1.25rem !important;
+}
+
+button[type="submit"] {
+  min-width: 140px;
+  background: #0d6efd;
+  border: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 10px 24px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #084ecc;
+}
+
+button[type="submit"]:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.alert {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+@media (max-width: 992px) {
   .pageWrapper {
+    max-width: 100%;
     margin-left: 0;
-    padding: 1rem;
+    padding: 20px 15px;
   }
 
   .card {
-    padding: 1.5rem;
+    padding: 25px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  button[type="submit"] {
+    width: 100%;
   }
 }

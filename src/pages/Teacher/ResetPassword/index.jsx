@@ -47,7 +47,7 @@ function ResetPassword() {
             if (res.status === 200) {
                 setMessage("✅ Password successfully changed!");
                 setTimeout(() => {
-                    navigate("/teacher-login");
+                    navigate("/login");
                 }, 2000); 
             } else {
                 setMessage(res.data.message || "❌ Something went wrong.");

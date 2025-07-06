@@ -12,7 +12,7 @@ function TeacherRoot() {
 
     if (!storedUser) {
       toast.warning("Zəhmət olmasa daxil olun.");
-      navigate("/teacher-login");
+      navigate("/login");
       return;
     }
 
@@ -20,7 +20,7 @@ function TeacherRoot() {
 
     if (user.role !== "Teacher") {
       toast.error("Sizin bu səhifəyə girişiniz yoxdur.");
-      navigate("/teacher-login");
+      navigate("/login");
       return;
     }
   }, []);

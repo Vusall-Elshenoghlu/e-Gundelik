@@ -47,6 +47,10 @@ import MemoryCardGame from "../components/User/MemoryCardGame";
 import ViewLesson from "../pages/Teacher/ViewLesson";
 import ResetPassword from "../pages/Teacher/ResetPassword";
 import EditProfile from "../pages/Teacher/EditProfile";
+import ParentBooks from "../pages/Parent/ParentBooks";
+import ParentSubjects from "../pages/Parent/ParentSubjects";
+import ParentLessons from "../pages/Parent/ParentLessons";
+import ParentResults from "../pages/Parent/ParentResults";
 
 export const ROUTES = [
     {
@@ -143,7 +147,7 @@ export const ROUTES = [
         ]
     },
     {
-        path: "teacher-login",
+        path: "login",
         element: <TeacherLogin />
     },
     {
@@ -192,14 +196,22 @@ export const ROUTES = [
                 path: "diary",
                 element: <ParentDiary />
             },
-            // {
-            //     path:"lessons",
-            //     element:<ParentLessons/>
-            // },
-            // {
-            //     path:"results",
-            //     element:<ParentResults/>
-            // },
+            {
+                path: "books",
+                element: <ParentBooks />
+            },
+            {
+                path: "subjects",
+                element: <ParentSubjects />
+            },
+            {
+                path:"lessons",
+                element:<ParentLessons/>
+            },
+            {
+                path:"results",
+                element:<ParentResults/>
+            },
 
         ]
     },

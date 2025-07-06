@@ -36,7 +36,7 @@ function StudentSidebar() {
     }).then((result) => {
       if (result.isConfirmed) {
         logout();
-        navigate("/teacher-login");
+        navigate("/login");
       }
     });
   };
