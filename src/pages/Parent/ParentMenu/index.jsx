@@ -3,7 +3,7 @@ import styles from "./ParentMenu.module.css"
 import { FaArrowRight } from 'react-icons/fa'
 import { motion } from "framer-motion"
 import { useNavigate } from 'react-router-dom'
-import lessonsPicture from '../../../assets/images/lessons.jpg';
+import lessonsPicture from '../../../assets/images/Lessons.jpg';
 import lessonsPicturee from '../../../assets/images/lessons.png';
 import diaryPicture from '../../../assets/images/diary.png';
 import resultPicture from '../../../assets/images/result.jpg';
