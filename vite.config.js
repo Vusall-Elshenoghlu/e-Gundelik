@@ -8,13 +8,20 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: [
-        'favicon.svg',
-        'favicon.ico',
-        'apple-touch-icon.png',
-        'masked-icon.svg',
-        'robots.txt',
-        'icons/icon-192x192.png',
-        'icons/icon-512x512.png'
+        'images/apple.svg',
+        'images/banana.svg',
+        'images/bottle.svg',
+        'images/grape.svg',
+        'images/corn.svg',
+        'images/ice-cream.svg',
+        'images/ice-cream2.svg',
+        'images/lollipop.svg',
+        'images/mix.svg',
+        'images/peach.svg',
+        'images/pinapple.svg',
+        'images/strawberry.svg',
+        'images/water.svg',
+        'images/watermelon.svg'
       ],
       manifest: {
         name: 'Memory Match Game',
