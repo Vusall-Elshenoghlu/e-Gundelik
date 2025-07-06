@@ -1,0 +1,46 @@
+/* Contact.module.css */
+
+.contactForm {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.contactForm:hover {
+  transform: scale(1.01);
+}
+
+.customInput {
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  padding: 10px 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.customInput:focus {
+  border-color: #3a0ca3;
+  box-shadow: 0 0 0 0.25rem rgba(58, 12, 163, 0.25);
+  outline: none;
+}
+
+.customBtn {
+  background-color: #3a0ca3;
+  border: none;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.customBtn:hover {
+  background-color: #560bad;
+  transform: translateY(-2px);
+}
+
+.exampleText {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 4px;
+}

@@ -1,0 +1,133 @@
+.footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-top: 3px solid #007bff;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  display: inline-block;
+}
+
+.text {
+  color: #b8c5d6;
+  line-height: 1.6;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+}
+
+.list li {
+  margin-bottom: 8px;
+}
+
+.link {
+  color: #b8c5d6;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.social {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background: rgba(0, 123, 255, 0.1);
+  color: #b8c5d6;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+  background: #007bff;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.contact {
+  margin-bottom: 15px;
+}
+
+.contact p {
+  color: #b8c5d6;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.contact i {
+  color: #007bff;
+  width: 16px;
+}
+
+.newsletter {
+  background: rgba(0, 123, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.newsletter .form-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.newsletter .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter .btn {
+  width: 100%;
+}
+
+.divider {
+  border-color: rgba(0, 123, 255, 0.3);
+  margin: 25px 0 15px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 0 !important;
+  }
+
+  .social {
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+  .newsletter {
+    margin-top: 20px;
+  }
+
+  .col-md-6:last-child {
+    text-align: center !important;
+    margin-top: 10px;
+  }
+}

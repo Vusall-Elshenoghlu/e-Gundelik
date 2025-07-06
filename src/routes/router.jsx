@@ -181,10 +181,6 @@ export const ROUTES = [
         ]
     },
     {
-        path: "parent-login",
-        element: <ParentLogin />
-    },
-    {
         path: "parent-portal",
         element: <ParentRoot />,
         children: [
@@ -214,10 +210,6 @@ export const ROUTES = [
             },
 
         ]
-    },
-    {
-        path: "director-login",
-        element: <DirectorLogin />
     },
     {
         path: "student-login",

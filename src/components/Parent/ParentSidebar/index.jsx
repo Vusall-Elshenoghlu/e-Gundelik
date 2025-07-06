@@ -97,7 +97,7 @@ function ParentSidebar() {
                             </div>
                             <div className={`text-white mt-2 ${styles.userName}`}>
                                 <div><FaUser /></div>
-                                <h5>{user.name}</h5>
+                                <h5>{user?.name}</h5>
                             </div>
                         </div>
                     </motion.div>

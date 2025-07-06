@@ -1,8 +1,7 @@
 .navbarHeroWrapper {
   background: linear-gradient(to right, #3a0ca3, #7209b7) !important;
   color: white;
-  min-height: 100vh;
-  padding-bottom: 2rem;
+  padding-bottom: 0.5rem;
 }
 
 .navbar {
@@ -11,6 +10,16 @@
   padding: 1rem 2rem;
   top: 0;
   z-index: 1000;
+}
+
+.fullHeight {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.autoHeight {
+  height: auto !important;
 }
 
 .navbarContent {
@@ -83,8 +92,9 @@
   }
 
   .loginBtn {
-    display: none; 
+    display: none;
   }
+
   .carousel-control-prev,
   .carousel-control-next {
     display: none !important;
@@ -130,7 +140,8 @@
   width: 300px;
   height: 400px;
   object-fit: cover;
-  border-radius: 30% / 20%; /* ✅ Oval forma */
+  border-radius: 30% / 20%;
+  /* ✅ Oval forma */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   transition: 0.3s ease;
 }

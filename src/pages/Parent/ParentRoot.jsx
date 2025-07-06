@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
-import StudentSidebar from '../../components/Student/StudentSidebar'
-import { Outlet } from 'react-router'
+import { Outlet, useNavigate } from 'react-router'
 import ParentSidebar from '../../components/Parent/ParentSidebar';
+import { toast } from 'react-toastify';
 
 function ParentRoot() {
+  const navigate = useNavigate()
+  const [isAuthorized, setIsAuthorized] = React.useState(false);
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
 
@@ -20,7 +23,10 @@ function ParentRoot() {
       navigate("/login");
       return;
     }
-  }, []);
+
+    // Əgər hər şey qaydasındadırsa
+    setIsAuthorized(true);
+  }, []); 
   return (
     <>
       <div style={{ display: "flex", minHeight: "100vh" }}>

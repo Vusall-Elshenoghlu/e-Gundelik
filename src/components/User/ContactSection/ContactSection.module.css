@@ -1,0 +1,155 @@
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contactForm {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 50px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.contactForm:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.contactForm h2 {
+    color: #333;
+    font-size: 2.2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.custom-input {
+    background-color: #fafafa;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 10px rgba(108, 99, 255, 0.4);
+    outline: none;
+}
+
+.phone-input .PhoneInputInput {
+    background-color: #fafafa;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.phone-input .PhoneInputInput:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 10px rgba(108, 99, 255, 0.4);
+    outline: none;
+}
+
+.text-success {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.successMessage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+  padding: 2px;
+  text-align: center;
+  border-radius: 4px;
+}
+.messageWrapper {
+  position: relative;
+}
+
+.custom-btn {
+    background-color: #6c63ff;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #4a44c3;
+}
+
+.back-btn {
+    background-color: #ff6347;
+    border-radius: 30px;
+    padding: 12px 25px;
+    color: white;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background-color: #e9533e;
+}
+
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 35px 30px;
+    }
+
+    .custom-input {
+        font-size: 0.95rem;
+    }
+
+    .custom-btn {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
+
+    .back-btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
+
+
+.mapContainer {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .mapContainer iframe {
+        height: 300px !important;
+    }
+}
+
+
