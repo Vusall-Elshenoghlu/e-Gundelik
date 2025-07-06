@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import styles from "./Classes.module.css";
+import Select from "react-select";
 import {
   FaChalkboardTeacher,
   FaUserFriends,
@@ -10,7 +11,7 @@ import {
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const BASE_URL = 'https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass';
+const BASE_URL = "https://turansalimli-001-site1.ntempurl.com/api/SchoolClass";
 
 export default function Classes() {
   const [classes, setClasses] = useState([]);
@@ -20,17 +21,32 @@ export default function Classes() {
   const [editForm, setEditForm] = useState({
     id: "",
     name: "",
-    year: "",
-    teacher: "",
-    studentCount: "",
+    subjectIds: [],
+    bossTeacherId: "",
   });
+  const [subjects, setSubjects] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
-  // 📥 Sinifləri yüklə
   useEffect(() => {
     axios
-      .get(BASE_URL)
+      .get(`${BASE_URL}/GetAllSchoolClass`)
       .then((res) => setClasses(res.data))
       .catch((err) => console.error("Sinifləri yükləmək mümkün olmadı:", err));
+
+    const fetchMetaData = async () => {
+      try {
+        const [subjectRes, teacherRes] = await Promise.all([
+          axios.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
+          axios.get("https://turansalimli-001-site1.ntempurl.com/api/User/teachers"),
+        ]);
+        setSubjects(subjectRes.data.map((s) => ({ label: s.name, value: s.id })));
+        setTeachers(teacherRes.data?.data || []);
+      } catch (err) {
+        console.error("Fənn və müəllimləri yükləmək mümkün olmadı:", err);
+      }
+    };
+
+    fetchMetaData();
   }, []);
 
   const handleClassClick = (cls) => {
@@ -40,7 +56,7 @@ export default function Classes() {
 
   const handleDelete = (cls) => {
     Swal.fire({
-      title: `Sinif "${cls.name}" silinsin?`,
+      title: `Sinif \"${cls.name}\" silinsin?`,
       text: "Bu əməliyyat geri alınmayacaq!",
       icon: "warning",
       showCancelButton: true,
@@ -51,10 +67,10 @@ export default function Classes() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`${BASE_URL}/${cls.id}`)
+          .delete(`${BASE_URL}/DeleteSchoolClass/${cls.id}`)
           .then(() => {
             setClasses((prev) => prev.filter((c) => c.id !== cls.id));
-            Swal.fire("Silindi!", `"${cls.name}" sinifi silindi.`, "success");
+            Swal.fire("Silindi!", `\"${cls.name}\" sinifi silindi.`, "success");
           })
           .catch((err) => {
             console.error("Silinmə zamanı xəta:", err);
@@ -65,7 +81,12 @@ export default function Classes() {
   };
 
   const handleEditClick = (cls) => {
-    setEditForm({ ...cls });
+    setEditForm({
+      id: cls.id,
+      name: cls.name,
+      subjectIds: cls.subjectIds || [],
+      bossTeacherId: cls.bossTeacherId || "",
+    });
     setShowEditModal(true);
   };
 
@@ -77,18 +98,30 @@ export default function Classes() {
   const handleEditSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`${BASE_URL}/${editForm.id}`, editForm)
+      .put(`${BASE_URL}/UpdateSchoolClass`, editForm)
       .then((res) => {
         setClasses((prev) =>
           prev.map((cls) => (cls.id === editForm.id ? res.data : cls))
         );
         setShowEditModal(false);
-        Swal.fire("Uğurlu!", `"${editForm.name}" sinifi yeniləndi.`, "success");
+        Swal.fire("Uğurlu!", `\"${editForm.name}\" sinifi yeniləndi.`, "success");
       })
       .catch((err) => {
         console.error("Yeniləmə zamanı xəta:", err);
         Swal.fire("Xəta!", "Yeniləmə zamanı problem oldu.", "error");
       });
+  };
+
+  const getTeacherName = (id) => {
+    const found = teachers.find(t => t.id === id);
+    return found ? `${found.firstName} ${found.lastName}` : "-";
+  };
+
+  const getSubjectNames = (ids) => {
+    return subjects
+      .filter(sub => ids?.includes(sub.value))
+      .map(sub => sub.label)
+      .join(", ");
   };
 
   return (
@@ -107,12 +140,9 @@ export default function Classes() {
                 <h3 className={styles.className}>{cls.name}</h3>
                 <FaChalkboardTeacher className={styles.icon} />
               </div>
-
-              <p className={styles.classYear}>{cls.year}</p>
               <p className={styles.classInfo}>
                 <FaUserFriends className={styles.icon} /> {cls.studentCount} şagird
               </p>
-
               <div className="d-flex justify-content-end gap-3 mt-3">
                 <FaEdit
                   size={20}
@@ -134,45 +164,71 @@ export default function Classes() {
         ))}
       </Row>
 
-      {/* Detal Modal */}
       <Modal show={showDetailModal} onHide={() => setShowDetailModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title className={styles.modalTitle}>{selectedClass?.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
-          <p><span className={styles.modalLabel}>Sinif rəhbəri:</span>{selectedClass?.teacher}</p>
-          <p><span className={styles.modalLabel}>Şagird sayı:</span>{selectedClass?.studentCount}</p>
-          <p><span className={styles.modalLabel}>Tədris ili:</span>{selectedClass?.year}</p>
+          <p><span className={styles.modalLabel}>Sinif rəhbəri:</span> {getTeacherName(selectedClass?.bossTeacherId)}</p>
+          <p><span className={styles.modalLabel}>Şagird sayı:</span> {selectedClass?.studentCount}</p>
+          <p><span className={styles.modalLabel}>Fənnlər:</span> {getSubjectNames(selectedClass?.subjectIds)}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={() => setShowDetailModal(false)}>Bağla</Button>
         </Modal.Footer>
       </Modal>
 
-      {/* Edit Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title className={styles.modalTitle}>Sinifi redaktə et</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleEditSubmit}>
-            <Form.Group className="mb-3" controlId="formName">
-              <Form.Label>Sinif adı</Form.Label>
-              <Form.Control type="text" name="name" value={editForm.name} onChange={handleEditChange} required />
+            <Form.Group className="mb-3">
+              <Form.Label>Sinif Adı</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={editForm.name}
+                onChange={handleEditChange}
+                required
+              />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formYear">
-              <Form.Label>Tədris ili</Form.Label>
-              <Form.Control type="text" name="year" value={editForm.year} onChange={handleEditChange} required />
+
+            <Form.Group className="mb-3">
+              <Form.Label>Fənnlər</Form.Label>
+              <Select
+                isMulti
+                name="subjectIds"
+                options={subjects}
+                value={subjects.filter(sub => editForm.subjectIds.includes(sub.value))}
+                onChange={(selected) =>
+                  setEditForm(prev => ({
+                    ...prev,
+                    subjectIds: selected.map(s => s.value),
+                  }))
+                }
+              />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formTeacher">
-              <Form.Label>Sinif rəhbəri</Form.Label>
-              <Form.Control type="text" name="teacher" value={editForm.teacher} onChange={handleEditChange} required />
+
+            <Form.Group className="mb-3">
+              <Form.Label>Sinif Rəhbəri</Form.Label>
+              <Form.Select
+                name="bossTeacherId"
+                value={editForm.bossTeacherId}
+                onChange={handleEditChange}
+                required
+              >
+                <option value="">Seçin...</option>
+                {teachers.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.firstName} {t.lastName}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formStudentCount">
-              <Form.Label>Şagird sayı</Form.Label>
-              <Form.Control type="number" name="studentCount" value={editForm.studentCount} onChange={handleEditChange} required min={0} />
-            </Form.Group>
-            <Button variant="primary" type="submit">Yenilə</Button>
+
+            <Button type="submit" variant="primary">Yenilə</Button>
           </Form>
         </Modal.Body>
       </Modal>

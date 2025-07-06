@@ -1,21 +1,26 @@
+import { useEffect, useState } from "react"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import { Container, Row, Col, Card, Button, Form as BootstrapForm } from "react-bootstrap"
-import Swal from "sweetalert2"
 import styles from "./AddStudent.module.css"
-import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
-
+import Swal from "sweetalert2"
+import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth"
 
 const AddStudent = () => {
-  const validationSchema = Yup.object({
-    firstName: Yup.string().min(2, "Ad ən azı 2 simvoldan ibarət olmalıdır").required("Ad vacibdir"),
-    lastName: Yup.string().min(2, "Soyad ən azı 2 simvoldan ibarət olmalıdır").required("Soyad vacibdir"),
-    userName: Yup.string().min(3, "İstifadəçi adı ən azı 3 simvoldan ibarət olmalıdır").required("İstifadəçi adı vacibdir"),
-    email: Yup.string().email("Yanlış email ünvanı").required("Email vacibdir"),
-    gender: Yup.number().required("Cinsiyyət vacibdir"),
-    dob: Yup.date().max(new Date(), "Doğum tarixi gələcəkdə ola bilməz").required("Doğum tarixi vacibdir"),
-    address: Yup.string().min(5, "Ünvan ən azı 5 simvoldan ibarət olmalıdır").required("Ünvan vacibdir"),
-  })
+  const axiosAuth = useAxiosWithAuth()
+  const [classes, setClasses] = useState([])
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass")
+        setClasses(res.data)
+      } catch (err) {
+        console.error("Sinifləri gətirə bilmədik:", err)
+      }
+    }
+    fetchClasses()
+  }, [])
 
   const initialValues = {
     firstName: "",
@@ -26,37 +31,47 @@ const AddStudent = () => {
     dob: "",
     address: "",
     imgUrl: "",
-    password: null,
-    confirmPassword: null,
+    password: "",
+    confirmPassword: "",
+    schoolClassId: ""
   }
 
-  const axiosAuth = useAxiosWithAuth()
+  const validationSchema = Yup.object({
+    firstName: Yup.string().min(2, "Ad ən azı 2 simvoldan ibarət olmalıdır").required("Ad vacibdir"),
+    lastName: Yup.string().min(2, "Soyad ən azı 2 simvoldan ibarət olmalıdır").required("Soyad vacibdir"),
+    userName: Yup.string().min(3, "İstifadəçi adı ən azı 3 simvoldan ibarət olmalıdır").required("İstifadəçi adı vacibdir"),
+    email: Yup.string().email("Yanlış email ünvanı").required("Email vacibdir"),
+    gender: Yup.number().required("Cinsiyyət vacibdir"),
+    dob: Yup.date().max(new Date(), "Doğum tarixi gələcəkdə ola bilməz").required("Doğum tarixi vacibdir"),
+    address: Yup.string().min(5, "Ünvan ən azı 5 simvoldan ibarət olmalıdır").required("Ünvan vacibdir"),
+    schoolClassId: Yup.string().required("Sinif seçilməlidir")
+  })
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
       const payload = {
         ...values,
         gender: Number(values.gender),
-        imgUrl: values.imgUrl === "" ? "" : values.imgUrl,
+        imgUrl: values.imgUrl || "",
         password: "",
         confirmPassword: "",
         childrenIds: [],
-        parentId: "",
-      };
+        parentId: ""
+      }
 
       const response = await axiosAuth.post(
-        "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-student", payload
-      );
+        "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-student",
+        payload
+      )
+
       console.log(response.data)
-
-      alert("✅ Şagird uğurla yaradıldı!");
-      resetForm();
+      Swal.fire("Uğur!", "Şagird uğurla əlavə edildi", "success")
+      resetForm()
     } catch (error) {
-      console.error("❌ Xəta baş verdi:", error);
-      alert("Xəta oldu. Zəhmət olmasa məlumatları yoxlayın.");
+      console.error("Xəta:", error)
+      Swal.fire("Xəta!", "Zəhmət olmasa məlumatları yoxlayın", "error")
     }
-  };
-
+  }
 
   return (
     <div className={styles.pageWrapper}>
@@ -74,9 +89,7 @@ const AddStudent = () => {
                   <Row className="g-4">
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-user me-2"></i>Ad
-                        </BootstrapForm.Label>
+                        <BootstrapForm.Label className={styles.label}>Ad</BootstrapForm.Label>
                         <Field name="firstName">
                           {({ field }) => (
                             <BootstrapForm.Control
@@ -93,9 +106,7 @@ const AddStudent = () => {
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-user me-2"></i>Soyad
-                        </BootstrapForm.Label>
+                        <BootstrapForm.Label className={styles.label}>Soyad</BootstrapForm.Label>
                         <Field name="lastName">
                           {({ field }) => (
                             <BootstrapForm.Control
@@ -112,9 +123,7 @@ const AddStudent = () => {
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-at me-2"></i>İstifadəçi Adı
-                        </BootstrapForm.Label>
+                        <BootstrapForm.Label className={styles.label}>İstifadəçi Adı</BootstrapForm.Label>
                         <Field name="userName">
                           {({ field }) => (
                             <BootstrapForm.Control
@@ -131,9 +140,7 @@ const AddStudent = () => {
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-envelope me-2"></i>Email Ünvanı
-                        </BootstrapForm.Label>
+                        <BootstrapForm.Label className={styles.label}>Email Ünvanı</BootstrapForm.Label>
                         <Field name="email">
                           {({ field }) => (
                             <BootstrapForm.Control
@@ -150,9 +157,7 @@ const AddStudent = () => {
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-venus-mars me-2"></i>Cinsiyyət
-                        </BootstrapForm.Label>
+                        <BootstrapForm.Label className={styles.label}>Cinsiyyət</BootstrapForm.Label>
                         <Field name="gender">
                           {({ field }) => (
                             <BootstrapForm.Select
@@ -171,9 +176,7 @@ const AddStudent = () => {
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-calendar me-2"></i>Doğum Tarixi
-                        </BootstrapForm.Label>
+                        <BootstrapForm.Label className={styles.label}>Doğum Tarixi</BootstrapForm.Label>
                         <Field name="dob">
                           {({ field }) => (
                             <BootstrapForm.Control
@@ -187,11 +190,30 @@ const AddStudent = () => {
                       </BootstrapForm.Group>
                     </Col>
 
+                    {/* 🔥 Sinif Seçimi */}
+                    <Col md={6}>
+                      <BootstrapForm.Group>
+                        <BootstrapForm.Label className={styles.label}>Sinif</BootstrapForm.Label>
+                        <Field name="schoolClassId">
+                          {({ field }) => (
+                            <BootstrapForm.Select
+                              {...field}
+                              className={`${styles.input} ${errors.schoolClassId && touched.schoolClassId ? styles.inputError : ""}`}
+                            >
+                              <option value="">Sinif seçin</option>
+                              {classes.map((cls) => (
+                                <option key={cls.id} value={cls.id}>{cls.name}</option>
+                              ))}
+                            </BootstrapForm.Select>
+                          )}
+                        </Field>
+                        <ErrorMessage name="schoolClassId" component="div" className={styles.errorText} />
+                      </BootstrapForm.Group>
+                    </Col>
+
                     <Col md={12}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>
-                          <i className="fas fa-map-marker-alt me-2"></i>Ünvan
-                        </BootstrapForm.Label>
+                        <BootstrapForm.Label className={styles.label}>Ünvan</BootstrapForm.Label>
                         <Field name="address">
                           {({ field }) => (
                             <BootstrapForm.Control
@@ -212,11 +234,7 @@ const AddStudent = () => {
                     <Button type="submit" disabled={isSubmitting} className={styles.submitButton} size="lg">
                       {isSubmitting ? (
                         <>
-                          <span
-                            className="spinner-border spinner-border-sm me-2"
-                            role="status"
-                            aria-hidden="true"
-                          ></span>
+                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                           Şagird əlavə olunur...
                         </>
                       ) : (
