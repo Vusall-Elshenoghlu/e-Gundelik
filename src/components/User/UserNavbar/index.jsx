@@ -67,7 +67,7 @@ const UserNavbar = () => {
             <Link to={"/about"}>Layihə haqqında</Link>
             <Link to={"/contact"}>Bizimlə əlaqə</Link>
             <a href="#videos">Tədris videoları</a>
-            <a href="#faq">FAQ</a>
+            <Link to={"/FAQ"}>FAQ</Link>
             <a href="#guide">İstifadəçi təlimatı</a>
           </div>
 
@@ -87,11 +87,11 @@ const UserNavbar = () => {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <a href="#about" onClick={toggleMenu}>Layihə haqqında</a>
-              <a href="#videos" onClick={toggleMenu}>Tədris videoları</a>
-              <a href="#schools" onClick={toggleMenu}>Bakı məktəbləri</a>
-              <a href="#faq" onClick={toggleMenu}>FAQ</a>
-              <a href="#guide" onClick={toggleMenu}>İstifadəçi təlimatı</a>
+              <Link to={"/about"}>Layihə haqqında</Link>
+              <Link to={"/contact"}>Bizimlə əlaqə</Link>
+              <a href="#videos">Tədris videoları</a>
+              <Link to={"/FAQ"}>FAQ</Link>
+              <a href="#guide">İstifadəçi təlimatı</a>
             </motion.div>
           )}
         </AnimatePresence>

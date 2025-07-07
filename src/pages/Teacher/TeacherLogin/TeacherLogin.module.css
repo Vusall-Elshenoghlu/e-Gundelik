@@ -182,3 +182,14 @@
   color: #084298;
   text-decoration: underline;
 }
+.rememberMeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.rememberMeWrapper input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #007bff;
+}

@@ -54,6 +54,7 @@ import ParentResults from "../pages/Parent/ParentResults";
 import CreateQuiz from "../pages/Teacher/CreateQuiz";
 import QuizTimes from "../pages/Teacher/QuizTimes";
 import CheckYourself from "../pages/Student/CheckYourself";
+import FAQ from "../pages/User/FAQ";
 
 export const ROUTES = [
     {
@@ -71,6 +72,10 @@ export const ROUTES = [
             {
                 path: "contact",
                 element: <Contact />
+            },
+            {
+                path: "FAQ",
+                element: <FAQ />
             },
             {
                 path: "user-profile",

@@ -37,7 +37,7 @@ const CheckYourself = () => {
 
         const formData = new FormData();
         formData.append('pdf', pdfFile);
-        formData.append('starPage', startPage);
+        formData.append('starPage', startPage);  // ← bura da düzgün yazılıb?
         formData.append('endPage', endPage);
 
         try {
@@ -50,14 +50,28 @@ const CheckYourself = () => {
                     },
                 }
             );
-            console.log(response.data)
-            setQuestions(response.data);
+
+            const formattedQuestions = response.data.map((item) => {
+                const optionKeys = Object.keys(item.options);
+                const optionValues = optionKeys.map((key) => item.options[key]);
+                const correctIndex = optionKeys.indexOf(item.correctAnswer);
+
+                return {
+                    question: item.question,
+                    options: optionValues,
+                    correctIndex,
+                };
+            });
+
+            setQuestions(formattedQuestions);
         } catch (error) {
+            console.error(error);
             alert('Sual yüklənərkən xəta baş verdi.');
         } finally {
             setLoading(false);
         }
     };
+
 
     const handleAnswerClick = (index) => {
         setSelectedAnswer(index);
