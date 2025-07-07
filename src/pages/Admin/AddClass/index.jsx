@@ -29,7 +29,7 @@ const AddClass = () => {
       try {
         const [subjectsRes, teachersRes] = await Promise.all([
           axios.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
-          axios.get("http://turansalimli-001-site1.ntempurl.com/api/User/teachers"),
+          axios.get("http://turansalimli-001-site1.ntempurl.com/api/User/GetAllTeachers/teachers"),
         ]);
         console.log(teachersRes)
         console.log(subjectsRes)

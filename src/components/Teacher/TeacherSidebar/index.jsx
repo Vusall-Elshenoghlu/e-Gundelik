@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./TeacherSidebar.module.css"
-import { FaBars, FaBook, FaChalkboardTeacher, FaHome, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
+import { FaBars, FaBook, FaChalkboardTeacher, FaHome, FaPeopleArrows, FaPlus, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
 import { AuthContext } from '../../../context/AuthContext'
 import Swal from 'sweetalert2'
 
@@ -82,12 +82,22 @@ function TeacherSidebar() {
                                 </li>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"students"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaBook className='me-2' /> Students
+                                        <FaPeopleArrows className='me-2' /> Students
                                     </Link>
                                 </li>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"edit-profile"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
                                         <FaBook className='me-2' /> Edit Profile
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
+                                    <Link to={"create-quiz"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaPlus className='me-2' /> Quiz yarat
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
+                                    <Link to={"quiz-times"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaBook className='me-2' /> Quizlər
                                     </Link>
                                 </li>
                                 

@@ -41,7 +41,7 @@ const Students = () => {
     const fetchStudents = async () => {
       try {
         setLoading(true)
-        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/User/students")
+        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/User/GetAllStudents/students")
         setStudents(res.data.data)
       } catch (err) {
         console.error("Error:", err)
@@ -87,7 +87,7 @@ const Students = () => {
 
     if (result.isConfirmed) {
       try {
-        await axiosAuth.delete(`https://turansalimli-001-site1.ntempurl.com/api/User/students/${student.id}`)
+        await axiosAuth.delete(`https://turansalimli-001-site1.ntempurl.com/api/User/DeleteStudent/students/${student.id}`)
         setStudents((prev) => prev.filter(s => s.id !== student.id))
         Swal.fire(
           'Silindi!',

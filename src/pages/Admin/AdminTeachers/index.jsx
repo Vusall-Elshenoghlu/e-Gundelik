@@ -42,8 +42,9 @@ const AdminTeachers = () => {
     const fetchTeachers = async () => {
       try {
         setLoading(true)
-        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/User/teachers")
+        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/User/GetAllTeachers/teachers")
         setTeachers(res.data.data)
+        console.log(res.data)
       } catch (err) {
         console.error("Error:", err)
       } finally {
@@ -89,7 +90,7 @@ const AdminTeachers = () => {
 
     if (result.isConfirmed) {
       try {
-        await axiosAuth.delete(`https://turansalimli-001-site1.ntempurl.com/api/User/teachers/${teacher.id}`)
+        await axiosAuth.delete(`https://turansalimli-001-site1.ntempurl.com/api/User/DeleteTeacher/teachers/${teacher.id}`)
         setTeachers((prev) => prev.filter(t => t.id !== teacher.id))
         Swal.fire(
           'Silindi!',

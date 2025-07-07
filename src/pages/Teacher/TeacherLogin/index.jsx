@@ -81,6 +81,7 @@ const TeacherLogin = () => {
 
     } catch (err) {
       const errorData = err.response?.data;
+      console.log(errorData)
 
       if (errorData?.errors && typeof errorData.errors === "object") {
         Object.values(errorData.errors).forEach((errorArr) => {
@@ -94,8 +95,8 @@ const TeacherLogin = () => {
       if (errorData?.title) {
         toast.error(errorData.title);
         return;
-      } else if (errorData?.Message) {
-        toast.error(errorData.Message);
+      } else if (errorData?.message) {
+        toast.error(errorData.message);
         return;
       }
 
@@ -124,12 +125,12 @@ const TeacherLogin = () => {
 
       <div className={`${styles.rightSide} ${darkMode ? styles.darkRight : styles.lightRight}`}>
         <form className={styles.loginForm} onSubmit={handleSubmit}>
-          <h2 className={styles.formTitle}>Welcome Back</h2>
+          <h2 className={styles.formTitle}>Xoş gəlmisiniz</h2>
 
           <input
             type="text"
-            placeholder="Email or Username"
-            // required
+            placeholder="Email və ya istifadəçi adı"
+            required
             className={styles.loginInput}
             value={emailOrUserName}
             onChange={(e) => setEmailOrUserName(e.target.value)}
@@ -138,8 +139,8 @@ const TeacherLogin = () => {
           <div className={styles.passwordWrapper}>
             <input
               type={passwordVisible ? "text" : "password"}
-              placeholder="Password"
-              // required
+              placeholder="Şifrə"
+              required
               className={styles.loginInput}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -160,7 +161,7 @@ const TeacherLogin = () => {
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <label htmlFor="rememberMe">Remember Me</label>
+            <label htmlFor="rememberMe">Məni xatırla</label>
           </div>
           <div className={styles.rememberMeWrapper}>
             <input
@@ -169,21 +170,29 @@ const TeacherLogin = () => {
               checked={isFirstLogin}
               onChange={(e) => setIsFirstLogin(e.target.checked)}
             />
-            <label htmlFor="firstLogin">I am logging in for the first time</label>
+            <label htmlFor="firstLogin">İlk dəfə daxil oluram</label>
           </div>
 
 
           <button type="submit" className={styles.loginButton}>
-            Login
+            Daxil ol
           </button>
           <p className={styles.registerRedirect}>
-            <Link to="/forgot-password">Forgot your password?</Link>
+            <Link to="/forgot-password">Şifrənizi unutmusunuz?</Link>
           </p>
           <p className={styles.registerRedirect}>
-            Don't have an account? <Link to="/register">Register</Link>
+            Hesabınız yoxdur? <Link to="/register">Qeydiyyatdan keçin</Link>
           </p>
+
+
+        <Link to="/" className={styles.backHomeLink}>
+          ⬅ Ana səhifəyə qayıt
+        </Link>
         </form>
+        
       </div>
+
+
     </motion.div>
   );
 };

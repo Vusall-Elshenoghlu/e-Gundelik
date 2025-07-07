@@ -130,8 +130,8 @@ const UpdatePassword = () => {
                   >
                     <FaShieldAlt className="text-primary" size={32} />
                   </div>
-                  <h2 className="fw-bold text-dark mb-2">Change Password</h2>
-                  <p className="text-muted mb-0">Update your password to keep your account secure</p>
+                  <h2 className="fw-bold text-dark mb-2">Şifrəni dəyiş</h2>
+                  <p className="text-muted mb-0">Hesabınızın təhlükəsizliyini təmin etmək üçün şifrənizi yeniləyin</p>
                 </motion.div>
 
                 <AnimatePresence>
@@ -143,7 +143,7 @@ const UpdatePassword = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <Alert variant="danger" className="rounded-3 mb-4">
-                        <small>{error}</small>
+                        <small>Cari şifrə yalnışdır və ya yeni şifrə tələblərə cavab vermir.</small>
                       </Alert>
                     </motion.div>
                   )}
@@ -156,7 +156,7 @@ const UpdatePassword = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <Alert variant="success" className="rounded-3 mb-4">
-                        <small>Password updated successfully! Redirecting to dashboard...</small>
+                        <small>Şifrə uğurla yeniləndi! Yönləndirilirsiniz...</small>
                       </Alert>
                     </motion.div>
                   )}
@@ -170,7 +170,7 @@ const UpdatePassword = () => {
                         <RBForm.Group className="mb-4">
                           <RBForm.Label className="fw-semibold text-dark mb-2">
                             <FaLock className="me-2 text-muted" size={14} />
-                            Current Password
+                            Cari şifrə
                           </RBForm.Label>
                           <InputGroup>
                             <Field name="currentPassword">
@@ -178,7 +178,7 @@ const UpdatePassword = () => {
                                 <RBForm.Control
                                   {...field}
                                   type={showCurrent ? "text" : "password"}
-                                  placeholder="Enter your current password"
+                                  placeholder="Cari şifrənizi daxil edin"
                                   className={`rounded-start-3 border-end-0 ${errors.currentPassword && touched.currentPassword ? "is-invalid" : ""
                                     }`}
                                   style={{
@@ -218,7 +218,7 @@ const UpdatePassword = () => {
                         <RBForm.Group className="mb-4">
                           <RBForm.Label className="fw-semibold text-dark mb-2">
                             <FaLock className="me-2 text-muted" size={14} />
-                            New Password
+                            Yeni şifrə
                           </RBForm.Label>
                           <InputGroup>
                             <Field name="newPassword">
@@ -226,7 +226,7 @@ const UpdatePassword = () => {
                                 <RBForm.Control
                                   {...field}
                                   type={showNew ? "text" : "password"}
-                                  placeholder="Enter your new password"
+                                  placeholder="Yeni şifrənizi daxil edin"
                                   className={`rounded-start-3 border-end-0 ${errors.newPassword && touched.newPassword ? "is-invalid" : ""
                                     }`}
                                   style={{
@@ -266,7 +266,7 @@ const UpdatePassword = () => {
                         <RBForm.Group className="mb-4">
                           <RBForm.Label className="fw-semibold text-dark mb-2">
                             <FaLock className="me-2 text-muted" size={14} />
-                            Confirm New Password
+                            Yeni şifrəni təsdiqləyin
                           </RBForm.Label>
                           <InputGroup>
                             <Field name="confirmPassword">
@@ -274,7 +274,7 @@ const UpdatePassword = () => {
                                 <RBForm.Control
                                   {...field}
                                   type={showConfirm ? "text" : "password"}
-                                  placeholder="Confirm your new password"
+                                  placeholder="Yeni şifrənini təsdiqləyin"
                                   className={`rounded-start-3 border-end-0 ${errors.confirmPassword && touched.confirmPassword ? "is-invalid" : ""
                                     }`}
                                   style={{
@@ -327,12 +327,12 @@ const UpdatePassword = () => {
                             {isSubmitting ? (
                               <>
                                 <Spinner as="span" animation="border" size="sm" role="status" className="me-2" />
-                                Updating Password...
+                                Şifrə yenilənir...
                               </>
                             ) : success ? (
-                              "Password Updated Successfully!"
+                              "Şifrə uğurla yeniləndi!"
                             ) : (
-                              "Change Password"
+                              "Şifrəni dəyiş"
                             )}
                           </Button>
                         </motion.div>
@@ -342,7 +342,7 @@ const UpdatePassword = () => {
                 </Formik>
 
                 <motion.div variants={itemVariants} className="text-center mt-4">
-                  <small className="text-muted">Make sure your new password is strong and unique</small>
+                  <small className="text-muted">Yeni şifrənizin güclü və unikal olduğuna əmin olun</small>
                 </motion.div>
               </Card.Body>
             </Card>

@@ -1,58 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { Button, Container, Row, Col, Card, Form as BootstrapForm } from "react-bootstrap";
-import styles from "./AddTeacher.module.css";
 import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
+import styles from "./AddTeacher.module.css";
 
 const AddTeacher = () => {
+  const [subjects, setSubjects] = useState([]);
+  const axiosAuth = useAxiosWithAuth();
+
+  // Mövzu yüklə
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const res = await axiosAuth.get(
+          "https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"
+        );
+        setSubjects(res.data || []);
+      } catch (error) {
+        console.error("Subject yüklənmədi:", error);
+      }
+    };
+    fetchSubjects();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const initialValues = {
     firstName: "",
     lastName: "",
     username: "",
     email: "",
-    gender: 0,
+    gender: "0",
     dob: "",
     address: "",
-    imgUrl: "",
-    password: null,
-    confirmPassword: null,
+    subjectId: "",
   };
-
-  const axiosAuth = useAxiosWithAuth();
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required("Ad vacibdir"),
     lastName: Yup.string().required("Soyad vacibdir"),
     username: Yup.string().required("İstifadəçi adı vacibdir"),
-    email: Yup.string().email("Düzgün email daxil edin").required("Email vacibdir"),
-    gender: Yup.number().oneOf([0, 1], "Cins seçin").required("Cins vacibdir"),
+    email: Yup.string().email("Düzgün email").required("Email vacibdir"),
+    gender: Yup.string().oneOf(["0", "1"]).required("Cins vacibdir"),
     dob: Yup.date().required("Doğum tarixi vacibdir"),
     address: Yup.string().required("Ünvan vacibdir"),
-    imgUrl: Yup.string().url("Şəkil URL düzgün deyil").nullable().notRequired(),
+    subjectId: Yup.string().required("Mövzu seçilməlidir"),
   });
 
   const handleSubmit = async (values, { resetForm }) => {
-    try {
-      const payload = {
-        ...values,
-        imgUrl: values.imgUrl === "" ? "" : values.imgUrl,
-        password: "",
-        confirmPassword: "",
-        childrenIds: [],
-        parentId: "",
-      };
+    const payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      userName: values.username,
+      email: values.email,
+      gender: Number(values.gender),
+      dob: values.dob,
+      address: values.address,
+      password: "",
+      confirmPassword: "",
+      childrenIds: [],
+      parentId: "",
+      subjectIds: [values.subjectId],
+      teacherId: "",
+      classId: "",
+      student: "",
+    };
 
-      const response = await axiosAuth.post(
+    try {
+      await axiosAuth.post(
         "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-teacher",
         payload
       );
-
       alert("✅ Müəllim uğurla yaradıldı!");
       resetForm();
     } catch (error) {
-      console.error("❌ Xəta baş verdi:", error);
+      console.error("❌ Xəta:", error);
       alert("Xəta oldu. Zəhmət olmasa məlumatları yoxla.");
     }
   };
@@ -67,147 +89,117 @@ const AddTeacher = () => {
 
         <Card className={styles.formCard}>
           <Card.Body className={styles.cardBody}>
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
               {({ isSubmitting, errors, touched }) => (
                 <Form>
                   <Row className="g-4">
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>Ad</BootstrapForm.Label>
-                        <Field name="firstName">
-                          {({ field }) => (
-                            <BootstrapForm.Control
-                              {...field}
-                              type="text"
-                              placeholder="Adınızı daxil edin"
-                              className={`${styles.input} ${errors.firstName && touched.firstName ? styles.inputError : ""}`}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage name="firstName" component="div" className={styles.errorText} />
+                        <BootstrapForm.Label>Ad</BootstrapForm.Label>
+                        <Field
+                          name="firstName"
+                          type="text"
+                          className={`form-control ${errors.firstName && touched.firstName ? "is-invalid" : ""}`}
+                        />
+                        <ErrorMessage name="firstName" component="div" className="invalid-feedback" />
                       </BootstrapForm.Group>
                     </Col>
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>Soyad</BootstrapForm.Label>
-                        <Field name="lastName">
-                          {({ field }) => (
-                            <BootstrapForm.Control
-                              {...field}
-                              type="text"
-                              placeholder="Soyadınızı daxil edin"
-                              className={`${styles.input} ${errors.lastName && touched.lastName ? styles.inputError : ""}`}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage name="lastName" component="div" className={styles.errorText} />
+                        <BootstrapForm.Label>Soyad</BootstrapForm.Label>
+                        <Field
+                          name="lastName"
+                          type="text"
+                          className={`form-control ${errors.lastName && touched.lastName ? "is-invalid" : ""}`}
+                        />
+                        <ErrorMessage name="lastName" component="div" className="invalid-feedback" />
                       </BootstrapForm.Group>
                     </Col>
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>İstifadəçi Adı</BootstrapForm.Label>
-                        <Field name="username">
-                          {({ field }) => (
-                            <BootstrapForm.Control
-                              {...field}
-                              type="text"
-                              placeholder="İstifadəçi adını daxil edin"
-                              className={`${styles.input} ${errors.username && touched.username ? styles.inputError : ""}`}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage name="username" component="div" className={styles.errorText} />
+                        <BootstrapForm.Label>İstifadəçi adı</BootstrapForm.Label>
+                        <Field
+                          name="username"
+                          type="text"
+                          className={`form-control ${errors.username && touched.username ? "is-invalid" : ""}`}
+                        />
+                        <ErrorMessage name="username" component="div" className="invalid-feedback" />
                       </BootstrapForm.Group>
                     </Col>
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>Email</BootstrapForm.Label>
-                        <Field name="email">
-                          {({ field }) => (
-                            <BootstrapForm.Control
-                              {...field}
-                              type="email"
-                              placeholder="Email ünvanınızı daxil edin"
-                              className={`${styles.input} ${errors.email && touched.email ? styles.inputError : ""}`}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage name="email" component="div" className={styles.errorText} />
+                        <BootstrapForm.Label>Email</BootstrapForm.Label>
+                        <Field
+                          name="email"
+                          type="email"
+                          className={`form-control ${errors.email && touched.email ? "is-invalid" : ""}`}
+                        />
+                        <ErrorMessage name="email" component="div" className="invalid-feedback" />
                       </BootstrapForm.Group>
                     </Col>
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>Cins</BootstrapForm.Label>
-                        <Field name="gender">
-                          {({ field }) => (
-                            <BootstrapForm.Select
-                              {...field}
-                              className={`${styles.input} ${errors.gender && touched.gender ? styles.inputError : ""}`}
-                            >
-                              <option value="">Cins seçin</option>
-                              <option value={0}>Kişi</option>
-                              <option value={1}>Qadın</option>
-                            </BootstrapForm.Select>
-                          )}
+                        <BootstrapForm.Label>Cins</BootstrapForm.Label>
+                        <Field as="select" name="gender" className={`form-select ${errors.gender && touched.gender ? "is-invalid" : ""}`}>
+                          <option value="0">Kişi</option>
+                          <option value="1">Qadın</option>
                         </Field>
-                        <ErrorMessage name="gender" component="div" className={styles.errorText} />
+                        <ErrorMessage name="gender" component="div" className="invalid-feedback" />
                       </BootstrapForm.Group>
                     </Col>
 
                     <Col md={6}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>Doğum Tarixi</BootstrapForm.Label>
-                        <Field name="dob">
-                          {({ field }) => (
-                            <BootstrapForm.Control
-                              {...field}
-                              type="date"
-                              className={`${styles.input} ${errors.dob && touched.dob ? styles.inputError : ""}`}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage name="dob" component="div" className={styles.errorText} />
+                        <BootstrapForm.Label>Doğum tarixi</BootstrapForm.Label>
+                        <Field
+                          name="dob"
+                          type="date"
+                          className={`form-control ${errors.dob && touched.dob ? "is-invalid" : ""}`}
+                        />
+                        <ErrorMessage name="dob" component="div" className="invalid-feedback" />
                       </BootstrapForm.Group>
                     </Col>
 
                     <Col md={12}>
                       <BootstrapForm.Group>
-                        <BootstrapForm.Label className={styles.label}>Ünvan</BootstrapForm.Label>
-                        <Field name="address">
-                          {({ field }) => (
-                            <BootstrapForm.Control
-                              {...field}
-                              as="textarea"
-                              rows={4}
-                              placeholder="Ünvanınızı daxil edin"
-                              className={`${styles.input} ${styles.textarea} ${errors.address && touched.address ? styles.inputError : ""}`}
-                            />
-                          )}
+                        <BootstrapForm.Label>Ünvan</BootstrapForm.Label>
+                        <Field
+                          name="address"
+                          as="textarea"
+                          rows={3}
+                          className={`form-control ${errors.address && touched.address ? "is-invalid" : ""}`}
+                        />
+                        <ErrorMessage name="address" component="div" className="invalid-feedback" />
+                      </BootstrapForm.Group>
+                    </Col>
+
+                    <Col md={6}>
+                      <BootstrapForm.Group>
+                        <BootstrapForm.Label>Mövzu</BootstrapForm.Label>
+                        <Field as="select" name="subjectId" className={`form-select ${errors.subjectId && touched.subjectId ? "is-invalid" : ""}`}>
+                          <option value="">Seçin</option>
+                          {subjects.map((subj) => (
+                            <option key={subj.id} value={subj.id}>
+                              {subj.name}
+                            </option>
+                          ))}
                         </Field>
-                        <ErrorMessage name="address" component="div" className={styles.errorText} />
+                        <ErrorMessage name="subjectId" component="div" className="invalid-feedback" />
                       </BootstrapForm.Group>
                     </Col>
 
                     <Col md={12}>
-                      <div className={styles.buttonContainer}>
-                        <Button type="submit" disabled={isSubmitting} className={styles.submitButton} size="lg">
-                          {isSubmitting ? (
-                            <>
-                              <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                              Göndərilir...
-                            </>
-                          ) : (
-                            <>
-                              <i className="fas fa-plus me-2"></i>
-                              Müəllim Yarat
-                            </>
-                          )}
-                        </Button>
-                      </div>
+                      <Button type="submit" disabled={isSubmitting} size="lg" className="w-100 mt-3">
+                        {isSubmitting ? "Göndərilir..." : "Müəllim Yarat"}
+                      </Button>
                     </Col>
                   </Row>
                 </Form>

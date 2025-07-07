@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 50px 30px;
+  padding: 100px 30px;
 }
 
 .lightRight {
@@ -167,4 +167,18 @@
   .formTitle {
     font-size: 24px;
   }
+}
+
+.backHomeLink {
+  display: inline-block;
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  margin-left: 60%;
+}
+
+.backHomeLink:hover {
+  color: #084298;
+  text-decoration: underline;
 }

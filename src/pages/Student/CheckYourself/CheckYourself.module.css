@@ -1,0 +1,62 @@
+    .quizContainer {
+  background-color: #ffffff;
+  padding: 30px 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(13, 110, 253, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 900px;
+  margin: auto;
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .quizContainer {
+    padding: 20px 15px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .quizContainer {
+    padding: 15px 10px;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  width: 100%;
+  transition: 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+button {
+  font-size: 16px;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(13, 110, 253, 0.25);
+}
+
+form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}

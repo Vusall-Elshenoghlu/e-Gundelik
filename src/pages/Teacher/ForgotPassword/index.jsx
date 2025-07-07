@@ -29,11 +29,11 @@ function ForgotPassword() {
         </Helmet>
         {message && <p>{message}</p>}
         <form className={`${styles.authForm} form-box`} onSubmit={handleSubmit}>
-          <h2 className={styles.formTitle}>Forgot Password</h2>
+          <h2 className={styles.formTitle}>Şifrəmi unutdum</h2>
           <input
             type="email"
             name="email"
-            placeholder="Enter your email"
+            placeholder="Emailinizi daxil edin"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={`${styles.inputField} form-control mt-2`}
@@ -43,11 +43,11 @@ function ForgotPassword() {
             type="submit"
             className={`btn btn-primary mt-3 ${styles.submitBtn}`}
           >
-            Send Reset Link
+            Yeniləmə linkini göndər
           </button>
           <p className={styles.redirectText}>
-            Remembered your password?{' '}
-            <a href="/login" className={styles.redirectLink}>Login</a>
+            Şifrənizi xatırladınız?{' '}
+            <a href="/login" className={styles.redirectLink}>Daxil ol</a>
           </p>
         </form>
       </div>

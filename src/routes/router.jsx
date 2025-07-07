@@ -51,6 +51,9 @@ import ParentBooks from "../pages/Parent/ParentBooks";
 import ParentSubjects from "../pages/Parent/ParentSubjects";
 import ParentLessons from "../pages/Parent/ParentLessons";
 import ParentResults from "../pages/Parent/ParentResults";
+import CreateQuiz from "../pages/Teacher/CreateQuiz";
+import QuizTimes from "../pages/Teacher/QuizTimes";
+import CheckYourself from "../pages/Student/CheckYourself";
 
 export const ROUTES = [
     {
@@ -178,6 +181,14 @@ export const ROUTES = [
                 path: "edit-profile",
                 element: <EditProfile />
             },
+            {
+                path: "create-quiz",
+                element: <CreateQuiz />
+            },
+            {
+                path: "quiz-times",
+                element: <QuizTimes />
+            },
         ]
     },
     {
@@ -234,6 +245,10 @@ export const ROUTES = [
             {
                 path: "results",
                 element: <StudentResults />
+            },
+            {
+                path: "check-yourself",
+                element: <CheckYourself />
             },
 
         ]

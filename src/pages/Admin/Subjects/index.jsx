@@ -99,6 +99,7 @@ export default function Subject() {
         );
         setShowEditModal(false);
         Swal.fire("Uğurlu!", `"${editForm.name}" fənni yeniləndi.`, "success");
+        window.location.reload()
       })
 
       .catch((err) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom' // düzəliş etdin
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./StudentSidebar.module.css"
-import { FaBars, FaBook, FaHome, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
+import { FaBars, FaBook, FaCheck, FaHome, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
 import { AuthContext } from '../../../context/AuthContext'
 import Swal from 'sweetalert2'
 
@@ -77,6 +77,11 @@ function StudentSidebar() {
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"results"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
                                         <FaHome className='me-2' /> Results
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
+                                    <Link to={"check-yourself"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaCheck className='me-2' /> Ozunu Yoxla
                                     </Link>
                                 </li>
                             </ul>
