@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./Parentsidebar.module.css"
-import { FaAccessibleIcon, FaAdjust, FaBars, FaBook, FaHome, FaLess, FaSignOutAlt, FaSubscript, FaTimes, FaUser } from 'react-icons/fa'
+import { FaAccessibleIcon, FaAdjust, FaBars, FaBook, FaHome, FaLess, FaQuestionCircle, FaSignOutAlt, FaSubscript, FaTimes, FaUser } from 'react-icons/fa'
 import { AuthContext } from '../../../context/AuthContext'
 import Swal from 'sweetalert2'
 function ParentSidebar() {
@@ -86,6 +86,11 @@ function ParentSidebar() {
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"subjects"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
                                         <FaAdjust className='me-2' /> Fənnlər
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
+                                    <Link to={"quiz-times"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaQuestionCircle className='me-2' /> Imtahan vaxtlari
                                     </Link>
                                 </li>
                             </ul>

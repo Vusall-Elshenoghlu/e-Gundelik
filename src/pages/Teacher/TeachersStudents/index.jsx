@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Table, Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../context/AuthContext";
 
 const TeacherStudents = () => {
+  const { user } = useContext(AuthContext)// Teacher məlumatını burdan götürürük (əgər backend tələb edirsə)
   const [lessons, setLessons] = useState([]);
   const [selectedLessonId, setSelectedLessonId] = useState("");
   const [students, setStudents] = useState([]);
@@ -11,8 +13,8 @@ const TeacherStudents = () => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [result, setResult] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [studentProgress, setStudentProgress] = useState({});
 
-  // Dərsləri çəkmək
   useEffect(() => {
     axios
       .get("https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetAllLessons")
@@ -24,7 +26,6 @@ const TeacherStudents = () => {
       });
   }, []);
 
-  // Tələbələri çəkmək (hal-hazırda dəyişmir, lazım olsa lessonId-ə görə dəyişdirə bilərik)
   useEffect(() => {
     axios
       .get("https://turansalimli-001-site1.ntempurl.com/api/User/GetAllStudents/students")
@@ -35,6 +36,49 @@ const TeacherStudents = () => {
         console.error("Tələbələr çəkilərkən xəta:", err);
       });
   }, []);
+
+  // Seçilmiş dərs və tələbələr dəyişəndə proqresləri al
+  useEffect(() => {
+    if (!selectedLessonId || students.length === 0) return;
+
+    const fetchProgressForAll = async () => {
+      const progressData = {};
+
+      await Promise.all(
+        students.map(async (student) => {
+          try {
+            const res = await axios.get(
+              `https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetStudentProgress`,
+              {
+                params: {
+                  lessonId: selectedLessonId,
+                  studentId: student.id,
+                },
+              }
+            );
+
+            const studentProgressEntry = res.data?.data?.studentsProgress?.find(
+              (progress) => progress.studentId === student.id
+            );
+
+            progressData[student.id] = studentProgressEntry
+              ? {
+                result: studentProgressEntry.result,
+                feedback: studentProgressEntry.feedback,
+              }
+              : null;
+          } catch (err) {
+            console.error(`Progress alınarkən xəta (ID: ${student.id}):`, err);
+            progressData[student.id] = null;
+          }
+        })
+      );
+
+      setStudentProgress(progressData);
+    };
+
+    fetchProgressForAll();
+  }, [selectedLessonId, students]);
 
   const handleLessonChange = (e) => {
     setSelectedLessonId(e.target.value);
@@ -81,6 +125,14 @@ const TeacherStudents = () => {
       .then(() => {
         Swal.fire("Uğurlu", "Qiymət əlavə olundu", "success");
         handleCloseModal();
+
+        // Yenidən qiymətləri çək
+        setTimeout(() => {
+          setSelectedLessonId((prev) => {
+            // Trigger useEffect by setting the same value again
+            return prev;
+          });
+        }, 300); // kiçik gecikmə (optional)
       })
       .catch((err) => {
         console.error("POST error:", err);
@@ -89,12 +141,20 @@ const TeacherStudents = () => {
   };
 
   return (
-    <div className="p-4" style={{ maxWidth: "calc(100vw - 300px)", marginLeft: "300px", minHeight: "100vh", backgroundColor: "#f9fafb", boxSizing: "border-box" }}>
+    <div
+      className="p-4"
+      style={{
+        maxWidth: "calc(100vw - 300px)",
+        marginLeft: "300px",
+        minHeight: "100vh",
+        backgroundColor: "#f9fafb",
+        boxSizing: "border-box",
+      }}
+    >
       <h3 className="mb-4 text-primary fw-bold" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
         Tələbə Siyahısı
       </h3>
 
-      {/* Select for Lessons */}
       <Form.Group className="mb-4" style={{ maxWidth: "400px" }}>
         <Form.Label>Dərs seçin</Form.Label>
         <Form.Select value={selectedLessonId} onChange={handleLessonChange} aria-label="Dərs seçin">
@@ -108,13 +168,14 @@ const TeacherStudents = () => {
       </Form.Group>
 
       <div className="table-responsive shadow-sm rounded bg-white">
-        <Table striped bordered hover responsive className="mb-0" style={{ minWidth: "700px" }}>
+        <Table striped bordered hover responsive className="mb-0" style={{ minWidth: "750px" }}>
           <thead className="table-primary">
             <tr>
               <th>Ad</th>
               <th>Soyad</th>
               <th>Doğum Tarixi</th>
               <th>Ünvan</th>
+              <th>Qiymət</th>
               <th style={{ minWidth: "130px" }}>Əməliyyat</th>
             </tr>
           </thead>
@@ -127,6 +188,11 @@ const TeacherStudents = () => {
                   <td>{new Date(student.dob).toLocaleDateString()}</td>
                   <td>{student.address}</td>
                   <td>
+                    {studentProgress[student.id]?.result !== undefined
+                      ? studentProgress[student.id]?.result
+                      : <span className="text-muted">Yoxdur</span>}
+                  </td>
+                  <td>
                     <Button variant="outline-primary" size="sm" onClick={() => handleOpenModal(student)}>
                       Qiymətləndir
                     </Button>
@@ -135,7 +201,7 @@ const TeacherStudents = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="text-center text-muted py-4">
+                <td colSpan={6} className="text-center text-muted py-4">
                   Tələbə tapılmadı.
                 </td>
               </tr>

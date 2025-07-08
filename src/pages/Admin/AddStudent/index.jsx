@@ -69,7 +69,7 @@ const AddStudent = () => {
       resetForm()
     } catch (error) {
       console.error("Xəta:", error)
-      Swal.fire("Xəta!", "Zəhmət olmasa məlumatları yoxlayın", "error")
+      Swal.fire("Xəta!", error.response.data.message, "error")
     }
   }
 

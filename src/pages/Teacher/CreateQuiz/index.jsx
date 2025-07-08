@@ -14,43 +14,50 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import Select from "react-select"; // ✅ react-select əlavə et
 import styles from "./CreateQuiz.module.css";
 
 const CreateQuiz = () => {
   const [subjects, setSubjects] = useState([]);
+  const [classes, setClasses] = useState([]); // ✅ SchoolClasses üçün state
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const fetchSubjects = async () => {
+
+  const fetchClasses = async () => {
     try {
       const res = await axios.get(
-        "https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"
+        "https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass"
       );
-      setSubjects(res.data);
+      setClasses(res.data);
     } catch (err) {
-      toast.error("Fənləri yükləmək alınmadı");
+      toast.error("Sinifləri yükləmək alınmadı");
     }
   };
 
   useEffect(() => {
-    fetchSubjects();
+    fetchClasses();
   }, []);
 
   const initialValues = {
     subjectId: "",
     date: "",
     primary: false,
+    classIds: [], // ✅ array şəklində saxlayacağıq
   };
 
   const validationSchema = Yup.object().shape({
     subjectId: Yup.string().required("Fənn seçin"),
     date: Yup.date().required("Tarix seçin"),
+    classIds: Yup.array().min(1, "Ən az 1 sinif seçilməlidir"),
   });
 
   const handleSubmit = async (values, { resetForm }) => {
     const payload = {
-      ...values,
-      classId: values.subjectId,                         
+      primary: values.primary,
+      subjectId: values.subjectId,
+      classId: values.classIds[0], // ✅ yalnız 1 classId göndərilirsə (əgər array qəbul edirsə, dəyiş)
+      date: values.date,
     };
 
     try {
@@ -117,6 +124,31 @@ const CreateQuiz = () => {
                     />
                     {touched.date && errors.date && (
                       <div className="invalid-feedback">{errors.date}</div>
+                    )}
+                  </Col>
+                </Row>
+
+                <Row className="mb-3">
+                  <Col>
+                    <BootstrapForm.Label>Sinif(lər)</BootstrapForm.Label>
+                    <Select
+                      isMulti
+                      name="classIds"
+                      options={classes.map((cls) => ({
+                        label: cls.name,
+                        value: cls.id,
+                      }))}
+                      className={touched.classIds && errors.classIds ? "is-invalid" : ""}
+                      onChange={(selected) =>
+                        setFieldValue(
+                          "classIds",
+                          selected ? selected.map((s) => s.value) : []
+                        )
+                      }
+                      placeholder="Sinif seçin..."
+                    />
+                    {touched.classIds && errors.classIds && (
+                      <div className="text-danger mt-1">{errors.classIds}</div>
                     )}
                   </Col>
                 </Row>

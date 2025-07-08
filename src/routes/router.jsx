@@ -55,6 +55,8 @@ import CreateQuiz from "../pages/Teacher/CreateQuiz";
 import QuizTimes from "../pages/Teacher/QuizTimes";
 import CheckYourself from "../pages/Student/CheckYourself";
 import FAQ from "../pages/User/FAQ";
+import ParentQuizTimes from "../pages/Parent/ParentQuizTimes";
+import StudentQuizTimes from "../pages/Student/StudentQuizTimes";
 
 export const ROUTES = [
     {
@@ -224,6 +226,10 @@ export const ROUTES = [
                 path:"results",
                 element:<ParentResults/>
             },
+            {
+                path:"quiz-times",
+                element:<ParentQuizTimes/>
+            },
 
         ]
     },
@@ -254,6 +260,10 @@ export const ROUTES = [
             {
                 path: "check-yourself",
                 element: <CheckYourself />
+            },
+            {
+                path: "quiz-times",
+                element: <StudentQuizTimes />
             },
 
         ]

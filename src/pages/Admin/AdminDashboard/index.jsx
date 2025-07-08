@@ -25,12 +25,12 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   // Base URL
-  const baseURL = "https://turansalimli-001-site1.ntempurl.com/api";
+  const baseURL = "https://turansalimli-001-site1.ntempurl.com/api/User";
 
   // Helper fetch functions
   const fetchTeachers = async () => {
     try {
-      const res = await axios.get(`${baseURL}/User/teachers`);
+      const res = await axios.get(`${baseURL}/GetAllTeachers/teachers`);
       if (res.data.isSuccess) {
         setCounts((c) => ({ ...c, teachers: res.data.data.length }));
         // Son 5 müəllim (son tarixə görə sort yoxsa slice)
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
 
   const fetchParents = async () => {
     try {
-      const res = await axios.get(`${baseURL}/User/parents`);
+      const res = await axios.get(`${baseURL}/GetAllParents/parents`);
       if (res.data.isSuccess) {
         setCounts((c) => ({ ...c, parents: res.data.data.length }));
         // Son 5 valideyn
@@ -82,10 +82,9 @@ const AdminDashboard = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get(`${baseURL}/User/students`);
+      const res = await axios.get(`${baseURL}/GetAllStudents/students`);
       if (res.data.isSuccess) {
         setCounts((c) => ({ ...c, students: res.data.data.length }));
-        // Son 10 tələbə
         setRecentStudents(
           res.data.data
             .slice()

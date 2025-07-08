@@ -1,27 +1,113 @@
+// LessonList.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { Container, Card, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Table,
+  Button,
+  Modal,
+  Form,
+  Spinner,
+  Row,
+  Col,
+  Card,
+} from "react-bootstrap";
+import Swal from "sweetalert2";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ViewLesson = () => {
-  const { id } = useParams();
-  const [lesson, setLesson] = useState(null);
+  const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedLesson, setSelectedLesson] = useState(null);
+  const [detailData, setDetailData] = useState(null);
+
+  const fetchLessons = async () => {
+    try {
+      const res = await axios.get(
+        "https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetAllLessons"
+      );
+      setLessons(res.data);
+    } catch (err) {
+      console.error("Dərslər yüklənmədi", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchLesson = async () => {
-      try {
-        const response = await axios.get(`http://turansalimli-001-site1.ntempurl.com/api/Lesson/${id}`);
-        setLesson(response.data);
-      } catch (err) {
-        console.error("Dərs yüklənmədi:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchLessons();
+  }, []);
 
-    fetchLesson();
-  }, [id]);
+  const handleEditClick = (lesson) => {
+    setSelectedLesson({ ...lesson });
+    setShowModal(true);
+  };
+
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Əminsiniz?",
+      text: "Bu dərsi silmək istədiyinizə əminsiniz?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Bəli, sil!",
+      cancelButtonText: "Xeyr",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(
+          `https://turansalimli-001-site1.ntempurl.com/api/Lesson/DeleteLesson/${id}`
+        );
+        fetchLessons();
+        Swal.fire("Silindi!", "Dərs uğurla silindi.", "success");
+      } catch (err) {
+        Swal.fire("Xəta", "Silinmə zamanı xəta baş verdi", "error");
+      }
+    }
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      const { id, title, task, teacherId, classId, subject } = selectedLesson;
+      await axios.put(
+        `https://turansalimli-001-site1.ntempurl.com/api/Lesson/UpdateLesson/${id}`,
+        {
+          id,
+          title,
+          task,
+          teacherId,
+          classId,
+          subjectId: subject.id,
+        }
+      );
+      setShowModal(false);
+      fetchLessons();
+    } catch (err) {
+      Swal.fire("Xəta", "Yenilənmə zamanı xəta baş verdi", "error");
+    }
+  };
+
+  const handleDetail = async (id) => {
+    try {
+      const res = await axios.get(
+        `https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetById/${id}`
+      );
+      setDetailData(res.data);
+      Swal.fire({
+        title: res.data.title,
+        html: `
+          <b>Tarix:</b> ${new Date(res.data.date).toLocaleString()}<br/>
+          <b>Fənn:</b> ${res.data.subject.name}<br/>
+          <b>Sinif ID:</b> ${res.data.classId}<br/>
+          <b>Task:</b> ${res.data.task || "Yoxdur"}
+        `,
+        icon: "info",
+      });
+    } catch (err) {
+      Swal.fire("Xəta", "Detalları gətirərkən xəta baş verdi", "error");
+    }
+  };
 
   if (loading) {
     return (
@@ -31,40 +117,108 @@ const ViewLesson = () => {
     );
   }
 
-  if (!lesson) {
-    return <div className="text-center mt-5 text-danger">Dərs tapılmadı.</div>;
-  }
-
   return (
-    <Container className="mt-5">
-      <Card className="p-4">
-        <h3 className="mb-4 text-center">{lesson.title}</h3>
-        <p><strong>Tarix:</strong> {new Date(lesson.date).toLocaleString()}</p>
-        <p><strong>Fənn ID:</strong> {lesson.subjectId}</p>
-        <p><strong>Sinif ID:</strong> {lesson.classId}</p>
-        <p><strong>Müəllim ID:</strong> {lesson.teacherId}</p>
-        <p><strong>Tapşırıq:</strong> {lesson.task}</p>
+    <Container fluid className="mt-4">
+      <Row>
+        <Col lg={{ span: 10, offset: 1 }} style={{marginLeft:"260px"}}>
+          <Card className="p-4 shadow">
+            <h3 className="mb-4 text-center">Bütün Dərslər</h3>
+            <Table striped bordered responsive hover>
+              <thead>
+                <tr>
+                  <th>Başlıq</th>
+                  <th>Tarix</th>
+                  <th>Fənn</th>
+                  <th>Task</th>
+                  <th>Əməliyyatlar</th>
+                </tr>
+              </thead>
+              <tbody>
+                {lessons.map((lesson) => (
+                  <tr key={lesson.id}>
+                    <td>{lesson.title}</td>
+                    <td>{new Date(lesson.date).toLocaleString()}</td>
+                    <td>{lesson.subject?.name}</td>
+                    <td>{lesson.task}</td>
+                    <td>
+                      <div className="d-flex flex-wrap gap-2">
+                        <Button
+                          variant="info"
+                          size="sm"
+                          onClick={() => handleEditClick(lesson)}
+                        >
+                          Redaktə
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => handleDetail(lesson.id)}
+                        >
+                          Detal
+                        </Button>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => handleDelete(lesson.id)}
+                        >
+                          Sil
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card>
+        </Col>
+      </Row>
 
-        {lesson.videoUrl && (
-          <div className="mt-4">
-            <strong>Video:</strong>
-            <video controls className="w-100 mt-2" src={lesson.videoUrl} />
-          </div>
-        )}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Dərsi Redaktə Et</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedLesson && (
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Başlıq</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedLesson.title}
+                  onChange={(e) =>
+                    setSelectedLesson({
+                      ...selectedLesson,
+                      title: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
 
-        {lesson.studentsProgress?.length > 0 && (
-          <div className="mt-4">
-            <h5>Proqreslər</h5>
-            <ul>
-              {lesson.studentsProgress.map((s, i) => (
-                <li key={i}>
-                  👤 {s.studentId} — ✅ {s.result} — 💬 {s.feedback}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </Card>
+              <Form.Group className="mb-3">
+                <Form.Label>Task</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedLesson.task}
+                  onChange={(e) =>
+                    setSelectedLesson({
+                      ...selectedLesson,
+                      task: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            </Form>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Bağla
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Yadda saxla
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

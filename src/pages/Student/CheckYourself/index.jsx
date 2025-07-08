@@ -14,6 +14,7 @@ import QuestionCard from '../../../components/Student/QuestionCard';
 import ProgressBar from '../../../components/Student/ProgressBar';
 import Timer from '../../../components/Student/Timer';
 import ResultCard from '../../../components/Student/ResultCard';
+import { useAxiosWithAuth } from '../../../hooks/UseAxiosWithAuth';
 
 const CheckYourself = () => {
     const [pdfFile, setPdfFile] = useState(null);
@@ -25,30 +26,41 @@ const CheckYourself = () => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
     const [showResult, setShowResult] = useState(false);
+    const [books, setBooks] = useState([])
+    const [selectedPdfUrl, setSelectedPdfUrl] = useState("")
+    const axiosAuth = useAxiosWithAuth()
+    useEffect(() => {
+        const fetchBooks = async () => {
+
+            try {
+                const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Book/GetAllBooks")
+                setBooks(res.data || [])
+            } catch (error) {
+                console.error("Kitablar yüklənmədi:", err);
+            }
+        }
+
+        fetchBooks()
+    }, [])
 
     const handleFetchQuestions = async () => {
-        if (!pdfFile || !startPage || !endPage) {
+        if (!selectedPdfUrl || !startPage || !endPage) {
             alert("Zəhmət olmasa bütün xanaları doldurun.");
             return;
         }
 
+        const params = new URLSearchParams({
+            pdf: selectedPdfUrl,
+            starPage: startPage,
+            endPage: endPage,
+        });
+
         setLoading(true);
         setQuestions([]);
 
-        const formData = new FormData();
-        formData.append('pdf', pdfFile);
-        formData.append('starPage', startPage);  // ← bura da düzgün yazılıb?
-        formData.append('endPage', endPage);
-
         try {
             const response = await axios.post(
-                'https://turansalimli-001-site1.ntempurl.com/api/AI/GetQuestions',
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
+                `https://turansalimli-001-site1.ntempurl.com/api/AI/GetQuestions?${params.toString()}`
             );
 
             const formattedQuestions = response.data.map((item) => {
@@ -65,12 +77,13 @@ const CheckYourself = () => {
 
             setQuestions(formattedQuestions);
         } catch (error) {
-            console.error(error);
-            alert('Sual yüklənərkən xəta baş verdi.');
+            console.error("Xəta:", error?.response?.data || error.message);
+            alert("Sual yüklənərkən xəta baş verdi.");
         } finally {
             setLoading(false);
         }
     };
+
 
 
     const handleAnswerClick = (index) => {
@@ -125,13 +138,22 @@ const CheckYourself = () => {
 
             {questions.length === 0 ? (
                 <Form>
-                    <Form.Group controlId="pdfFile">
-                        <Form.Label>PDF faylını seç</Form.Label>
+                    <Form.Group controlId="selectPdf">
+                        <Form.Label>PDF seçin</Form.Label>
                         <Form.Control
-                            type="file"
-                            accept="application/pdf"
-                            onChange={(e) => setPdfFile(e.target.files[0])}
-                        />
+                            as="select"
+                            value={selectedPdfUrl}
+                            onChange={(e) => setSelectedPdfUrl(e.target.value)}
+                        >
+                            <option value="">PDF seçin</option>
+                            {books
+                                .filter(book => book.pdf)
+                                .map(book => (
+                                    <option key={book.id} value={book.pdf}>
+                                        {book.name}
+                                    </option>
+                                ))}
+                        </Form.Control>
                     </Form.Group>
 
                     <Row className="mt-3">
@@ -158,7 +180,13 @@ const CheckYourself = () => {
                     </Row>
 
                     <div className="text-center mt-4">
-                        <Button onClick={handleFetchQuestions} disabled={loading}>
+                        <Button
+                            onClick={() => {
+                                console.log("Selected PDF:", selectedPdfUrl); // BURADA YOXLA BOŞDURSA PROBLEM BURDADIR
+                                handleFetchQuestions();
+                            }}
+                            disabled={loading}
+                        >
                             {loading ? <Spinner animation="border" size="sm" /> : 'Başla'}
                         </Button>
                     </div>
