@@ -238,7 +238,8 @@ function Contact() {
                       </svg>
                     </div>
                     <h6>Telefon</h6>
-                    <p>+994 60 372 72 46</p>
+                    <p>+994 60 867 72 77</p>
+                    
                   </div>
                 </Col>
                 <Col md={4}>
@@ -262,7 +263,7 @@ function Contact() {
                       </svg>
                     </div>
                     <h6>Email</h6>
-                    <p>hvusal085@gmail.com</p>
+                    <p>eGundelik@gmail.com</p>
                   </div>
                 </Col>
               </Row>
