@@ -75,11 +75,6 @@ function StudentSidebar() {
                                     </Link>
                                 </li>
                                 <li className='nav-item list-unstyled'>
-                                    <Link to={"results"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaHome className='me-2' /> Results
-                                    </Link>
-                                </li>
-                                <li className='nav-item list-unstyled'>
                                     <Link to={"check-yourself"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
                                         <FaCheck className='me-2' /> Ozunu Yoxla
                                     </Link>

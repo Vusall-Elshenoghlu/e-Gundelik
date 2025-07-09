@@ -58,7 +58,7 @@ const AddClass = () => {
         payload
       );
 
-      if (response.data.success) {
+      if (response.status === 200) {
         setStatus({ success: "Sinif uğurla əlavə olundu!" });
         resetForm();
       } else {

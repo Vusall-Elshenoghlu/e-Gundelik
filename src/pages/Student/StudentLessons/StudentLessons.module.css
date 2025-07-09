@@ -1,0 +1,462 @@
+.container {
+  padding: 2rem 1rem;
+  transition: margin-left 0.3s ease;
+  width: auto;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Sidebar consideration */
+@media screen and (min-width: 992px) {
+  .container {
+    margin-left: 300px;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.divider {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+}
+
+.loadingText {
+  color: #64748b;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #64748b;
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.lessonsGrid {
+  margin: 0 -0.5rem;
+}
+
+.lessonCard {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white;
+  cursor: pointer;
+  height: 100%;
+  overflow: hidden;
+  margin: 0 0.5rem;
+}
+
+.lessonCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.cardBody {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.cardTitle {
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin: 0;
+  flex: 1;
+}
+
+.dateBadge {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.cardContent {
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+
+.subjectInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.subjectLabel {
+  font-weight: 600;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.subjectName {
+  color: #3b82f6;
+  font-weight: 500;
+  background-color: #eff6ff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.taskInfo {
+  margin-bottom: 1rem;
+}
+
+.taskLabel {
+  font-weight: 600;
+  color: #475569;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.taskText {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardFooter {
+  margin-top: auto;
+}
+
+.viewButton {
+  width: 100%;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.viewButton:hover {
+  background: linear-gradient(135deg, #1e40af, #1e3a8a);
+  transform: translateY(-1px);
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+  font-style: normal;
+}
+
+.viewButton:hover .arrow {
+  transform: translateX(4px);
+}
+
+.progressModal .modal-content {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.modalHeader {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-radius: 20px 20px 0 0;
+}
+
+.modalTitle {
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.modalBody {
+  padding: 2rem;
+  min-height: 200px;
+}
+
+.modalLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  color: #64748b;
+}
+
+.progressInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.gradeSection {
+  text-align: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  border-radius: 16px;
+  border: 1px solid #93c5fd;
+}
+
+.gradeLabel {
+  font-size: 0.9rem;
+  color: #1e40af;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.gradeValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.feedbackSection {
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.feedbackLabel {
+  font-size: 0.9rem;
+  color: #475569;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.feedbackText {
+  color: #1e293b;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.noProgress {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+}
+
+.noProgressIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.noProgress h5 {
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.modalFooter {
+  border-top: 1px solid #e2e8f0;
+  padding: 1.5rem 2rem;
+  background: #f8fafc;
+  border-radius: 0 0 20px 20px;
+}
+
+.closeButton {
+  border-radius: 12px;
+  padding: 0.75rem 2rem;
+  font-weight: 500;
+  border: 2px solid #e2e8f0;
+  color: #475569;
+  transition: all 0.3s ease;
+}
+
+.closeButton:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .container {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .cardBody {
+    padding: 1.25rem;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+
+  .lessonsGrid {
+    margin: 0;
+  }
+
+  .lessonCard {
+    margin: 0;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .dateBadge {
+    align-self: flex-end;
+  }
+
+  .modalBody {
+    padding: 1.5rem;
+  }
+
+  .modalHeader {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .modalFooter {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .gradeValue {
+    font-size: 2rem;
+  }
+}
+
+/* Small phones */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .cardBody {
+    padding: 1rem;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
+  }
+
+  .taskText {
+    font-size: 0.85rem;
+  }
+
+  .viewButton {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .modalBody {
+    padding: 1.25rem;
+  }
+
+  .gradeSection,
+  .feedbackSection {
+    padding: 1.25rem;
+  }
+
+  .gradeValue {
+    font-size: 1.75rem;
+  }
+}
+
+/* Extra large screens */
+@media screen and (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 320px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .container {
+    margin-left: 0;
+    background: white;
+  }
+
+  .lessonCard {
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+  }
+
+  .viewButton {
+    display: none;
+  }
+}

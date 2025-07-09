@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Spinner,
+} from "react-bootstrap";
 import styles from "./EditProfile.module.css";
 import defaultAvatar from "/images/avatar-default.svg";
+import { AuthContext } from "../../../context/AuthContext";
 import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 
 const EditProfile = () => {
-  const token = localStorage.getItem("token");
-  const user = localStorage.getItem("user")
-  const userInfo = JSON.parse(user)
-  const userId = userInfo.userId
+  
+   const {user} = useContext(AuthContext)
+  const userId = user.userId
+
   const [userData, setUserData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [previewImage, setPreviewImage] = useState(defaultAvatar);
@@ -28,16 +35,17 @@ const EditProfile = () => {
 
   const fetchUserData = async () => {
     try {
-      const { data } = await axiosAuth.get(`https://turansalimli-001-site1.ntempurl.com/api/User/teachers/${userId}`);
-
-      if (data && data.success) {
-        setUserData(data.data);
-        if (data.data.profileImageUrl) {
-          setPreviewImage(data.data.profileImageUrl);
+      const res = await axios.get(
+        `https://turansalimli-001-site1.ntempurl.com/api/User/GetUserById/${userId}`
+      );
+      if (res.data?.isSuccess) {
+        setUserData(res.data.data);
+        if (res.data.data.imgUrl) {
+          setPreviewImage(res.data.data.imgUrl);
         }
       }
     } catch (error) {
-      console.error("Profil məlumatları gətirilə bilmədi:", error);
+      console.error("Məlumatlar gətirilə bilmədi:", error);
     }
   };
 
@@ -69,12 +77,11 @@ const EditProfile = () => {
         formData.append("ProfileImage", imageFile);
       }
 
-      await axiosAuth.put("https://turansalimli-001-site1.ntempurl.com/api/Auth/update-profile", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axiosAuth.put(
+        `https://turansalimli-001-site1.ntempurl.com/api/Auth/update-profile`,
+        formData,
+        
+      );
 
       alert("Profil uğurla yeniləndi!");
       setIsEditMode(false);
@@ -98,7 +105,10 @@ const EditProfile = () => {
   return (
     <Container className={styles.editProfileWrapper}>
       <div className="text-center mb-4">
-        <div className={styles.avatarContainer} onClick={() => isEditMode && document.getElementById("profileUpload").click()}>
+        <div
+          className={styles.avatarContainer}
+          onClick={() => isEditMode && document.getElementById("profileUpload").click()}
+        >
           <img src={previewImage} alt="Profil şəkli" className={styles.avatar} />
           {isEditMode && <div className={styles.overlay}>Şəkli Dəyiş</div>}
         </div>
@@ -117,7 +127,7 @@ const EditProfile = () => {
           firstName: userData.firstName || "",
           lastName: userData.lastName || "",
           gender: userData.gender?.toString() || "",
-          dob: userData.dob ? userData.dob.slice(0, 10) : "",
+          dob: userData.dob?.slice(0, 10) || "",
           address: userData.address || "",
           profileImage: null,
         }}

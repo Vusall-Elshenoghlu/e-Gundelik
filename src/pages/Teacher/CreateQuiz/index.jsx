@@ -14,15 +14,14 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import Select from "react-select"; // ✅ react-select əlavə et
+import Select from "react-select";
 import styles from "./CreateQuiz.module.css";
 
 const CreateQuiz = () => {
   const [subjects, setSubjects] = useState([]);
-  const [classes, setClasses] = useState([]); // ✅ SchoolClasses üçün state
+  const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
 
   const fetchClasses = async () => {
     try {
@@ -35,15 +34,27 @@ const CreateQuiz = () => {
     }
   };
 
+  const fetchSubjects = async () => {
+    try {
+      const res = await axios.get(
+        "https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"
+      );
+      setSubjects(res.data);
+    } catch (err) {
+      toast.error("Fənnləri yükləmək alınmadı");
+    }
+  };
+
   useEffect(() => {
     fetchClasses();
+    fetchSubjects();
   }, []);
 
   const initialValues = {
     subjectId: "",
     date: "",
     primary: false,
-    classIds: [], // ✅ array şəklində saxlayacağıq
+    classIds: [],
   };
 
   const validationSchema = Yup.object().shape({
@@ -56,7 +67,7 @@ const CreateQuiz = () => {
     const payload = {
       primary: values.primary,
       subjectId: values.subjectId,
-      classId: values.classIds[0], // ✅ yalnız 1 classId göndərilirsə (əgər array qəbul edirsə, dəyiş)
+      classId: values.classIds[0],
       date: values.date,
     };
 
