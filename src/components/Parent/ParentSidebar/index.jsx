@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./Parentsidebar.module.css"
-import { FaAccessibleIcon, FaAdjust, FaBars, FaBook, FaHome, FaLess, FaQuestionCircle, FaSignOutAlt, FaSubscript, FaTimes, FaUser } from 'react-icons/fa'
+import { FaAccessibleIcon, FaAdjust, FaBars, FaBook, FaChalkboardTeacher, FaEllipsisH, FaHome, FaLess, FaNotesMedical, FaQuestionCircle, FaRegBellSlash, FaSignOutAlt, FaSubscript, FaTimes, FaUser, FaYoutube } from 'react-icons/fa'
 import { AuthContext } from '../../../context/AuthContext'
 import Swal from 'sweetalert2'
 function ParentSidebar() {
@@ -65,12 +65,12 @@ function ParentSidebar() {
                                 </li>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"lessons"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaHome className='me-2' /> Dərslər
+                                        <FaBook className='me-2' /> Dərslər
                                     </Link>
                                 </li>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"diary"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaBook className='me-2' /> Gündəlik
+                                        <FaChalkboardTeacher className='me-2' /> Gündəlik
                                     </Link>
                                 </li>
                                
@@ -87,6 +87,11 @@ function ParentSidebar() {
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"quiz-times"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
                                         <FaQuestionCircle className='me-2' /> Imtahan vaxtlari
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
+                                    <Link to={"https://www.youtube.com/"} target='_blank' onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaYoutube className='me-2' /> Canlı izlə
                                     </Link>
                                 </li>
                             </ul>
