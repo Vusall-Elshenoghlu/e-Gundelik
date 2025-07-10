@@ -33,7 +33,7 @@ const AddClass = () => {
           axios.get("http://turansalimli-001-site1.ntempurl.com/api/User/GetAllTeachers/teachers"),
         ]);
         console.log(teachersRes)
-        console.log(subjectsRes)
+        console.log(subjectsRes.data)
         setSubjects(
           (subjectsRes.data || []).map((s) => ({ label: s.name, value: s.id }))
         );
