@@ -91,14 +91,15 @@ const UserNavbar = () => {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <Link to={"/about"}>Layihə haqqında</Link>
-              <Link to={"/contact"}>Bizimlə əlaqə</Link>
-              <a href="#videos">Tədris videoları</a>
-              <Link to={"/FAQ"}>FAQ</Link>
-              <a href="#guide">İstifadəçi təlimatı</a>
+              <Link to={"/about"} onClick={() => setMenuOpen(false)}>Layihə haqqında</Link>
+              <Link to={"/contact"} onClick={() => setMenuOpen(false)}>Bizimlə əlaqə</Link>
+              <a href="#videos" onClick={() => setMenuOpen(false)}>Tədris videoları</a>
+              <Link to={"/FAQ"} onClick={() => setMenuOpen(false)}>FAQ</Link>
+              <a href="#guide" onClick={() => setMenuOpen(false)}>İstifadəçi təlimatı</a>
             </motion.div>
           )}
         </AnimatePresence>
+
       </motion.nav>
 
       {isHomePage && (

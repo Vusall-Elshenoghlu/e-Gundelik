@@ -59,6 +59,7 @@ import ParentQuizTimes from "../pages/Parent/ParentQuizTimes";
 import StudentQuizTimes from "../pages/Student/StudentQuizTimes";
 import StudentBooks from "../pages/Student/StudentBooks";
 import EditStudentProfile from "../pages/Student/EditStudentProfile";
+import StudentSubject from "../pages/Student/StudentSubjects";
 
 export const ROUTES = [
     {
@@ -274,6 +275,10 @@ export const ROUTES = [
             {
                 path: "books",
                 element: <StudentBooks />
+            },
+            {
+                path: "subjects",
+                element: <StudentSubject />
             },
 
         ]

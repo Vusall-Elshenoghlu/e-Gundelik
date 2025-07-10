@@ -90,6 +90,11 @@ function StudentSidebar() {
                                     </Link>
                                 </li>
                                 <li className='nav-item list-unstyled'>
+                                    <Link to={"subjects"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaBook className='me-2' /> Fənlər
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
                                     <Link to={"my-profile"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
                                         <FaUserAlt className='me-2' /> Profilim
                                     </Link>

@@ -1,4 +1,3 @@
-
 import { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import { Modal, Button, Card, Container, Row, Col, Spinner, Badge } from "react-bootstrap"
@@ -40,7 +39,6 @@ const StudentLessons = () => {
         },
       })
       .then((res) => {
-        console.log(res.data)
         setProgress(res.data)
         setProgressLoading(false)
         setShowModal(true)
@@ -83,13 +81,27 @@ const StudentLessons = () => {
           {lessons.map((lesson) => (
             <Col key={lesson.id} xs={12} sm={6} lg={4} xl={3} className="mb-4">
               <Card className={styles.lessonCard} onClick={() => handleLessonClick(lesson)}>
-                <Card.Body className={styles.cardBody}>
+                <Card.Body className={styles.cardBody} style={{ position: "relative" }}>
                   <div className={styles.cardHeader}>
                     <Card.Title className={styles.cardTitle}>{lesson.title}</Card.Title>
                     <Badge bg="light" text="dark" className={styles.dateBadge}>
                       {new Date(lesson.date).toLocaleDateString("az-AZ")}
                     </Badge>
                   </div>
+
+                  {/* 📹 Video icon əlavə olunur */}
+                  {lesson.videoUrl && (
+                    <div
+                      className={styles.videoIcon}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        window.open(lesson.videoUrl, "_blank")
+                      }}
+                      title="Videoya bax"
+                    >
+                      📹
+                    </div>
+                  )}
 
                   <div className={styles.cardContent}>
                     <div className={styles.subjectInfo}>

@@ -39,6 +39,12 @@ function StudentMenu() {
       image: 'https://cdn-icons-png.flaticon.com/512/29/29302.png',
     },
     {
+      title: 'Fənlər',
+      desc: 'Əldə olan fənlər və əlavə resurslara baxın',
+      path: 'student-page/subjects',
+      image: 'https://cdn-icons-png.flaticon.com/512/29/29302.png',
+    },
+    {
       title: 'Profilim',
       desc: 'Profil məlumatlarınızı görüntüləyin və yeniləyin',
       path: 'student-page/my-profile',
