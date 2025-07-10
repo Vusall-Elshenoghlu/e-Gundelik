@@ -5,11 +5,12 @@ import Select from "react-select"; // Yeni əlavə
 import { Button, Form as BootstrapForm, Container, Card } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 
 const AddClass = () => {
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
-
+  const axiosAuth = useAxiosWithAuth()
   const initialValues = {
     name: "",
     subjectIds: [],
@@ -29,7 +30,7 @@ const AddClass = () => {
     const fetchData = async () => {
       try {
         const [subjectsRes, teachersRes] = await Promise.all([
-          axios.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
+          axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
           axios.get("http://turansalimli-001-site1.ntempurl.com/api/User/GetAllTeachers/teachers"),
         ]);
         console.log(teachersRes)
