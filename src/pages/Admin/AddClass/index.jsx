@@ -8,7 +8,32 @@ import Swal from "sweetalert2";
 import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 
 const AddClass = () => {
-  const [subjects, setSubjects] = useState([]);
+  const [subjects, setSubjects] = useState([
+    {
+      "id": "27b9fe57-2f35-4b97-3a52-08ddb182fdf4",
+      "name": "Cografiya"
+    },
+    {
+      "id": "149e638f-adb0-464b-df7b-08ddb9729ce1",
+      "name": "Riyaziyyat "
+    },
+    {
+      "id": "2d5116ee-622a-4187-c880-08ddba28c1e4",
+      "name": "Tarix"
+    },
+    {
+      "id": "bba9177e-b6a3-4237-da5d-08ddba28deb6",
+      "name": "Edebiyyat"
+    },
+    {
+      "id": "8b6c9994-e5bf-42ce-7c3f-08ddbb1f03e5",
+      "name": "Azerbaycan Dili"
+    },
+    {
+      "id": "04f49674-4f42-4449-4f63-08ddbcb568ec",
+      "name": "Ingilis Dili"
+    }
+  ]);
   const [teachers, setTeachers] = useState([]);
   const axiosAuth = useAxiosWithAuth()
   const initialValues = {
@@ -50,7 +75,7 @@ const AddClass = () => {
   const onSubmit = async (values, { setSubmitting, resetForm, setStatus }) => {
     const payload = {
       name: values.name,
-      subjectIds: values.subjectIds.map((s) => s.value), 
+      subjectIds: values.subjectIds.map((s) => s.value),
       bossTeacherId: values.classTeacher,
     };
 
@@ -76,7 +101,7 @@ const AddClass = () => {
 
   return (
     <Container
-      style={{ width: "1230px", height:"100vh", backgroundColor: "rgba(234, 228, 228, 0.85)" }}
+      style={{ width: "1230px", height: "100vh", backgroundColor: "rgba(234, 228, 228, 0.85)" }}
       className="d-flex justify-content-center align-items-center"
     >
       <Card className="shadow-sm" style={{ width: "800px", height: "auto", padding: "5%" }}>
