@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth"
 import { Modal, Button } from "react-bootstrap"
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa"
+import { FaEdit, FaEye, FaPlusCircle, FaTrash } from "react-icons/fa"
 import Swal from "sweetalert2"
 
 const AdminTeachers = () => {
@@ -145,7 +145,7 @@ const AdminTeachers = () => {
             <div className="card-header bg-primary text-white">
               <h4 className="mb-0">
                 <i className="bi bi-person-workspace me-2"></i>
-                Teachers Management
+                Müəllimlərin İdarə Edilməsi
               </h4>
             </div>
             <div className="card-body p-0">
@@ -154,13 +154,13 @@ const AdminTeachers = () => {
                   <thead className="table-light">
                     <tr>
                       <th>#</th>
-                      <th>Profile</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Age</th>
-                      <th>Gender</th>
-                      <th>Full Name</th>
-                      <th className="text-center">Actions</th>
+                      <th>Profil</th>
+                      <th>Ad</th>
+                      <th>Soyad</th>
+                      <th>Yaş</th>
+                      <th>Cins</th>
+                      <th>Tam Ad</th>
+                      <th className="text-center">Əməliyyatlar </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -225,7 +225,7 @@ const AdminTeachers = () => {
             <div className="card-footer d-flex justify-content-between bg-light">
               <small className="text-muted">Total Teachers: {teachers.length}</small>
               <button className="btn btn-primary btn-sm">
-                <i className="bi bi-plus-circle me-1"></i>Add New Teacher
+                <FaPlusCircle/>Yeni Müəllim Əlavə Et
               </button>
             </div>
           </div>
