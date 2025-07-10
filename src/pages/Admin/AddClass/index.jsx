@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import Select from "react-select"; // Yeni əlavə
 import { Button, Form as BootstrapForm, Container, Card } from "react-bootstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const AddClass = () => {
   const [subjects, setSubjects] = useState([]);
@@ -57,9 +58,10 @@ const AddClass = () => {
         "https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/CreateSchoolClass",
         payload
       );
-
-      if (response.status === 200) {
+      console.log(response.data.isSuccess)
+      if (response.data.statusCode === 200) {
         setStatus({ success: "Sinif uğurla əlavə olundu!" });
+        Swal.fire("Sinif uğurla əlavə olundu!",)
         resetForm();
       } else {
         setStatus({ error: response.data.message || "Xəta baş verdi" });
@@ -79,7 +81,7 @@ const AddClass = () => {
       <Card className="shadow-sm" style={{ width: "800px", height: "auto", padding: "5%" }}>
         <Card.Body>
           <h3 className="mb-4">Yeni Sinif Əlavə Et</h3>
-          <Formik initialValues={initialValues} validat9 ionSchema={validationSchema} onSubmit={onSubmit}>
+          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
             {({ isSubmitting, status, setFieldValue, values }) => (
               <Form>
                 <BootstrapForm.Group className="mb-3" controlId="formName">

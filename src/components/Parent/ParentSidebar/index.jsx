@@ -73,11 +73,7 @@ function ParentSidebar() {
                                         <FaBook className='me-2' /> Gündəlik
                                     </Link>
                                 </li>
-                                <li className='nav-item list-unstyled'>
-                                    <Link to={"results"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaHome className='me-2' /> Nəticə
-                                    </Link>
-                                </li>
+                               
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"books"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
                                         <FaBook className='me-2' /> Kitablar

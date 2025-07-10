@@ -62,47 +62,49 @@ const AddBook = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Add New Book</h2>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {() => (
-          <Form className="mt-4">
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label">Book Name</label>
-              <Field name="name" className="form-control" />
-              <ErrorMessage name="name" component="div" className="text-danger" />
-            </div>
+    <div className="containerWrapper">
+      <div className="cardWrapper">
+        <h2 className="title">Add New Book</h2>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {() => (
+            <Form className="mt-4">
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">Book Name</label>
+                <Field name="name" className="form-control" />
+                <ErrorMessage name="name" component="div" className="errorText" />
+              </div>
 
-            <div className="mb-3">
-              <label htmlFor="subjectId" className="form-label">Fənn seçin</label>
-              <Field as="select" name="subjectId" className="form-select">
-                <option value="">Fənn seçin...</option>
-                {subjects.map(subject => (
-                  <option key={subject.id || subject._id} value={subject.id || subject._id}>
-                    {subject.name}
-                  </option>
-                ))}
-              </Field>
-              <ErrorMessage name="subjectId" component="div" className="text-danger" />
-            </div>
+              <div className="mb-3">
+                <label htmlFor="subjectId" className="form-label">Fənn seçin</label>
+                <Field as="select" name="subjectId" className="form-select">
+                  <option value="">Fənn seçin...</option>
+                  {subjects.map(subject => (
+                    <option key={subject.id || subject._id} value={subject.id || subject._id}>
+                      {subject.name}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage name="subjectId" component="div" className="errorText" />
+              </div>
 
-            <div className="mb-3">
-              <label htmlFor="pdf" className="form-label">Upload PDF</label>
-              <input
-                type="file"
-                className="form-control"
-                accept="application/pdf"
-              />
-            </div>
+              <div className="mb-3">
+                <label htmlFor="pdf" className="form-label">Upload PDF</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  accept="application/pdf"
+                />
+              </div>
 
-            <button type="submit" className="btn btn-primary">Add Book</button>
-          </Form>
-        )}
-      </Formik>
+              <button type="submit" className="btn btn-primary w-100">Add Book</button>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 };

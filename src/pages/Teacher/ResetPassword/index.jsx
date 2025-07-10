@@ -17,14 +17,12 @@ function ResetPassword() {
     const [message, setMessage] = useState("");
     const validationSchema = Yup.object({
         password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Required'),
+            .min(6, 'Şifrə ən azı 6 simvoldan ibarət olmalıdır')
+            .required('Mütləq doldurulmalıdır'),
         confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
-            .required('Required'),
+            .oneOf([Yup.ref('password'), null], 'Şifrələr eyni olmalıdır')
+            .required('Mütləq doldurulmalıdır'),
     });
-
-
 
     const email = searchParams.get("email");
     const rawToken = searchParams.get("token")
@@ -45,17 +43,17 @@ function ResetPassword() {
             console.log("Response:", res);
 
             if (res.status === 200) {
-                setMessage("✅ Password successfully changed!");
+                setMessage("✅ Şifrə uğurla dəyişdirildi!");
                 setTimeout(() => {
                     navigate("/login");
                 }, 2000); 
             } else {
-                setMessage(res.data.message || "❌ Something went wrong.");
+                setMessage(res.data.message || "❌ Nə isə səhv oldu.");
             }
         } catch (error) {
             console.error("Error Response:", error.response?.data || error.message);
             toast.error( error.response?.data || error.message)
-            setMessage(error.response?.data?.message || "❌ An error occurred while resetting password.");
+            setMessage(error.response?.data?.message || "❌ Şifrəni sıfırlayarkən xəta baş verdi.");
         }
         setSubmitting(false);
     };
@@ -64,7 +62,7 @@ function ResetPassword() {
     return (
         <div className={styles.resetPasswordWrapper}>
             <Helmet>
-                <title>Reset Password</title>
+                <title>Şifrəni Sıfırla</title>
             </Helmet>
 
             <motion.div
@@ -73,7 +71,7 @@ function ResetPassword() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4 }}
             >
-                <h2 className={styles.formTitle}>🔐 Reset Password</h2>
+                <h2 className={styles.formTitle}>🔐 Şifrəni Sıfırla</h2>
 
                 <Formik
                     initialValues={{ password: '', confirmPassword: '' }}
@@ -86,7 +84,7 @@ function ResetPassword() {
                                 <Field
                                     type={showPassword ? "text" : "password"}
                                     name="password"
-                                    placeholder="Enter new password"
+                                    placeholder="Yeni şifrəni daxil et"
                                     className={styles.inputField}
                                 />
                                 <div className={styles.eyeIcon} onClick={() => setShowPassword(!showPassword)}>
@@ -99,7 +97,7 @@ function ResetPassword() {
                                 <Field
                                     type={showConfirm ? "text" : "password"}
                                     name="confirmPassword"
-                                    placeholder="Confirm password"
+                                    placeholder="Şifrəni təsdiqlə"
                                     className={styles.inputField}
                                 />
                                 <div className={styles.eyeIcon} onClick={() => setShowConfirm(!showConfirm)}>
@@ -117,7 +115,7 @@ function ResetPassword() {
                                 whileTap={{ scale: 0.95 }}
                                 disabled={isSubmitting}
                             >
-                                {isSubmitting ? "Submitting..." : "Reset Password"}
+                                {isSubmitting ? "Göndərilir..." : "Şifrəni Sıfırla"}
                             </motion.button>
                         </Form>
                     )}

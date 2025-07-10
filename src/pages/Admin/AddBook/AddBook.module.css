@@ -1,0 +1,33 @@
+.containerWrapper {
+  margin-left: 300px; /* Əgər sidebar varsa boşluq üçün */
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardWrapper {
+  width: 100%;
+  max-width: 600px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+  color: #343a40;
+}
+
+.errorText {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}

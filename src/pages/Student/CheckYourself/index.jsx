@@ -25,22 +25,22 @@ const CheckYourself = () => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
     const [showResult, setShowResult] = useState(false);
-    const [books, setBooks] = useState([])
-    const [selectedPdfUrl, setSelectedPdfUrl] = useState("")
-    const axiosAuth = useAxiosWithAuth()
+    const [books, setBooks] = useState([]);
+    const [selectedPdfUrl, setSelectedPdfUrl] = useState("");
+    const axiosAuth = useAxiosWithAuth();
+
     useEffect(() => {
         const fetchBooks = async () => {
-
             try {
-                const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Book/GetAllBooks")
-                setBooks(res.data || [])
-            } catch (error) {
+                const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Book/GetAllBooks");
+                setBooks(res.data || []);
+            } catch (err) {
                 console.error("Kitablar yüklənmədi:", err);
             }
-        }
+        };
 
-        fetchBooks()
-    }, [])
+        fetchBooks();
+    }, []);
 
     const handleFetchQuestions = async () => {
         if (!selectedPdfUrl || !startPage || !endPage) {
@@ -63,13 +63,22 @@ const CheckYourself = () => {
             );
 
             const formattedQuestions = response.data.map((item) => {
-                const optionKeys = Object.keys(item.options);
-                const optionValues = optionKeys.map((key) => item.options[key]);
-                const correctIndex = optionKeys.indexOf(item.correctAnswer);
+                const optionKeys = Object.keys(item.options); // ["A", "B", "C", "D"]
+
+                const optionsWithKey = optionKeys.map((key) => ({
+                    key,
+                    text: item.options[key],
+                }));
+
+                const shuffledOptions = [...optionsWithKey].sort(() => Math.random() - 0.5);
+
+                const correctIndex = shuffledOptions.findIndex(
+                    (option) => option.key === item.correctAnswer
+                );
 
                 return {
                     question: item.question,
-                    options: optionValues,
+                    options: shuffledOptions.map((opt) => opt.text),
                     correctIndex,
                 };
             });
@@ -82,8 +91,6 @@ const CheckYourself = () => {
             setLoading(false);
         }
     };
-
-
 
     const handleAnswerClick = (index) => {
         setSelectedAnswer(index);
@@ -180,10 +187,7 @@ const CheckYourself = () => {
 
                     <div className="text-center mt-4">
                         <Button
-                            onClick={() => {
-                                console.log("Selected PDF:", selectedPdfUrl); // BURADA YOXLA BOŞDURSA PROBLEM BURDADIR
-                                handleFetchQuestions();
-                            }}
+                            onClick={handleFetchQuestions}
                             disabled={loading}
                         >
                             {loading ? <Spinner animation="border" size="sm" /> : 'Başla'}

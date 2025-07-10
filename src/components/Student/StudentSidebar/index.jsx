@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom' // düzəliş etdin
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from "./StudentSidebar.module.css"
-import { FaBars, FaBook, FaCheck, FaHome, FaQuestion, FaSignOutAlt, FaTimes, FaUser } from 'react-icons/fa'
+import { FaBars, FaBook, FaCheck, FaHome, FaQuestion, FaSignOutAlt, FaTimes, FaUser, FaUserAlt } from 'react-icons/fa'
 import { AuthContext } from '../../../context/AuthContext'
 import Swal from 'sweetalert2'
 
 function StudentSidebar() {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
-    const {user, logout} = useContext(AuthContext)
+    const {user, logout} = useContext(AuthContext ? AuthContext : null)
     const navigate = useNavigate()
     useEffect(() => {
         const handleResize = () => {
@@ -57,31 +57,41 @@ function StudentSidebar() {
                         transition={{ type: 'spring', stiffness: 80 }}
                     >
                         <div>
-                            <h4 className='text-white text-center mb-4'>Student Sidebar</h4>
+                            <h4 className='text-white text-center mb-4'>Şagird Panel</h4>
                             <ul className='ps-0 ms-0'>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={""} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaHome className='me-2' /> Menu
+                                        <FaHome className='me-2' />Ana Menu
                                     </Link>
                                 </li>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"lessons"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaHome className='me-2' /> Lessons
+                                        <FaHome className='me-2' /> Dərslər
                                     </Link>
                                 </li>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"diary"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaBook className='me-2' /> Diary
+                                        <FaBook className='me-2' /> Gündəlik
                                     </Link>
                                 </li>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"check-yourself"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaCheck className='me-2' /> Ozunu Yoxla
+                                        <FaCheck className='me-2' /> Özünü Yoxla
                                     </Link>
                                 </li>
                                 <li className='nav-item list-unstyled'>
                                     <Link to={"quiz-times"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
-                                        <FaQuestion className='me-2' /> Imtahan Vaxtlari
+                                        <FaQuestion className='me-2' /> İmtahan Vaxtları
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
+                                    <Link to={"books"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaBook className='me-2' /> Kitablar
+                                    </Link>
+                                </li>
+                                <li className='nav-item list-unstyled'>
+                                    <Link to={"my-profile"} onClick={handleLinkClick} className={`nav-link text-white ${styles.navLink}`}>
+                                        <FaUserAlt className='me-2' /> Profilim
                                     </Link>
                                 </li>
                             </ul>
@@ -89,7 +99,7 @@ function StudentSidebar() {
 
                         <div>
                             <div onClick={handleLogoutClick} className={`nav-link text-white ${styles.navLink}`} style={{cursor:"pointer"}}>
-                                <FaSignOutAlt className='me-2' /> Logout
+                                <FaSignOutAlt className='me-2' /> Çıxış
                             </div>
                             <div className={`text-white mt-2 ${styles.userName}`}>
                                 <div><FaUser/></div>

@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router'
 import ParentSidebar from '../../components/Parent/ParentSidebar';
 import { toast } from 'react-toastify';
 
 function ParentRoot() {
   const navigate = useNavigate()
-  const [isAuthorized, setIsAuthorized] = React.useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    try {
+      const storedUser = localStorage.getItem("user");
 
     if (!storedUser) {
       toast.warning("Zəhmət olmasa daxil olun.");
@@ -24,8 +25,11 @@ function ParentRoot() {
       return;
     }
 
-    // Əgər hər şey qaydasındadırsa
     setIsAuthorized(true);
+    } catch (error) {
+      toast.error("Xəta baş verdi. Yenidən daxil olun.");
+      navigate("/login");
+    }
   }, []); 
   return (
     <>
@@ -44,3 +48,5 @@ function ParentRoot() {
 }
 
 export default ParentRoot
+
+

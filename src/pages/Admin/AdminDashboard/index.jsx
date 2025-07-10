@@ -107,7 +107,8 @@ const AdminDashboard = () => {
 
   const fetchSubjects = async () => {
     try {
-      const res = await axios.get(`${baseURL}/Subject/GetAllSubject`);
+      const res = await axios.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject");
+      console.log(res.data)
       if (res.data) {
         setCounts((c) => ({ ...c, subjects: res.data.length || res.data.data.length }));
       }
@@ -192,7 +193,7 @@ const AdminDashboard = () => {
       <div className="d-flex gap-4" style={{ maxWidth: "1000px" }}>
         {/* Son 10 tələbə */}
         <div className="card shadow-sm p-4 flex-fill">
-          <h4 className="mb-4">Son 10 tələbə</h4>
+          <h4 className="mb-4">Son 10 Şagird</h4>
           <table className="table table-striped table-hover">
             <thead className="table-dark">
               <tr>

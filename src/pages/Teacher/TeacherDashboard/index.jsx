@@ -1,47 +1,55 @@
 import React from 'react';
 import styles from './TeacherDashboard.module.css';
 import { FaArrowRight } from 'react-icons/fa';
-import lessonImage from '../../../assets/images/lessons.png';
 import { motion } from 'framer-motion';
 import { Col, Container, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 function TeacherDashboard() {
+  const navigate = useNavigate();
+
   const cards = [
     {
-      title: 'Dərs cədvəli',
-      desc: 'Həftəlik dərs cədvəli',
+      title: 'Dashboard',
+      desc: 'Əsas idarəetmə paneli',
+      path: 'teacher-panel',
+      image: 'https://cdn-icons-png.flaticon.com/512/711/711769.png',
     },
     {
-      title: 'Qiymətləndirmə',
-      desc: 'Tədris apardığınız siniflərin təlim nəticələri',
+      title: 'Dərslərim',
+      desc: 'Tədris etdiyiniz dərsləri izləyin və idarə edin',
+      path: 'teacher-panel/my-lessons',
+      image: 'https://cdn-icons-png.flaticon.com/512/3062/3062634.png',
     },
     {
-      title: 'Şagird siyahısı',
-      desc: 'Tədris apardığınız siniflərin siyahısı',
+      title: 'Dərs əlavə et',
+      desc: 'Yeni dərs əlavə edin',
+      path: 'teacher-panel/add-lesson',
+      image: 'https://cdn-icons-png.flaticon.com/512/1828/1828919.png',
     },
     {
-      title: 'Elanlar',
-      desc: 'Tədris ilinə dair təlimat və məlumatlar',
+      title: 'Şagirdlər',
+      desc: 'Sizə aid olan şagirdlərin siyahısı',
+      path: 'teacher-panel/students',
+      image: 'https://cdn-icons-png.flaticon.com/512/201/201818.png',
     },
     {
-      title: 'Elanlar',
-      desc: 'Tədris ilinə dair təlimat və məlumatlar',
+      title: 'Profilə düzəliş et',
+      desc: 'Profil məlumatlarınızı yeniləyin',
+      path: 'teacher-panel/edit-profile',
+      image: 'https://cdn-icons-png.flaticon.com/512/747/747545.png',
     },
     {
-      title: 'Elanlar',
-      desc: 'Tədris ilinə dair təlimat və məlumatlar',
+      title: 'Quiz yarat',
+      desc: 'Yeni testlər yaradın və paylaşın',
+      path: 'teacher-panel/create-quiz',
+      image: 'https://cdn-icons-png.flaticon.com/512/1006/1006555.png',
     },
     {
-      title: 'Elanlar',
-      desc: 'Tədris ilinə dair təlimat və məlumatlar',
-    },
-    {
-      title: 'Elanlar',
-      desc: 'Tədris ilinə dair təlimat və məlumatlar',
-    },
-    {
-      title: 'Elanlar',
-      desc: 'Tədris ilinə dair təlimat və məlumatlar',
+      title: 'Quizlər',
+      desc: 'Hazır testləri və vaxtlarını idarə edin',
+      path: 'teacher-panel/quiz-times',
+      image: 'https://cdn-icons-png.flaticon.com/512/2910/2910768.png',
     },
   ];
 
@@ -55,17 +63,20 @@ function TeacherDashboard() {
       <Container fluid>
         <Row className="g-4">
           {cards.map((card, index) => (
-            <Col key={index} xs={12} md={6} xl={6}>
+            <Col key={index} xs={12} md={6} xl={4}>
               <div className={styles.card}>
                 <div className={styles.baseText}>
                   <h2>{card.title}</h2>
                   <p>{card.desc}</p>
-                  <button className={styles.continueBtn}>
+                  <button
+                    className={styles.continueBtn}
+                    onClick={() => navigate(`/${card.path}`)}
+                  >
                     Davam et <FaArrowRight />
                   </button>
                 </div>
                 <div className={styles.baseImage}>
-                  <img src={lessonImage} alt="lesson" />
+                  <img src={card.image} alt={card.title} style={{ maxWidth: '100px', objectFit: 'contain' }} />
                 </div>
               </div>
             </Col>

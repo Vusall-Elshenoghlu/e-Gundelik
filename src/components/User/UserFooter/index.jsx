@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import styles from "./UserFooter.module.css"
-
+import { FaEnvelope, FaFacebook, FaGraduationCap, FaInstagram, FaLinkedin, FaMapMarked, FaMapMarker, FaPhone, FaTelegram } from "react-icons/fa"
 const UserFooter = () => {
   return (
     <footer className={`${styles.footer} bg-dark text-light py-4`}>
@@ -9,24 +9,24 @@ const UserFooter = () => {
           {/* Haqqımızda */}
           <div className="col-md-4 mb-3">
             <h5 className={`${styles.title} text-primary`}>
-              <i className="fas fa-graduation-cap me-2"></i>
-              EduAzerbaijan
+              <FaGraduationCap/>
+              e-Gündəlik
             </h5>
             <p className={styles.text}>
               Keyfiyyətli təhsil vasitəsilə gələcəyinizi qurun. Minlərlə tələbə ilə birlikdə öyrənin.
             </p>
             <div className={styles.social}>
               <a href="#" className={styles.socialLink}>
-                <i className="fab fa-facebook-f"></i>
+                <FaFacebook/>
+              </a>
+              <a href="https://www.instagram.com/aliyev222__/" target="_blank" className={styles.socialLink}>
+                <FaInstagram/>
+              </a>
+              <a href="https://www.linkedin.com/in/vilayataliyev/" target="_blank" className={styles.socialLink}>
+                <FaLinkedin/>
               </a>
               <a href="#" className={styles.socialLink}>
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#" className={styles.socialLink}>
-                <i className="fab fa-youtube"></i>
-              </a>
-              <a href="#" className={styles.socialLink}>
-                <i className="fab fa-telegram"></i>
+                <FaTelegram/>
               </a>
             </div>
           </div>
@@ -90,13 +90,13 @@ const UserFooter = () => {
             <h6 className={styles.subtitle}>Əlaqə Məlumatları</h6>
             <div className={styles.contact}>
               <p>
-                <i className="fas fa-map-marker-alt me-2"></i>Bakı, Azərbaycan
+                <FaMapMarker className="me-2"/>Bakı, Azərbaycan
               </p>
               <p>
-                <i className="fas fa-phone me-2"></i>+994 12 123 45 67
+                <FaPhone className="me-2"/>+994 12 123 45 67
               </p>
               <p>
-                <i className="fas fa-envelope me-2"></i>info@eduaz.edu
+                <FaEnvelope className="me-2"/>info@eduaz.edu
               </p>
             </div>
             <div className={styles.newsletter}>
@@ -110,7 +110,7 @@ const UserFooter = () => {
 
         <div className="row align-items-center">
           <div className="col-md-6">
-            <p className="mb-0">&copy; {new Date().getFullYear()} EduAzerbaijan. Bütün hüquqlar qorunur.</p>
+            <p className="mb-0">&copy; {new Date().getFullYear()} e-Gündəlik. Bütün hüquqlar qorunur.</p>
           </div>
           <div className="col-md-6 text-md-end">
             <a href="#" className={`${styles.link} me-3`}>

@@ -57,6 +57,8 @@ import CheckYourself from "../pages/Student/CheckYourself";
 import FAQ from "../pages/User/FAQ";
 import ParentQuizTimes from "../pages/Parent/ParentQuizTimes";
 import StudentQuizTimes from "../pages/Student/StudentQuizTimes";
+import StudentBooks from "../pages/Student/StudentBooks";
+import EditStudentProfile from "../pages/Student/EditStudentProfile";
 
 export const ROUTES = [
     {
@@ -212,7 +214,7 @@ export const ROUTES = [
             },
             {
                 path: "books",
-                element: <ParentBooks />
+                element: <StudentBooks />
             },
             {
                 path: "subjects",
@@ -220,7 +222,7 @@ export const ROUTES = [
             },
             {
                 path:"lessons",
-                element:<ParentLessons/>
+                element:<StudentLessons/>
             },
             {
                 path:"results",
@@ -264,6 +266,14 @@ export const ROUTES = [
             {
                 path: "quiz-times",
                 element: <StudentQuizTimes />
+            },
+            {
+                path: "my-profile",
+                element: <EditStudentProfile />
+            },
+            {
+                path: "books",
+                element: <StudentBooks />
             },
 
         ]

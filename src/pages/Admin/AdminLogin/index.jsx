@@ -56,7 +56,7 @@ const AdminLogin = ({ setUser, setAccessToken, setRefreshToken }) => {
         localStorage.setItem("refreshToken", response.data.refreshToken);
       }
 
-      toast.success("Admin login successful!");
+      toast.success("Uğurlu giriş");
       navigate("/admin-panel");
       window.location.reload()
 
@@ -69,8 +69,8 @@ const AdminLogin = ({ setUser, setAccessToken, setRefreshToken }) => {
         });
       } else if (errorData?.title) {
         toast.error(errorData.title);
-      } else if (errorData?.Message) {
-        toast.error(errorData.Message);
+      } else if (errorData?.message) {
+        toast.error(errorData.message);
       } else {
         toast.error("Unknown error occurred");
       }

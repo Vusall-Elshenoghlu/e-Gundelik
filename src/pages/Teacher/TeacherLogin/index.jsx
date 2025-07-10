@@ -67,7 +67,7 @@ const TeacherLogin = () => {
         navigate("/update-password");
         window.location.reload()
       } else if (userData.role === "Admin") {
-        navigate("/admin-dashboard");
+        navigate("/admin-panel");
       } else if (userData.role === "Teacher") {
         navigate("/teacher-panel");
       } else if (userData.role === "Parent") {

@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react"
 import { Modal, Button, Container, Row, Col, Card, Badge, Form } from "react-bootstrap"
-import styles from "./Books.module.css"
+import styles from "./StudentBooks.module.css"
 import { FaEdit, FaTrash, FaBookOpen, FaFilePdf, FaEye, FaPlus } from "react-icons/fa"
 import Swal from "sweetalert2"
 import axios from "axios"
@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router"
 
 const API_BASE = "https://turansalimli-001-site1.ntempurl.com/api/Book"
 
-export default function Books() {
+export default function StudentBooks() {
   const [books, setBooks] = useState([])
   const [selectedBook, setSelectedBook] = useState(null)
   const [showDetailModal, setShowDetailModal] = useState(false)
@@ -56,71 +56,6 @@ export default function Books() {
     setShowDetailModal(true)
   }
 
-  const handleDelete = async (book) => {
-    Swal.fire({
-      title: `Kitab "${book.name}" silinsin?`,
-      text: "Bu əməliyyat geri qaytarıla bilməz!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#dc3545",
-      cancelButtonColor: "#6c757d",
-      confirmButtonText: "Bəli, sil!",
-      cancelButtonText: "Ləğv et",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axiosAuth.delete(`${API_BASE}/DeleteBook/${book.id}`);
-          setBooks(books.filter((b) => b.id !== book.id))
-          Swal.fire("Silindi!", `"${book.name}" kitabı silindi.`, "success")
-        } catch (err) {
-          console.error("Silinmədi:", err)
-          Swal.fire("Xəta!", "Kitab silinmədi.", "error")
-        }
-      }
-    })
-  }
-
-  const handleEditClick = (book) => {
-    setEditForm({
-      id: book.id,
-      name: book.name,
-      subjectId: book.subject?.id || "",
-      pdfFile: null,
-    })
-    setShowEditModal(true)
-  }
-
-  const handleEditChange = (e) => {
-    const { name, value } = e.target
-    setEditForm((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0] || null
-    setEditForm((prev) => ({ ...prev, pdfFile: file }))
-  }
-
-  const handleEditSubmit = async (e) => {
-    e.preventDefault()
-    const formData = new FormData()
-    formData.append("id", editForm.id)
-    formData.append("name", editForm.name)
-    formData.append("subjectId", editForm.subjectId)
-    if (editForm.pdfFile) {
-      formData.append("pdf", editForm.pdfFile)
-    }
-
-    try {
-      await axiosAuth.put(`${API_BASE}/UpdateBook`, formData)
-      fetchBooks()
-      setShowEditModal(false)
-      Swal.fire("Uğurlu!", `"${editForm.name}" kitabı yeniləndi.`, "success")
-    } catch (err) {
-      console.error("Yenilənmədi:", err)
-      Swal.fire("Xəta!", "Kitab yenilənmədi.", "error")
-    }
-  }
-
   const filteredBooks = books.filter((book) => {
     const matchesSearch =
       book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -134,7 +69,7 @@ export default function Books() {
       <div className={styles.header}>
         <div className={styles.titleSection}>
           <FaBookOpen className={styles.titleIcon} />
-          <h1 className={styles.title}>Kitab Kitabxanası</h1>
+          <h1 className={styles.title}>Kitablar</h1>
         </div>
 
         <div className={styles.controls}>
@@ -160,13 +95,7 @@ export default function Books() {
             </Form.Select>
           </div>
 
-          <Link to={"/admin-panel/add-book"}>
-            <Button variant="primary" className={styles.addButton}>
-              <FaPlus className="me-2" />
-              Yeni Kitab
-            </Button>
-          </Link>
-        </div>
+            </div>
       </div>
 
       <div className={styles.statsSection}>
@@ -227,24 +156,6 @@ export default function Books() {
                       <FaFilePdf />
                     </Button>
                   )}
-
-                  <Button
-                    variant="outline-warning"
-                    size="sm"
-                    onClick={() => handleEditClick(book)}
-                    className={styles.actionBtn}
-                  >
-                    <FaEdit />
-                  </Button>
-
-                  <Button
-                    variant="outline-danger"
-                    size="sm"
-                    onClick={() => handleDelete(book)}
-                    className={styles.actionBtn}
-                  >
-                    <FaTrash />
-                  </Button>
                 </div>
               </Card.Body>
             </Card>
@@ -284,46 +195,7 @@ export default function Books() {
         </Modal.Footer>
       </Modal>
 
-      {/* Edit Modal */}
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <FaEdit className="me-2" />
-            Kitabı redaktə et
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleEditSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Kitab adı</Form.Label>
-              <Form.Control type="text" name="name" value={editForm.name} onChange={handleEditChange} required />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Mövzu</Form.Label>
-              <Form.Select name="subjectId" value={editForm.subjectId} onChange={handleEditChange} required>
-                <option value="">Mövzu seçin</option>
-                {subjects.map((subject) => (
-                  <option key={subject.id} value={subject.id}>
-                    {subject.name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>PDF faylı yüklə</Form.Label>
-              <Form.Control type="file" accept="application/pdf" onChange={handleFileChange} />
-            </Form.Group>
-
-            <div className="d-grid">
-              <Button variant="primary" type="submit">
-                Yenilə
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      
 
 
     </Container>
