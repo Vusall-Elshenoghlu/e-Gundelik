@@ -4,6 +4,7 @@ import { Container, Row, Col, Accordion, Card } from "react-bootstrap"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import styles from "./FAQ.module.css"
+import { Helmet } from "react-helmet"
 
 const FAQ = () => {
     const [activeCategory, setActiveCategory] = useState("general")
@@ -130,6 +131,12 @@ const FAQ = () => {
     }
 
     return (
+        <>
+        <Helmet>
+        <title>FAQ</title>
+        <meta name="description" content="Tələbələr, valideynlər, müəllimlər və direktorlar üçün hazırlanmış interaktiv ana səhifə." />
+        <meta name="keywords" content="təhsil, tələbə, müəllim, direktor, portal, məktəb" />
+      </Helmet>
         <div className={styles.faqContainer}>
             {/* Hero Section */}
             <motion.section
@@ -289,6 +296,7 @@ const FAQ = () => {
                 </Container>
             </motion.section>
         </div>
+        </>
     )
 }
 

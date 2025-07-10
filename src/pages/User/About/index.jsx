@@ -1,6 +1,7 @@
 import { Container, Row, Col, Card } from "react-bootstrap"
 import { motion } from "framer-motion"
 import styles from "./About.module.css"
+import { Helmet } from "react-helmet"
 
 const About = () => {
   const features = [
@@ -36,7 +37,14 @@ const About = () => {
     },
   ]
 
+
   return (
+    <>
+    <Helmet>
+        <title>Haqqımızda</title>
+        <meta name="description" content="Tələbələr, valideynlər, müəllimlər və direktorlar üçün hazırlanmış interaktiv ana səhifə." />
+        <meta name="keywords" content="təhsil, tələbə, müəllim, direktor, portal, məktəb" />
+      </Helmet>
     <div className={styles.aboutContainer}>
       {/* Hero Section */}
       <motion.section
@@ -260,6 +268,7 @@ const About = () => {
         </Container>
       </motion.section>
     </div>
+    </>
   )
 }
 
