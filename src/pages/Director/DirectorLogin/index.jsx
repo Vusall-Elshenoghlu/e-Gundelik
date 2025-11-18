@@ -24,7 +24,7 @@ const DirectorLogin = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://turansalimli-001-site1.ntempurl.com/api/Auth/login", {
+      const response = await axios.post("https://turanapi2-001-site1.jtempurl.com/api/Auth/login", {
         emailOrUserName,
         password,
         rememberMe

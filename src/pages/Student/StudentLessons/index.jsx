@@ -17,7 +17,7 @@ const StudentLessons = () => {
   useEffect(() => {
     setLoading(true)
     axios
-      .get("https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetAllLessons")
+      .get("https://turanapi2-001-site1.jtempurl.com/api/Lesson/GetAllLessons")
       .then((res) => {
         setLessons(res.data)
         setLoading(false)
@@ -32,7 +32,7 @@ const StudentLessons = () => {
     setSelectedLesson(lesson)
     setProgressLoading(true)
     axios
-      .get("https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetStudentProgress", {
+      .get("https://turanapi2-001-site1.jtempurl.com/api/Lesson/GetStudentProgress", {
         params: {
           lessonId: lesson.id,
           studentId: studentId,

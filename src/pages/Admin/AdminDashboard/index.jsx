@@ -25,7 +25,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   // Base URL
-  const baseURL = "https://turansalimli-001-site1.ntempurl.com/api/User";
+  const baseURL = "https://turanapi2-001-site1.jtempurl.com/api/User";
 
   // Helper fetch functions
   const fetchTeachers = async () => {
@@ -107,10 +107,10 @@ const AdminDashboard = () => {
 
   const fetchSubjects = async () => {
     try {
-      const res = await axios.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject");
+      const res = await axios.get("https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject");
       console.log(res.data)
       if (res.data) {
-        setCounts((c) => ({ ...c, subjects: res.data.length || res.data.data.length }));
+        setCounts((c) => ({ ...c, subjects: res.data.length || res.data.length }));
       }
     } catch (error) {
       console.error("Subjects fetch error:", error);

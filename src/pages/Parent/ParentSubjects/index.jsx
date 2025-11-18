@@ -4,7 +4,7 @@ import styles from "./ParentSubjects.module.css";
 import { FaBookOpen } from "react-icons/fa";
 import axios from "axios";
 
-const BASE_URL = "https://turansalimli-001-site1.ntempurl.com/api/Subject";
+const BASE_URL = "https://turanapi2-001-site1.jtempurl.com/api/Subject";
 
 export default function ParentSubjects() {
   const [subjects, setSubjects] = useState([]);

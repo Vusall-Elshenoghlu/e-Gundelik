@@ -3,7 +3,7 @@ import { Modal, Container, Row, Col, Button } from "react-bootstrap";
 import styles from "./ParentBooks.module.css";
 import { FaBookOpen, FaFilePdf } from "react-icons/fa";
 import axios from "axios";
-const API_BASE = "https://turansalimli-001-site1.ntempurl.com/api/Book";
+const API_BASE = "https://turanapi2-001-site1.jtempurl.com/api/Book";
 
 export default function ParentBooks() {
   const [books, setBooks] = useState([]);

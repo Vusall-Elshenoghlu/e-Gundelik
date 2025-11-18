@@ -24,7 +24,7 @@ const AdminLogin = ({ setUser, setAccessToken, setRefreshToken }) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post("https://turansalimli-001-site1.ntempurl.com/api/Auth/login", {
+      const response = await axios.post("http://turanapi2-001-site1.jtempurl.com/api/Auth/login", {
         emailOrUserName: values.emailOrUserName,
         password: values.password,
         rememberMe: values.rememberMe,

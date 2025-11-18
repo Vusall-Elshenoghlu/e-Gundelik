@@ -23,7 +23,7 @@ const AddSubject = () => {
 
   const onSubmit = async (values, { setSubmitting, resetForm, setStatus }) => {
     try {
-      const response = await axios.post('https://turansalimli-001-site1.ntempurl.com/api/Subject/CreateSubject', values);
+      const response = await axios.post('https://turanapi2-001-site1.jtempurl.com/api/Subject/CreateSubject', values);
       console.log(response.data)
       if (response.data.isSuccess) {
         setStatus({ success: "Fənn uğurla əlavə olundu!" });

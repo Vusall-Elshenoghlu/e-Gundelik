@@ -27,8 +27,8 @@ const AddLesson = () => {
     const fetchData = async () => {
       try {
         const [subjectRes, classRes] = await Promise.all([
-          axios.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
-          axios.get("https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass"),
+          axios.get("https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject"),
+          axios.get("https://turanapi2-001-site1.jtempurl.com/api/SchoolClass/GetAllSchoolClass"),
         ]);
         setSubjects(subjectRes.data);
         setClasses(classRes.data);
@@ -72,7 +72,7 @@ const AddLesson = () => {
       formData.append("StudentsProgress", JSON.stringify([]));
 
       await axios.post(
-        "https://turansalimli-001-site1.ntempurl.com/api/Lesson/CreateLesson",
+        "https://turanapi2-001-site1.jtempurl.com/api/Lesson/CreateLesson",
         formData,
         {
           headers: {

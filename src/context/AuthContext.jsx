@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
             
             console.log("aaa");
             console.log("old refresh token: ", refreshToken)
-            const res = await axios.post(`https://turansalimli-001-site1.ntempurl.com/api/Token?refreshToken=${encodeURIComponent(refreshToken)}`);
+            const res = await axios.post(`http://turanapi2-001-site1.jtempurl.com/api/Token?refreshToken=${encodeURIComponent(refreshToken)}`);
 
 
             console.log(res)

@@ -48,7 +48,7 @@ const UpdatePassword = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setError("")
-      await axiosAuth.post("https://turansalimli-001-site1.ntempurl.com/api/Auth/update-password", values,)
+      await axiosAuth.post("https://turanapi2-001-site1.jtempurl.com/api/Auth/update-password", values,)
       setSuccess(true)
       localStorage.removeItem("firstLogin")
 

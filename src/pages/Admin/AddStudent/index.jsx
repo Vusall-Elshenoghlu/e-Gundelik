@@ -13,7 +13,7 @@ const AddStudent = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass")
+        const res = await axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/SchoolClass/GetAllSchoolClass")
         setClasses(res.data)
       } catch (err) {
         console.error("Sinifləri gətirə bilmədik:", err)
@@ -60,7 +60,7 @@ const AddStudent = () => {
       }
 
       const response = await axiosAuth.post(
-        "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-student",
+        "https://turanapi2-001-site1.jtempurl.com/api/Auth/create-student",
         payload
       )
 

@@ -25,7 +25,7 @@ const ViewLesson = () => {
   const fetchLessons = async () => {
     try {
       const res = await axios.get(
-        "https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetAllLessons"
+        "https://turanapi2-001-site1.jtempurl.com/api/Lesson/GetAllLessons"
       );
       setLessons(res.data);
     } catch (err) {
@@ -57,7 +57,7 @@ const ViewLesson = () => {
     if (result.isConfirmed) {
       try {
         await axios.delete(
-          `https://turansalimli-001-site1.ntempurl.com/api/Lesson/DeleteLesson/${id}`
+          `https://turanapi2-001-site1.jtempurl.com/api/Lesson/DeleteLesson/${id}`
         );
         fetchLessons();
         Swal.fire("Silindi!", "Dərs uğurla silindi.", "success");
@@ -71,7 +71,7 @@ const ViewLesson = () => {
     try {
       const { id, title, task, teacherId, classId, subject } = selectedLesson;
       await axios.put(
-        `https://turansalimli-001-site1.ntempurl.com/api/Lesson/UpdateLesson/${id}`,
+        `https://turanapi2-001-site1.jtempurl.com/api/Lesson/UpdateLesson/${id}`,
         {
           id,
           title,
@@ -91,7 +91,7 @@ const ViewLesson = () => {
   const handleDetail = async (id) => {
     try {
       const res = await axios.get(
-        `https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetById/${id}`
+        `https://turanapi2-001-site1.jtempurl.com/api/Lesson/GetById/${id}`
       );
       setDetailData(res.data);
       Swal.fire({

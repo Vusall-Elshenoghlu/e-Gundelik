@@ -32,7 +32,7 @@ const CheckYourself = () => {
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Book/GetAllBooks");
+                const res = await axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/Book/GetAllBooks");
                 setBooks(res.data || []);
             } catch (err) {
                 console.error("Kitablar yüklənmədi:", err);
@@ -59,7 +59,7 @@ const CheckYourself = () => {
 
         try {
             const response = await axios.post(
-                `https://turansalimli-001-site1.ntempurl.com/api/AI/GetQuestions?${params.toString()}`
+                `https://turanapi2-001-site1.jtempurl.com/api/AI/GetQuestions?${params.toString()}`
             );
 
             const formattedQuestions = response.data.map((item) => {

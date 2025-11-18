@@ -14,7 +14,7 @@ const AddTeacher = () => {
     const fetchSubjects = async () => {
       try {
         const res = await axiosAuth.get(
-          "https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"
+          "https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject"
         );
         setSubjects(res.data || []);
       } catch (error) {
@@ -68,7 +68,7 @@ const AddTeacher = () => {
 
     try {
       await axiosAuth.post(
-        "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-teacher",
+        "https://turanapi2-001-site1.jtempurl.com/api/Auth/create-teacher",
         payload
       );
       alert("✅ Müəllim uğurla yaradıldı!");

@@ -12,7 +12,7 @@ function ForgotPassword() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://turansalimli-001-site1.ntempurl.com/api/Auth/forget-password", { email });
+      const res = await axios.post("https://turanapi2-001-site1.jtempurl.com/api/Auth/forget-password", { email });
       toast.success(res.data.message || "Check your email for reset link.");
       setEmail("");
       setMessage(res.data.message);

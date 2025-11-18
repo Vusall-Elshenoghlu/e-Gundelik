@@ -11,7 +11,7 @@ import {
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const BASE_URL = "https://turansalimli-001-site1.ntempurl.com/api/SchoolClass";
+const BASE_URL = "https://turanapi2-001-site1.jtempurl.com/api/SchoolClass";
 
 export default function Classes() {
   const [classes, setClasses] = useState([]);
@@ -36,8 +36,8 @@ export default function Classes() {
     const fetchMetaData = async () => {
       try {
         const [subjectRes, teacherRes] = await Promise.all([
-          axios.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
-          axios.get("https://turansalimli-001-site1.ntempurl.com/api/User/teachers"),
+          axios.get("https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject"),
+          axios.get("https://turanapi2-001-site1.jtempurl.com/api/User/teachers"),
         ]);
         setSubjects(subjectRes.data.map((s) => ({ label: s.name, value: s.id })));
         setTeachers(teacherRes.data?.data || []);

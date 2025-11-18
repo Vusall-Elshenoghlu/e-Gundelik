@@ -7,7 +7,7 @@ import Swal from "sweetalert2"
 import axios from "axios"
 import { Link, useNavigate } from "react-router"
 
-const API_BASE = "https://turansalimli-001-site1.ntempurl.com/api/Book"
+const API_BASE = "https://turanapi2-001-site1.jtempurl.com/api/Book"
 
 export default function Books() {
   const [books, setBooks] = useState([])
@@ -39,7 +39,7 @@ export default function Books() {
 
   const fetchSubjects = async () => {
     try {
-      const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject");
+      const res = await axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject");
       setSubjects(res.data);
     } catch (err) {
       console.error("Mövzular yüklənmədi:", err)

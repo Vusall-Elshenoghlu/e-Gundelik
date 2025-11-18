@@ -36,7 +36,7 @@ const EditProfile = () => {
   const fetchUserData = async () => {
     try {
       const res = await axios.get(
-        `https://turansalimli-001-site1.ntempurl.com/api/User/GetUserById/${userId}`
+        `https://turanapi2-001-site1.jtempurl.com/api/User/GetUserById/${userId}`
       );
       if (res.data?.isSuccess) {
         setUserData(res.data.data);
@@ -78,7 +78,7 @@ const EditProfile = () => {
       }
 
       await axiosAuth.put(
-        `https://turansalimli-001-site1.ntempurl.com/api/Auth/update-profile`,
+        `https://turanapi2-001-site1.jtempurl.com/api/Auth/update-profile`,
         formData,
         
       );

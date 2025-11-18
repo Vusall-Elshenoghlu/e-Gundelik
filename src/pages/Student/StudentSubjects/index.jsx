@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useAxiosWithAuth } from "../../../hooks/UseAxiosWithAuth";
 
-const BASE_URL = "https://turansalimli-001-site1.ntempurl.com/api/Subject";
+const BASE_URL = "https://turanapi2-001-site1.jtempurl.com/api/Subject";
 
 export default function StudentSubject() {
   const [subjects, setSubjects] = useState([]);

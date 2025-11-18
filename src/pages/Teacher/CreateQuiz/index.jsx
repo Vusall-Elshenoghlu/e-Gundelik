@@ -26,7 +26,7 @@ const CreateQuiz = () => {
   const fetchClasses = async () => {
     try {
       const res = await axios.get(
-        "https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass"
+        "https://turanapi2-001-site1.jtempurl.com/api/SchoolClass/GetAllSchoolClass"
       );
       setClasses(res.data);
     } catch (err) {
@@ -37,7 +37,7 @@ const CreateQuiz = () => {
   const fetchSubjects = async () => {
     try {
       const res = await axios.get(
-        "https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"
+        "https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject"
       );
       setSubjects(res.data);
     } catch (err) {
@@ -74,7 +74,7 @@ const CreateQuiz = () => {
     try {
       setLoading(true);
       await axios.post(
-        "https://turansalimli-001-site1.ntempurl.com/api/Quiz/CreateQuiz",
+        "https://turanapi2-001-site1.jtempurl.com/api/Quiz/CreateQuiz",
         payload
       );
       toast.success("Qiymətləndirmə uğurla əlavə edildi!");

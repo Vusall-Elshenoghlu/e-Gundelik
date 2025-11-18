@@ -19,7 +19,7 @@ const QuizTimes = () => {
     setLoading(true);
     try {
       const res = await axiosAuth.get(
-        "https://turansalimli-001-site1.ntempurl.com/api/Quiz/GetAllQuizzes"
+        "https://turanapi2-001-site1.jtempurl.com/api/Quiz/GetAllQuizzes"
       );
       setQuizzes(res.data);
     } catch (err) {
@@ -32,8 +32,8 @@ const QuizTimes = () => {
   const fetchSubjectsAndClasses = async () => {
     try {
       const [subjectsRes, classesRes] = await Promise.all([
-        axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
-        axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass"),
+        axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject"),
+        axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/SchoolClass/GetAllSchoolClass"),
       ]);
       setSubjects(subjectsRes.data);
       setClasses(classesRes.data);
@@ -50,7 +50,7 @@ const QuizTimes = () => {
   const handleDetail = async (id, mode = "detail") => {
     try {
       const res = await axiosAuth.get(
-        `https://turansalimli-001-site1.ntempurl.com/api/Quiz/GetById/${id}`
+        `https://turanapi2-001-site1.jtempurl.com/api/Quiz/GetById/${id}`
       );
       const data = res.data;
       setSelectedQuiz({
@@ -82,7 +82,7 @@ const QuizTimes = () => {
     if (confirm.isConfirmed) {
       try {
         await axiosAuth.delete(
-          `https://turansalimli-001-site1.ntempurl.com/api/Quiz/DeleteQuiz/${id}`
+          `https://turanapi2-001-site1.jtempurl.com/api/Quiz/DeleteQuiz/${id}`
         );
         Swal.fire("Silindi!", "Quiz uğurla silindi.", "success");
         fetchQuizzes();
@@ -102,7 +102,7 @@ const QuizTimes = () => {
         primary: selectedQuiz.primary,
       };
       await axiosAuth.put(
-        "https://turansalimli-001-site1.ntempurl.com/api/Quiz/UpdateQuiz",
+        "https://turanapi2-001-site1.jtempurl.com/api/Quiz/UpdateQuiz",
         payload
       );
       setShowModal(false);

@@ -38,7 +38,7 @@ const AddParent = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/User/GetAllStudents/students")
+        const res = await axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/User/GetAllStudents/students")
         const options = res.data.data.map((student) => ({
           value: student.id,
           label: `${student.firstName} ${student.lastName}`,
@@ -60,7 +60,7 @@ const AddParent = () => {
       }
 
       const response = await axiosAuth.post(
-        "https://turansalimli-001-site1.ntempurl.com/api/Auth/create-parent",
+        "https://turanapi2-001-site1.jtempurl.com/api/Auth/create-parent",
         payload
       )
 

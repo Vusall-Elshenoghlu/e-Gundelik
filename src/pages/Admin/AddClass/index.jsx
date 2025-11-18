@@ -55,8 +55,8 @@ const AddClass = () => {
     const fetchData = async () => {
       try {
         const [subjectsRes, teachersRes] = await Promise.all([
-          axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
-          axios.get("http://turansalimli-001-site1.ntempurl.com/api/User/GetAllTeachers/teachers"),
+          axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject"),
+          axios.get("https://turanapi2-001-site1.jtempurl.com/api/User/GetAllTeachers/teachers"),
         ]);
         console.log(teachersRes)
         console.log(subjectsRes.data)
@@ -81,7 +81,7 @@ const AddClass = () => {
 
     try {
       const response = await axios.post(
-        "https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/CreateSchoolClass",
+        "https://turanapi2-001-site1.jtempurl.com/api/SchoolClass/CreateSchoolClass",
         payload
       );
       console.log(response.data.isSuccess)

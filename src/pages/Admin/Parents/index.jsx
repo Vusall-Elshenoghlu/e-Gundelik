@@ -40,7 +40,7 @@ const Parents = () => {
     const fetchParents = async () => {
       try {
         setLoading(true)
-        const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/User/GetAllParents/parents")
+        const res = await axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/User/GetAllParents/parents")
         setParents(res.data.data)
       } catch (err) {
         console.error("Error:", err)
@@ -87,7 +87,7 @@ const Parents = () => {
 
     if (result.isConfirmed) {
       try {
-        await axiosAuth.delete(`https://turansalimli-001-site1.ntempurl.com/api/User/DeleteParent/parents/${parent.id}`)
+        await axiosAuth.delete(`https://turanapi2-001-site1.jtempurl.com/api/User/DeleteParent/parents/${parent.id}`)
         setParents((prev) => prev.filter(p => p.id !== parent.id))
         Swal.fire(
           'Silindi!',

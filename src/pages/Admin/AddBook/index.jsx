@@ -20,7 +20,7 @@ const AddBook = () => {
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const res = await axios.get('https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject');
+        const res = await axios.get('https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject');
         setSubjects(res.data || []);
       } catch (error) {
         console.error("Fənnlər yüklənərkən xəta:", error);
@@ -45,7 +45,7 @@ const AddBook = () => {
 
     try {
       const response = await axiosAuth.post(
-        'https://turansalimli-001-site1.ntempurl.com/api/Book/CreateBook',
+        'https://turanapi2-001-site1.jtempurl.com/api/Book/CreateBook',
         formData,
         {
           headers: {

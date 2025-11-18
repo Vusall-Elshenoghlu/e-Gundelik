@@ -20,7 +20,7 @@ const StudentQuizTimes = () => {
   const fetchQuizzes = async () => {
     setLoading(true);
     try {
-      const res = await axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Quiz/GetAllQuizzes");
+      const res = await axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/Quiz/GetAllQuizzes");
       setQuizzes(res.data);
     } catch (err) {
       console.error("Quiz-lər alınmadı:", err);
@@ -32,8 +32,8 @@ const StudentQuizTimes = () => {
   const fetchSubjectsAndClasses = async () => {
     try {
       const [subjectsRes, classesRes] = await Promise.all([
-        axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/Subject/GetAllSubject"),
-        axiosAuth.get("https://turansalimli-001-site1.ntempurl.com/api/SchoolClass/GetAllSchoolClass"),
+        axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/Subject/GetAllSubject"),
+        axiosAuth.get("https://turanapi2-001-site1.jtempurl.com/api/SchoolClass/GetAllSchoolClass"),
       ]);
       setSubjects(subjectsRes.data);
       setClasses(classesRes.data);
@@ -44,7 +44,7 @@ const StudentQuizTimes = () => {
 
   const handleDetail = async (id) => {
     try {
-      const res = await axiosAuth.get(`https://turansalimli-001-site1.ntempurl.com/api/Quiz/GetById/${id}`);
+      const res = await axiosAuth.get(`https://turanapi2-001-site1.jtempurl.com/api/Quiz/GetById/${id}`);
       const data = res.data;
       setSelectedQuiz({
         id: data.id,

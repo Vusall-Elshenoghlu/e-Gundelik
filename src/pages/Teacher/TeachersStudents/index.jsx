@@ -17,7 +17,7 @@ const TeacherStudents = () => {
 
   useEffect(() => {
     axios
-      .get("https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetAllLessons")
+      .get("https://turanapi2-001-site1.jtempurl.com/api/Lesson/GetAllLessons")
       .then((res) => {
         setLessons(res.data);
       })
@@ -28,7 +28,7 @@ const TeacherStudents = () => {
 
   useEffect(() => {
     axios
-      .get("https://turansalimli-001-site1.ntempurl.com/api/User/GetAllStudents/students")
+      .get("https://turanapi2-001-site1.jtempurl.com/api/User/GetAllStudents/students")
       .then((res) => {
         setStudents(res.data.data);
       })
@@ -48,7 +48,7 @@ const TeacherStudents = () => {
         students.map(async (student) => {
           try {
             const res = await axios.get(
-              `https://turansalimli-001-site1.ntempurl.com/api/Lesson/GetStudentProgress`,
+              `https://turanapi2-001-site1.jtempurl.com/api/Lesson/GetStudentProgress`,
               {
                 params: {
                   lessonId: selectedLessonId,
@@ -121,7 +121,7 @@ const TeacherStudents = () => {
     };
 
     axios
-      .post("https://turansalimli-001-site1.ntempurl.com/api/Lesson/AddStudentProgress", payload)
+      .post("https://turanapi2-001-site1.jtempurl.com/api/Lesson/AddStudentProgress", payload)
       .then(() => {
         Swal.fire("Uğurlu", "Qiymət əlavə olundu", "success");
         handleCloseModal();

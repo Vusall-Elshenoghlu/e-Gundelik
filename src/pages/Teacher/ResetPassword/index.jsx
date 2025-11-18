@@ -33,7 +33,7 @@ function ResetPassword() {
 
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
-            const res = await axios.post("https://turansalimli-001-site1.ntempurl.com/api/Auth/reset-password", {
+            const res = await axios.post("https://turanapi2-001-site1.jtempurl.com/api/Auth/reset-password", {
                 email,
                 token,
                 newPassword: values.password,
